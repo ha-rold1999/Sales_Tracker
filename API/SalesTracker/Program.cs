@@ -20,19 +20,19 @@ builder.Services.AddScoped<ItemHelper>();
 
 var app = builder.Build();
 
-//using (var migrate = app.Services.CreateScope())
-//{
-//    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
-//    dbMigrate.Database.Migrate();
-//}
+using (var migrate = app.Services.CreateScope())
+{
+    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
+    dbMigrate.Database.Migrate();
+}
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 

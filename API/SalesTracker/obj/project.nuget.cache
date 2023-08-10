@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qQ7UQed53EnVjlq0Aoe7y8i4GC+BWkFbLgsBOzEXVw3I4cnyIOpaz08vb2l5vcQDd91bHt7ozx0Y5ZudgmoRzQ==",
+  "dgSpecHash": "AXl9HVJ2KVUaS1IXOo3lLvzCErvcdM/Y4b3u9RnJwb7B5qAlzdFkcLz2MRY+zj0YMzqyveJzCkc8sxAo5Wad2Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\SalesTracker\\SalesTracker.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,7 @@
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.18.1\\microsoft.visualstudio.azure.containers.tools.targets.1.18.1.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\npgsql\\7.0.4\\npgsql.7.0.4.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.4\\npgsql.entityframeworkcore.postgresql.7.0.4.nupkg.sha512",
