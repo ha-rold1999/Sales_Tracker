@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\SalesTracker\\Models\\Models.csproj",
+      "projectUniqueName": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Models\\Models.csproj",
       "projectName": "Models",
-      "projectPath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\SalesTracker\\Models\\Models.csproj",
+      "projectPath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Models\\Models.csproj",
       "packagesPath": "C:\\Users\\Full Scale\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\SalesTracker\\Models\\obj\\",
+      "outputPath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

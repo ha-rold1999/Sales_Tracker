@@ -13,6 +13,7 @@ namespace Models.Model.Items
     {
         [Key]
         [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set ; }
         [Column("item_name")]
         [Required]

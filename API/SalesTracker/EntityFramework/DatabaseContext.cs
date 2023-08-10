@@ -16,15 +16,15 @@ namespace SalesTracker.EntityFramework
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {}
-        DbSet<Item> Item { get; set; }
-        DbSet<Sale> Sale { get; set; }
-        DbSet<Sales> Sales { get; set; }
-        DbSet<SaleReport> SaleReport { get; set; }
-        DbSet<Expense> Expense { get; set; }
-        DbSet<Expenses> Expenses { get; set; }
-        DbSet<ExpenseReport> ExpensesReport { get; set; }
-        DbSet<Principal> Principal { get; set; }
-        DbSet<CashFlow> CashFlow { get; set; }
-        DbSet<CashFlowReport> CashFlowReport { get; set; }
+        public DbSet<Item> Item { get; set; }
+        public DbSet<Sale> Sale { get; set; }
+        public DbSet<Sales> Sales { get; set; }
+        public DbSet<SaleReport> SaleReport { get; set; }
+        public DbSet<Expense> Expense { get; set; }
+        public DbSet<Expenses> Expenses { get; set; }
+        public DbSet<ExpenseReport> ExpensesReport { get; set; }
+        public DbSet<Principal> Principal { get; set; }
+        public DbSet<CashFlow> CashFlow { get; set; }
+        public DbSet<CashFlowReport> CashFlowReport { get; set; }
     }
 }

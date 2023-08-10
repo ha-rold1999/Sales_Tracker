@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DhZqMKXxJI8oxCiG5EYlOjV5yc4zMcoLTjBoXoefj9/5/Jl7bVExd79XEw/rnQgJYpUbQSHjfCCsW9T57ehUwA==",
+  "dgSpecHash": "LmkB6drcTvWq8O+sZfpOFFhRD/oVdUNLyTRNcYIUBB5iCUOIyF/VhUfRqcKXg8JQIxRYD+2dzVLVDUefot3ASg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\SalesTracker\\Models\\Models.csproj",
+  "projectFilePath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Models\\Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
