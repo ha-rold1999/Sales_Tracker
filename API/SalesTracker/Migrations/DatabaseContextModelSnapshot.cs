@@ -197,6 +197,10 @@ namespace SalesTracker.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("selling_price");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("integer")
+                        .HasColumnName("stock");
+
                     b.HasKey("Id");
 
                     b.ToTable("item");
@@ -238,8 +242,8 @@ namespace SalesTracker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date")
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("date");
 
                     b.HasKey("Id");
@@ -266,6 +270,10 @@ namespace SalesTracker.Migrations
                     b.Property<decimal>("Profit")
                         .HasColumnType("numeric")
                         .HasColumnName("profit");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
                     b.Property<int>("SaleId")
                         .HasColumnType("integer");

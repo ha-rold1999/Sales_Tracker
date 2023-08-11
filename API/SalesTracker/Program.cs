@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Models.Model.Items;
+using SalesTracker.Controllers;
 using SalesTracker.DatabaseHelpers;
+using SalesTracker.DatabaseHelpers.DailyReport;
+using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.EntityFramework;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,22 +21,29 @@ builder.Services.AddAutoMapper(typeof(Program));
 //Dependency Injection
 builder.Services.AddScoped<ItemHelper>();
 
+builder.Services.AddScoped<SaleHelper>();
+builder.Services.AddScoped<SaleDateHelper>();
+builder.Services.AddScoped<SaleReportHelper>();
+
+builder.Services.AddScoped<ItemController>();
+builder.Services.AddScoped<SaleController>();
+
 
 var app = builder.Build();
 
-using (var migrate = app.Services.CreateScope())
-{
-    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
-    dbMigrate.Database.Migrate();
-}
+//using (var migrate = app.Services.CreateScope())
+//{
+//    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
+//    dbMigrate.Database.Migrate();
+//}
 
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
-//}
+}
 
 app.UseHttpsRedirection();
 

@@ -5,7 +5,7 @@ using SalesTracker.DatabaseHelpers;
 
 namespace SalesTracker.Controllers
 {
-    public class ItemController : Controller
+    public class ItemController : Controller, IController<Item>
     {
         private ItemHelper _database;
         private IMapper _mapper;
@@ -17,36 +17,36 @@ namespace SalesTracker.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAllItem")]
-        public IActionResult GetAllItem()
+        [Route("api/[controller]/GetAll")]
+        public IActionResult GetAll()
         {
-            List<Item> items = _database.GetAllItems();
+            List<Item> items = _database.GetAll();
             return Ok(items);
         }
 
         [HttpPost]
-        [Route("api/[controller]/AddItem")]
-        public IActionResult AddItem([FromBody] Item item)
+        [Route("api/[controller]/Add")]
+        public IActionResult Add([FromBody] Item item)
         {
             var itemDTO = _mapper.Map<ItemDTO>(item);
-            _database.AddItem(itemDTO);
+            _database.Add(itemDTO);
             return Ok(item);
         }
 
         [HttpPut]
-        [Route("api/[controller]/UpdateItem")]
-        public IActionResult UpdateItem([FromBody] Item item)
+        [Route("api/[controller]/Update")]
+        public IActionResult Update([FromBody] Item item)
         {
             var itemDTO = _mapper.Map<ItemDTO>(item);
-            _database.UpdateItem(itemDTO);
+            _database.Update(itemDTO);
             return Ok(item);
         }
 
         [HttpDelete]
-        [Route("api/[controller]/DeleteItem/{id}")]
-        public IActionResult DeleteItem(int id) 
+        [Route("api/[controller]/Delete/{id}")]
+        public IActionResult Delete(int id)
         {
-            _database.DeleteItem(id);
+            _database.Delete(id);
             return Ok();
         }
     }

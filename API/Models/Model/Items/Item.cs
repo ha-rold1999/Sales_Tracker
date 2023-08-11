@@ -15,13 +15,20 @@ namespace Models.Model.Items
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set ; }
+
         [Column("item_name")]
         [Required]
         public string ItemName { get; set; }
+
+        [Required]
+        [Column("stock")]
+        public int Stock { get; set; }
+
         [Column("buying_price")]
         [Required]
         [DataType("decimal")]
         public decimal BuyingPrice { get; set; }
+
         [Column("selling_price")]
         [Required]
         [DataType("decimal")]

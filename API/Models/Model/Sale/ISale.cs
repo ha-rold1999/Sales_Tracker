@@ -2,7 +2,7 @@
 {
     public interface ISale
     {
-        DateOnly Date { get; set; }
+        DateTime Date { get; set; }
         int Id { get; set; }
     }
 }

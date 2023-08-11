@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Models.Model.Items;
+using Models.Model.Sale;
+using Models.Model.Sale.Reports;
+using Models.Model.Sale.Sales;
 
 namespace SalesTracker
 {
@@ -8,6 +11,10 @@ namespace SalesTracker
         public Automapper()
         {
             CreateMap<ItemDTO, Item>().ReverseMap();
+
+            CreateMap<SaleDTO, Sale>().ReverseMap();
+            CreateMap<SalesDTO, Sales>().ReverseMap();
+            CreateMap<SaleReportDTO, SaleReport>().ReverseMap();
         }
     }
 }

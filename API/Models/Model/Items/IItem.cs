@@ -11,6 +11,7 @@ namespace Models.Model.Items
     {
         public int Id { get; set; }
         public string ItemName { get; set; }
+        public int Stock { get; set; }
         public decimal BuyingPrice { get; set; }
         public decimal SellingPrice { get; set; }
     }
