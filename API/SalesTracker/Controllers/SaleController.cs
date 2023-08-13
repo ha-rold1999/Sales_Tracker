@@ -36,8 +36,11 @@ namespace SalesTracker.Controllers
         public IActionResult Add([FromBody] Sales sales) 
         {
             sales.Sale = saleDate;
+
             var salesDTO = _mapper.Map<SalesDTO>(sales);
+
             _saleHelper.Add(salesDTO);
+            _saleReportHelper.UpdateSaleReport(saleReport, salesDTO);
             return Ok();
         }
 
@@ -57,5 +60,12 @@ namespace SalesTracker.Controllers
             return Ok(saleReports);
         }
 
+        [HttpGet]
+        [Route("api/[controller].GetCurrentDateSales")]
+        public IActionResult GetCurrentDateSales()
+        {
+            List<Sales> sales = _saleHelper.GetCurrentDateSales(saleDate.Id);
+            return Ok(sales);
+        }
     }
 }

@@ -23,12 +23,13 @@ namespace SalesTracker.DatabaseHelpers
         {
             DTO.Profit = SalesLogic.CalculateProfit(DTO.Item.SellingPrice, DTO.Quantity);
             DTO.Income = SalesLogic.CalculateIncome(DTO.Item.BuyingPrice, DTO.Quantity, DTO.Profit);
+            DTO.Item.Stock = InventoryLogic.SubtractInventory(DTO.Item.Stock, DTO.Quantity);
 
             var sales = _mapper.Map<Sales>(DTO);
             var item = sales.Item;
             _context.Attach(item);
+            _context.Entry(item).State = EntityState.Modified;
             _context.Sales.Add(sales);
-            _context.SaveChanges();
             
             return sales;
         }
@@ -43,7 +44,12 @@ namespace SalesTracker.DatabaseHelpers
 
         public List<Sales> GetAll()
         {
-            return _context.Sales.Include(s => s.Item).ToList();
+            return _context.Sales.Include(s => s.Item).Include(s => s.Sale).ToList();
+        }
+
+        public List<Sales> GetCurrentDateSales(int id)
+        {
+            return _context.Sales.Where(sale => sale.Sale.Id == id).Include(sale => sale.Item).ToList();
         }
 
         public Sales Update(SalesDTO DTO)

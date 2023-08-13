@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using BusinessLogic.Sales;
+using Microsoft.EntityFrameworkCore;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
+using Models.Model.Sale.Sales;
 using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers.DailyReport
@@ -16,19 +19,19 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
             _mapper = mapper;
         }
 
-        public SaleReport AddReport(SaleReportDTO reportDTO) 
+        public SaleReport AddReport(SaleReportDTO reportDTO)
         {
             var saleReport = _mapper.Map<SaleReport>(reportDTO);
             var sale = saleReport.Sale;
             _context.Attach(sale);
             _context.SaleReport.Add(saleReport);
             _context.SaveChanges();
-            return saleReport; 
+            return saleReport;
         }
 
-        public List<SaleReport> GetAllReport() 
+        public List<SaleReport> GetAllReport()
         {
-            return _context.SaleReport.ToList();
+            return _context.SaleReport.Include(s => s.Sale).ToList();
         }
 
         public SaleReport GetReport(int id)
@@ -38,7 +41,17 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
 
         public SaleReport GetLastReport(Sale sale)
         {
-            return _context.SaleReport.FirstOrDefault(x=> x.Sale.Date == DateTime.Today) ?? AddReport(new SaleReportDTO() { Sale = sale, TotalIncome = 0, TotalProfit=0 });
+            return _context.SaleReport.FirstOrDefault(x => x.Sale.Date == DateTime.Today) ?? AddReport(new SaleReportDTO() { Sale = sale, TotalIncome = 0, TotalProfit = 0 });
+        }
+
+        public SaleReport UpdateSaleReport(SaleReport saleReport, SalesDTO salesDTO)
+        {
+            saleReport.TotalIncome = SalesLogic.CalculateTotalDailyReport(saleReport.TotalIncome, salesDTO.Income);
+            saleReport.TotalProfit = SalesLogic.CalculateTotalDailyReport(saleReport.TotalProfit, salesDTO.Profit);
+
+            _context.SaveChanges();
+
+            return saleReport;
         }
     }
 }
