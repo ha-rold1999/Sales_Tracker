@@ -21,16 +21,19 @@ namespace Models.Model.Items
         public string ItemName { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue)]
         [Column("stock")]
         public int Stock { get; set; }
 
         [Column("buying_price")]
         [Required]
+        [Range(1, int.MaxValue)]
         [DataType("decimal")]
         public decimal BuyingPrice { get; set; }
 
         [Column("selling_price")]
         [Required]
+        [Range(1, int.MaxValue)]
         [DataType("decimal")]
         public decimal SellingPrice { get; set; }
     }

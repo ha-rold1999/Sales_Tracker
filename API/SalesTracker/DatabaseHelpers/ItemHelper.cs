@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Models.Model.Items;
 using SalesTracker.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.DatabaseHelpers
 {
@@ -28,6 +29,8 @@ namespace SalesTracker.DatabaseHelpers
         public Item Add(ItemDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
+            isValid(item);
+
             _databaseContext.Item.Add(item);
             _databaseContext.SaveChanges();
             return item;
@@ -52,6 +55,17 @@ namespace SalesTracker.DatabaseHelpers
         private Item isExist(int id)
         {
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
+        }
+
+        private void isValid(Item item)
+        {
+            var validationResult = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(item, new ValidationContext(item), validationResult, validateAllProperties: true);
+
+            if(item.SellingPrice<=item.BuyingPrice)
+            { isValid = false; }
+
+            if (!isValid) { throw new ValidationException(); }
         }
     }
 }

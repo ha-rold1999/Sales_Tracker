@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models.Model.Items;
 using SalesTracker.DatabaseHelpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.Controllers
 {
@@ -28,9 +29,21 @@ namespace SalesTracker.Controllers
         [Route("api/[controller]/Add")]
         public IActionResult Add([FromBody] Item item)
         {
-            var itemDTO = _mapper.Map<ItemDTO>(item);
-            _database.Add(itemDTO);
-            return Ok(item);
+            try
+            {
+                var itemDTO = _mapper.Map<ItemDTO>(item);
+                _database.Add(itemDTO);
+                return Ok(item);
+            }
+            catch (ValidationException)
+            {
+                return BadRequest("Invalid Object");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpPut]
