@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "J4mTOQwtLWpQ5gDgq3Wgf4kcZ4Z73l8Ka9SXOzk7BJ4TaLHFvtjvypPsDGYehcQLin5sPKOC3aElQa/h015WkA==",
+  "dgSpecHash": "6IeTe3lqMMTjqQywFFdzrjyiL12iOor4/nAt9Qj6Lxw7xSXboZEcaQsETPjySvjhQYHy1LwSbLcILhrMn8UITA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\SalesTrackerTests\\SalesTrackerTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Full Scale\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
+    "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.codecoverage\\17.5.0\\microsoft.codecoverage.17.5.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.10\\microsoft.entityframeworkcore.7.0.10.nupkg.sha512",

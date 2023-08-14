@@ -118,3 +118,4 @@ C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Deb
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\BusinessLogic.pdb
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\CustomException.dll
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\CustomException.pdb
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Versioning.dll

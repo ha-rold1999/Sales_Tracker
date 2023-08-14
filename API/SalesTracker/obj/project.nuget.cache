@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "FsV3j7dqZLkziLNmZ29yc/IKtVGIxsPPGU0K9wVfjHrA9SEHDzyxneokGiBq/rjY7iEGO436yhgH/MfdHC7Rqg==",
+  "dgSpecHash": "r+s94O5TmlIiRIfugzRmCqbBg5/fTPXun8501JU3bP3+BU3DWgHRJcVubjuWJGUyUUUVQ0roSYQ1hkWz1aYJkA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\SalesTracker\\SalesTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Full Scale\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.10\\microsoft.entityframeworkcore.7.0.10.nupkg.sha512",
     "C:\\Users\\Full Scale\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.10\\microsoft.entityframeworkcore.abstractions.7.0.10.nupkg.sha512",

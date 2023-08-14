@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.Model.Items;
 using SalesTracker.Controllers;
@@ -28,6 +29,13 @@ builder.Services.AddScoped<SaleReportHelper>();
 builder.Services.AddScoped<ItemController>();
 builder.Services.AddScoped<SaleController>();
 
+//Versioning
+builder.Services.AddApiVersioning(config =>
+{
+    config.DefaultApiVersion = new ApiVersion(1, 0);
+    config.AssumeDefaultVersionWhenUnspecified = true;
+    config.ReportApiVersions = true; 
+});
 
 var app = builder.Build();
 

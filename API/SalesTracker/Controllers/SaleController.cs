@@ -12,6 +12,8 @@ using SalesTracker.DatabaseHelpers.DateReport;
 
 namespace SalesTracker.Controllers
 {
+    [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class SaleController : Controller
     {
         private readonly SaleHelper _saleHelper;
@@ -33,7 +35,7 @@ namespace SalesTracker.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/Add")]
+        [ApiVersion("1.0")]
         public IActionResult Add([FromBody] Sales sales) 
         {
             try
@@ -60,24 +62,24 @@ namespace SalesTracker.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetAllSales")]
+        [HttpGet("GetAllSales")]
+        [ApiVersion("1.0")]
         public IActionResult GetAllSales()
         {
             List<Sales> sales = _saleHelper.GetAll();
             return Ok(sales);
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetAllDailyReport")]
+        [HttpGet("GetAllDailyReport")]
+        [ApiVersion("1.0")]
         public IActionResult GetAllDailyReport()
         {
             List<SaleReport> saleReports = _saleReportHelper.GetAllReport();
             return Ok(saleReports);
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetCurrentDateSales")]
+        [HttpGet("GetCurrentDateSales")]
+        [ApiVersion("1.0")]
         public IActionResult GetCurrentDateSales()
         {
             List<Sales> sales = _saleHelper.GetCurrentDateSales(saleDate.Id);

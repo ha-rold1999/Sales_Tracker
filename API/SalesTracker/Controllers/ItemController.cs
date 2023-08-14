@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.Controllers
 {
+    [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ItemController : Controller, IController<Item>
     {
         private ItemHelper _database;
@@ -17,16 +19,16 @@ namespace SalesTracker.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [HttpGet("GetAll")]
+        [ApiVersion("1.0")]
         public IActionResult GetAll()
         {
             List<Item> items = _database.GetAll();
             return Ok(items);
         }
 
-        [HttpPost]
-        [Route("api/[controller]/Add")]
+        [HttpPost("Add")]
+        [ApiVersion("1.0")]
         public IActionResult Add([FromBody] Item item)
         {
             try
@@ -43,11 +45,10 @@ namespace SalesTracker.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            
         }
 
-        [HttpPut]
-        [Route("api/[controller]/Update")]
+        [HttpPut("Update")]
+        [ApiVersion("1.0")]
         public IActionResult Update([FromBody] Item item)
         {
             try
@@ -60,10 +61,11 @@ namespace SalesTracker.Controllers
             {
                 return BadRequest("Invalid item update");
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
     }
+
 }
