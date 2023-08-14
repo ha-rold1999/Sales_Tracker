@@ -131,3 +131,5 @@ C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests\ob
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests\obj\Debug\net6.0\SalesTrackerTests.pdb
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests\obj\Debug\net6.0\SalesTrackerTests.genruntimeconfig.cache
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests\obj\Debug\net6.0\ref\SalesTrackerTests.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests\bin\Debug\net6.0\CustomException.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests\bin\Debug\net6.0\CustomException.pdb

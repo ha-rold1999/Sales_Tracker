@@ -10,6 +10,7 @@
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "BusinessLogic": "1.0.0",
+          "CustomException": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "7.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.10",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.18.1",
@@ -351,6 +352,11 @@
           "BusinessLogic.dll": {}
         }
       },
+      "CustomException/1.0.0": {
+        "runtime": {
+          "CustomException.dll": {}
+        }
+      },
       "Models/1.0.0": {
         "runtime": {
           "Models.dll": {}
@@ -603,6 +609,11 @@
       "hashPath": "system.text.json.7.0.0.nupkg.sha512"
     },
     "BusinessLogic/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CustomException/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

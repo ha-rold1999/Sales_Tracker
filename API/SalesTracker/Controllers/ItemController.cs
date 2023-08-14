@@ -62,5 +62,10 @@ namespace SalesTracker.Controllers
             _database.Delete(id);
             return Ok();
         }
+
+        public static implicit operator ItemController?(Item? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

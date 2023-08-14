@@ -1041,6 +1041,16 @@
           "bin/placeholder/BusinessLogic.dll": {}
         }
       },
+      "CustomException/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CustomException.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CustomException.dll": {}
+        }
+      },
       "Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -1057,6 +1067,7 @@
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "BusinessLogic": "1.0.0",
+          "CustomException": "1.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.18.1",
           "Models": "1.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.4",
@@ -3506,6 +3517,11 @@
       "type": "project",
       "path": "../BusinessLogic/BusinessLogic.csproj",
       "msbuildProject": "../BusinessLogic/BusinessLogic.csproj"
+    },
+    "CustomException/1.0.0": {
+      "type": "project",
+      "path": "../CustomException/CustomException.csproj",
+      "msbuildProject": "../CustomException/CustomException.csproj"
     },
     "Models/1.0.0": {
       "type": "project",

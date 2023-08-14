@@ -42,7 +42,7 @@ namespace SalesTracker.Tests
         }
 
         [TestMethod]
-        public void ShouldReturnOK_AddItem() 
+        public void ShouldReturnOK_AddItem()
         {
             var result = _itemController.Add(new Item
             {
@@ -91,7 +91,7 @@ namespace SalesTracker.Tests
                 Id = 1,
                 ItemName = "item 1",
                 Stock = 50,
-                BuyingPrice =0,
+                BuyingPrice = 0,
                 SellingPrice = 10.00m
             });
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogic.Sales;
+using CustomException;
 using Microsoft.EntityFrameworkCore;
 using Models.Model.Sale;
 using Models.Model.Sale.Sales;
@@ -21,13 +22,16 @@ namespace SalesTracker.DatabaseHelpers
 
         public Sales Add(SalesDTO DTO)
         {
-            DTO.Profit = SalesLogic.CalculateProfit(DTO.Item.SellingPrice, DTO.Quantity);
-            DTO.Income = SalesLogic.CalculateIncome(DTO.Item.BuyingPrice, DTO.Quantity, DTO.Profit);
-            DTO.Item.Stock = InventoryLogic.SubtractInventory(DTO.Item.Stock, DTO.Quantity);
+            if (isValid(DTO))
+            {
+                DTO.Profit = SalesLogic.CalculateProfit(DTO.Item.SellingPrice, DTO.Quantity);
+                DTO.Income = SalesLogic.CalculateIncome(DTO.Item.BuyingPrice, DTO.Quantity, DTO.Profit);
+                DTO.Item.Stock = InventoryLogic.SubtractInventory(DTO.Item.Stock, DTO.Quantity);
+            }
 
             var sales = _mapper.Map<Sales>(DTO);
             var item = sales.Item;
-            _context.Attach(item);
+
             _context.Entry(item).State = EntityState.Modified;
             _context.Sales.Add(sales);
             
@@ -64,6 +68,19 @@ namespace SalesTracker.DatabaseHelpers
         private Sales isExist(int id)
         {
             return _context.Sales.Find(id) ?? throw new NullReferenceException();
+        }
+
+        private bool isValid(SalesDTO dto)
+        {
+            bool isValid = dto.Quantity > 0;
+
+            if (!isValid) { throw new SalesQuantityException(); }
+
+            isValid = dto.Item.Stock >= dto.Quantity;
+
+            if(!isValid) { throw new SalesQuantityException(); }
+
+            return isValid;
         }
 
         public void Dispose()

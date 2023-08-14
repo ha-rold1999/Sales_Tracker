@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using CustomException;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Models.Model.Items;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
 using Models.Model.Sale.Sales;
@@ -11,7 +14,6 @@ namespace SalesTracker.Controllers
 {
     public class SaleController : Controller
     {
-        private readonly ItemHelper _itemHelper;
         private readonly SaleHelper _saleHelper;
         private readonly SaleDateHelper _saleDateHelper;
         private readonly SaleReportHelper _saleReportHelper;
@@ -19,9 +21,8 @@ namespace SalesTracker.Controllers
         private readonly Sale saleDate;
         private readonly SaleReport saleReport;
 
-        public SaleController(ItemHelper itemHelper, SaleHelper saleHelper, SaleDateHelper saleDateHelper, SaleReportHelper saleReportHelper, IMapper mapper)
+        public SaleController(SaleHelper saleHelper, SaleDateHelper saleDateHelper, SaleReportHelper saleReportHelper, IMapper mapper)
         {
-            _itemHelper = itemHelper;
             _saleHelper = saleHelper;
             _saleDateHelper = saleDateHelper;
             _saleReportHelper = saleReportHelper;
@@ -35,13 +36,28 @@ namespace SalesTracker.Controllers
         [Route("api/[controller]/Add")]
         public IActionResult Add([FromBody] Sales sales) 
         {
-            sales.Sale = saleDate;
+            try
+            {
+                sales.Sale = saleDate;
 
-            var salesDTO = _mapper.Map<SalesDTO>(sales);
+                var salesDTO = _mapper.Map<SalesDTO>(sales);
 
-            _saleHelper.Add(salesDTO);
-            _saleReportHelper.UpdateSaleReport(saleReport, salesDTO);
-            return Ok();
+                _saleHelper.Add(salesDTO);
+                _saleReportHelper.UpdateSaleReport(saleReport, salesDTO);
+                return Ok(sales);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest($"Item does not exist {sales.Item}");
+            }
+            catch (SalesQuantityException)
+            {
+                return BadRequest("");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
@@ -61,7 +77,7 @@ namespace SalesTracker.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller].GetCurrentDateSales")]
+        [Route("api/[controller]/GetCurrentDateSales")]
         public IActionResult GetCurrentDateSales()
         {
             List<Sales> sales = _saleHelper.GetCurrentDateSales(saleDate.Id);

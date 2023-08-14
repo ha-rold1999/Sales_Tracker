@@ -116,3 +116,5 @@ C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\obj\Deb
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\obj\Debug\net6.0\ref\SalesTracker.dll
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\BusinessLogic.dll
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\BusinessLogic.pdb
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\CustomException.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\CustomException.pdb
