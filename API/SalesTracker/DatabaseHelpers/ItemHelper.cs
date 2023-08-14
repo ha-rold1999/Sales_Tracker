@@ -39,6 +39,7 @@ namespace SalesTracker.DatabaseHelpers
         {
             var item = isExist(itemDTO.Id);
             _mapper.Map(itemDTO, item);
+            isValid(item);
 
             _databaseContext.SaveChanges();
             return item;

@@ -50,22 +50,20 @@ namespace SalesTracker.Controllers
         [Route("api/[controller]/Update")]
         public IActionResult Update([FromBody] Item item)
         {
-            var itemDTO = _mapper.Map<ItemDTO>(item);
-            _database.Update(itemDTO);
-            return Ok(item);
-        }
-
-        [HttpDelete]
-        [Route("api/[controller]/Delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            _database.Delete(id);
-            return Ok();
-        }
-
-        public static implicit operator ItemController?(Item? v)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                var itemDTO = _mapper.Map<ItemDTO>(item);
+                _database.Update(itemDTO);
+                return Ok(item);
+            }
+            catch (ValidationException)
+            {
+                return BadRequest("Invalid item update");
+            }
+            catch(Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

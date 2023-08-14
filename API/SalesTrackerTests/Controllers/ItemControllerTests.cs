@@ -6,6 +6,7 @@ using Models.Model.Items;
 using SalesTracker.Controllers;
 using SalesTracker.DatabaseHelpers;
 using SalesTracker.EntityFramework;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SalesTracker.Tests
 {
@@ -46,7 +47,7 @@ namespace SalesTracker.Tests
         {
             var result = _itemController.Add(new Item
             {
-                Id = 1,
+                Id = 2,
                 ItemName = "item 1",
                 Stock = 50,
                 BuyingPrice = 9.00m,
@@ -107,7 +108,7 @@ namespace SalesTracker.Tests
                 ItemName = "item 1",
                 Stock = 0,
                 BuyingPrice = 9.00m,
-                SellingPrice = 10.00m
+                SellingPrice = 0m
             });
 
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
@@ -123,6 +124,127 @@ namespace SalesTracker.Tests
                 Stock = 0,
                 BuyingPrice = 9.00m,
                 SellingPrice = 8.00m
+            });
+
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void ShouldReturnStock60_UpdateItem()
+        {
+            _itemController.Add(new Item
+            {
+                Id = 3,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            });
+
+            var result = _itemController.Update(new Item
+            {
+                Id = 3,
+                ItemName = "item 1",
+                Stock = 60,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            }) as OkObjectResult;
+
+            var updatedItem = result?.Value as Item;
+
+            Assert.AreEqual(60, updatedItem.Stock);
+        }
+
+        [TestMethod]
+        public void ShouldReturnBadRequest_InvalidStock_Update()
+        {
+            _itemController.Add(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            });
+
+            var result = _itemController.Update(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 0,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            });
+
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void ShouldReturnBadRequest_SellingPriceLessThanBuyingPrice_Update()
+        {
+            _itemController.Add(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            });
+
+            var result = _itemController.Update(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 8.00m
+            });
+
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+
+        [TestMethod]
+        public void ShouldReturnBadRequest_InvalidSellingPrice_Update()
+        {
+            _itemController.Add(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            });
+
+            var result = _itemController.Update(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 0
+            });
+
+            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
+        }
+        [TestMethod]
+        public void ShouldReturnBadRequest_InvalidBuyingPrice_Update()
+        {
+            _itemController.Add(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 9.00m,
+                SellingPrice = 10.00m
+            });
+
+            var result = _itemController.Update(new Item
+            {
+                Id = 1,
+                ItemName = "item 1",
+                Stock = 50,
+                BuyingPrice = 0,
+                SellingPrice = 10.00m
             });
 
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
