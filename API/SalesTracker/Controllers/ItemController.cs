@@ -12,11 +12,13 @@ namespace SalesTracker.Controllers
     {
         private ItemHelper _database;
         private IMapper _mapper;
-
-        public ItemController(ItemHelper database, IMapper mapper)
+        private IConfiguration _configuration;
+        
+        public ItemController(ItemHelper database, IMapper mapper, IConfiguration configuration)
         {
             _database = database;
             _mapper = mapper;
+            _configuration = configuration.GetSection("ApiFeatures:ItemConfiguration");
         }
 
         [HttpGet("GetAll")]
@@ -31,6 +33,11 @@ namespace SalesTracker.Controllers
         [ApiVersion("1.0")]
         public IActionResult Add([FromBody] Item item)
         {
+            if(_configuration.GetValue<bool>("IsAddItemDisabled"))
+            {
+                return StatusCode(500, "Adding new Item Under Construction");
+            }
+
             try
             {
                 var itemDTO = _mapper.Map<ItemDTO>(item);
