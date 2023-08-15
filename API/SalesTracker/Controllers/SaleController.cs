@@ -24,7 +24,7 @@ namespace SalesTracker.Controllers
         private readonly SaleReport saleReport;
         private readonly SalesConfiguration _salesConfiguration;
 
-        public SaleController(SaleHelper saleHelper, SaleDateHelper saleDateHelper, SaleReportHelper saleReportHelper, IMapper mapper, IOptions<SalesConfiguration> configuration)
+        public SaleController(SaleHelper saleHelper, SaleDateHelper saleDateHelper, SaleReportHelper saleReportHelper, IMapper mapper, IOptionsSnapshot<SalesConfiguration> configuration)
         {
             _saleHelper = saleHelper;
             _saleDateHelper = saleDateHelper;
