@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.Model.Items;
+using Models.Model.Sale;
+using Models.Model.Sale.Reports;
+using Models.Model.Sale.Sales;
+using SalesTracker.Configuration.Items;
 using SalesTracker.Configuration.Sales;
 using SalesTracker.Controllers;
 using SalesTracker.DatabaseHelpers;
@@ -21,17 +25,16 @@ builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configur
 //Set Auto mapper
 builder.Services.AddAutoMapper(typeof(Program));
 //Dependency Injection
-builder.Services.AddScoped<ItemHelper>();
-
-builder.Services.AddScoped<SaleHelper>();
-builder.Services.AddScoped<SaleDateHelper>();
-builder.Services.AddScoped<SaleReportHelper>();
-
-builder.Services.AddScoped<ItemController>();
-builder.Services.AddScoped<SaleController>();
+builder.Services.AddScoped<IDBHelper<ItemDTO, Item>, ItemHelper>();
+builder.Services.AddScoped<IDBHelper<SalesDTO, Sales>, SaleHelper>();
+builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
+builder.Services.AddScoped<ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>, SaleReportHelper>();
+builder.Services.AddScoped<IController<Item>, ItemController>();
+builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
 
 //Configuration Binding
 builder.Services.Configure<SalesConfiguration>(builder.Configuration.GetSection("ApiFeatures:SalesConfiguration"));
+builder.Services.Configure<ItemsConfiguration>(builder.Configuration.GetSection("ApiFeatures:ItemConfiguration"));
 
 //Versioning
 builder.Services.AddApiVersioning(config =>

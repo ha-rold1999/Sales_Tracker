@@ -8,7 +8,7 @@ using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers.DailyReport
 {
-    public class SaleReportHelper
+    public class SaleReportHelper : ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>
     {
         private readonly DatabaseContext _context;
         private readonly IMapper _mapper;

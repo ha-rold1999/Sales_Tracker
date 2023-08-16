@@ -11,6 +11,12 @@ using SalesTracker.DatabaseHelpers;
 using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.DatabaseHelpers.DailyReport;
 using Microsoft.AspNetCore.Mvc;
+using SalesTracker.Configuration.Sales;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Moq;
+using Microsoft.Extensions.Options;
+using SalesTracker.Configuration.Items;
 
 namespace SalesTracker.Tests
 {
@@ -19,10 +25,10 @@ namespace SalesTracker.Tests
     {
         private DatabaseContext _dbContext;
         private DatabaseContext _dbContextSale;
-        private ItemHelper _itemHelper;
-        private SaleHelper _saleHelper;
-        private SaleDateHelper _saleDateHelper;
-        private SaleReportHelper _saleReportHelper;
+        private IDBHelper<ItemDTO, Item> _itemHelper;
+        private IDBHelper<SalesDTO, Sales> _saleHelper;
+        private IDateHelper<SaleDTO> _saleDateHelper;
+        private ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO> _saleReportHelper;
         private ItemController _itemController;
         private SaleController _saleController;
         private Item? _item;
@@ -51,7 +57,11 @@ namespace SalesTracker.Tests
             _saleDateHelper = new SaleDateHelper(_dbContextSale, mapper);
             _saleReportHelper = new SaleReportHelper(_dbContextSale, mapper);
 
-            _itemController = new ItemController(_itemHelper, mapper);
+            var optionsSnapshotMock = new Mock<IOptionsSnapshot<ItemsConfiguration>>();
+            optionsSnapshotMock.Setup(s => s.Value)
+                .Returns(new ItemsConfiguration { IsAddItemDisabled = false });
+
+            _itemController = new ItemController(_itemHelper, mapper, optionsSnapshotMock.Object);
             var addItemResponse = _itemController.Add(new Item
             {
                 Id = 1,
@@ -61,7 +71,12 @@ namespace SalesTracker.Tests
                 SellingPrice = 10.00m
             });
 
-            _saleController = new SaleController(_saleHelper, _saleDateHelper, _saleReportHelper, mapper);
+            var salesOptionsSnapshotMock = new Mock<IOptionsSnapshot<SalesConfiguration>>();
+            salesOptionsSnapshotMock.Setup(s => s.Value)
+                .Returns(new SalesConfiguration { IsAddSalesDisabled = false });
+           
+
+            _saleController = new SaleController(_saleHelper, _saleDateHelper, _saleReportHelper, mapper, salesOptionsSnapshotMock.Object);
         }
 
         [TestMethod]

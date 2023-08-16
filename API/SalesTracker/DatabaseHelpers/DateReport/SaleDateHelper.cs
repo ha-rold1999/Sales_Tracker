@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Models.Model.Sale;
+using Models.Model.Sale.Sales;
 using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers.DateReport
@@ -38,6 +40,10 @@ namespace SalesTracker.DatabaseHelpers.DateReport
                 { Date = DateTime.Today.ToUniversalTime() });
 
             return todayReport;
+        }
+        public List<Sales> GetCurrentDateSales(int id)
+        {
+            return _context.Sales.Where(sale => sale.Sale.Id == id).Include(sale => sale.Item).ToList();
         }
 
         public void Dispose()

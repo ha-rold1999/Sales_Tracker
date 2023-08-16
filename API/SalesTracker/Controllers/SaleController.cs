@@ -14,17 +14,22 @@ using SalesTracker.DatabaseHelpers.DateReport;
 
 namespace SalesTracker.Controllers
 {
-    public class SaleController : Controller
+    public class SaleController : Controller, ISaleController<Sales>
     {
-        private readonly SaleHelper _saleHelper;
-        private readonly SaleDateHelper _saleDateHelper;
-        private readonly SaleReportHelper _saleReportHelper;
+        private readonly IDBHelper<SalesDTO, Sales> _saleHelper;
+        private readonly IDateHelper<SaleDTO> _saleDateHelper;
+        private readonly ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO> _saleReportHelper;
         private readonly IMapper _mapper;
         private readonly Sale saleDate;
         private readonly SaleReport saleReport;
         private readonly SalesConfiguration _salesConfiguration;
 
-        public SaleController(SaleHelper saleHelper, SaleDateHelper saleDateHelper, SaleReportHelper saleReportHelper, IMapper mapper, IOptionsSnapshot<SalesConfiguration> configuration)
+        //Running Constructor
+        public SaleController(IDBHelper<SalesDTO,Sales> saleHelper,
+            IDateHelper<SaleDTO> saleDateHelper,
+            ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO> saleReportHelper,
+            IMapper mapper, 
+            IOptionsSnapshot<SalesConfiguration> configuration)
         {
             _saleHelper = saleHelper;
             _saleDateHelper = saleDateHelper;
@@ -37,12 +42,13 @@ namespace SalesTracker.Controllers
             _salesConfiguration = configuration.Value;
         }
 
+
         [HttpPost]
         [Route("api/[controller]/Add")]
-        public IActionResult Add([FromBody] Sales sales) 
+        public IActionResult Add([FromBody] Sales sales)
         {
-            if(_salesConfiguration.IsAddSalesDisabled)
-            {return StatusCode(500, "Adding new feature under construction");}
+            if (_salesConfiguration.IsAddSalesDisabled)
+            { return StatusCode(500, "Adding new feature under construction"); }
 
             try
             {
@@ -88,7 +94,7 @@ namespace SalesTracker.Controllers
         [Route("api/[controller]/GetCurrentDateSales")]
         public IActionResult GetCurrentDateSales()
         {
-            List<Sales> sales = _saleHelper.GetCurrentDateSales(saleDate.Id);
+            List<Sales> sales = _saleDateHelper.GetCurrentDateSales(saleDate.Id);
             return Ok(sales);
         }
     }

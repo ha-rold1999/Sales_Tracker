@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Models.Model.Items;
+using SalesTracker.Configuration.Items;
 using SalesTracker.DatabaseHelpers;
 using System.ComponentModel.DataAnnotations;
 
@@ -10,15 +12,16 @@ namespace SalesTracker.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ItemController : Controller, IController<Item>
     {
-        private ItemHelper _database;
+        private IDBHelper<ItemDTO, Item> _database;
         private IMapper _mapper;
-        private IConfiguration _configuration;
-        
-        public ItemController(ItemHelper database, IMapper mapper, IConfiguration configuration)
+        private ItemsConfiguration _configuration;
+
+        //Running constructor
+        public ItemController(IDBHelper<ItemDTO, Item> database, IMapper mapper, IOptionsSnapshot<ItemsConfiguration> configuration)
         {
             _database = database;
             _mapper = mapper;
-            _configuration = configuration.GetSection("ApiFeatures:ItemConfiguration");
+            _configuration = configuration.Value;
         }
 
         [HttpGet("GetAll")]
@@ -33,7 +36,7 @@ namespace SalesTracker.Controllers
         [ApiVersion("1.0")]
         public IActionResult Add([FromBody] Item item)
         {
-            if(_configuration.GetValue<bool>("IsAddItemDisabled"))
+            if(_configuration.IsAddItemDisabled)
             {
                 return StatusCode(500, "Adding new Item Under Construction");
             }

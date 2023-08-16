@@ -51,11 +51,6 @@ namespace SalesTracker.DatabaseHelpers
             return _context.Sales.Include(s => s.Item).Include(s => s.Sale).ToList();
         }
 
-        public List<Sales> GetCurrentDateSales(int id)
-        {
-            return _context.Sales.Where(sale => sale.Sale.Id == id).Include(sale => sale.Item).ToList();
-        }
-
         public Sales Update(SalesDTO DTO)
         {
             var sales = isExist(DTO.Id);

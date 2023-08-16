@@ -17,6 +17,7 @@ export default function Sales() {
             <input
               className="w-24 text-3xl font-semibold px-2 rounded-lg"
               type="number"
+              placeholder="0"
             />
           </div>
           <div className="flex justify-center mt-5">

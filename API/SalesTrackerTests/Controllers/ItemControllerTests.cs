@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models.Model.Items;
+using Moq;
+using SalesTracker.Configuration.Items;
 using SalesTracker.Controllers;
 using SalesTracker.DatabaseHelpers;
 using SalesTracker.EntityFramework;
@@ -31,8 +34,12 @@ namespace SalesTracker.Tests
                 cfg.CreateMap<ItemDTO, Item>().ReverseMap();
             }).CreateMapper();
 
+            var optionsSnapshotMock = new Mock<IOptionsSnapshot<ItemsConfiguration>>();
+            optionsSnapshotMock.Setup(s => s.Value)
+                .Returns(new ItemsConfiguration { IsAddItemDisabled = false });
+
             _itemHelper = new ItemHelper(_dbContext, config);
-            _itemController = new ItemController(_itemHelper, config);
+            _itemController = new ItemController(_itemHelper,config, optionsSnapshotMock.Object);
         }
 
         [TestMethod]
