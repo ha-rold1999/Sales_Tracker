@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
+import { UpdateItemAPI } from "../../Utility/APICalls";
 
 export default function Item() {
   const location = useLocation();
@@ -27,6 +28,10 @@ export default function Item() {
       setIsItemTheSame(true);
     }
   }, [stock, buyingPrice, sellingPrice]);
+
+  const handleUpdateItem = () => {
+    UpdateItemAPI({ data, stock, buyingPrice, sellingPrice });
+  };
 
   return (
     <div className="flex flex-1 w-full h-full justify-center items-center">
@@ -56,9 +61,7 @@ export default function Item() {
             className={`py-2 px-1 w-1/2 border-2 border-black rounded-lg text-2xl font-bold ${
               isItemTheSame ? "bg-gray-400 cursor-not-allowed" : "bg-orange-500"
             }`}
-            onClick={() => {
-              console.log("cliked");
-            }}
+            onClick={handleUpdateItem}
             disabled={isItemTheSame}>
             Save Changes
           </button>

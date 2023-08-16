@@ -8,8 +8,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.Controllers
 {
-    [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
     public class ItemController : Controller, IController<Item>
     {
         private IDBHelper<ItemDTO, Item> _database;
@@ -24,16 +22,16 @@ namespace SalesTracker.Controllers
             _configuration = configuration.Value;
         }
 
-        [HttpGet("GetAll")]
-        [ApiVersion("1.0")]
+        [HttpGet]
+        [Route("api/[controller]/GetAll")]
         public IActionResult GetAll()
         {
             List<Item> items = _database.GetAll();
             return Ok(items);
         }
 
-        [HttpPost("Add")]
-        [ApiVersion("1.0")]
+        [HttpPost]
+        [Route("api/[controller]/Add")]
         public IActionResult Add([FromBody] Item item)
         {
             if(_configuration.IsAddItemDisabled)
@@ -57,8 +55,8 @@ namespace SalesTracker.Controllers
             }
         }
 
-        [HttpPut("Update")]
-        [ApiVersion("1.0")]
+        [HttpPut]
+        [Route("api/[controller]/Update")]
         public IActionResult Update([FromBody] Item item)
         {
             try

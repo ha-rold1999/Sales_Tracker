@@ -3,6 +3,7 @@ import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
 import { useState } from "react";
+import { AddItemCall } from "../../Utility/APICalls";
 
 export default function AddItem() {
   const [itemName, setItemName] = useState("");
@@ -10,6 +11,10 @@ export default function AddItem() {
   const [newStock, setNewStock] = useState(0);
   const [buyingPrice, setBuyingPrice] = useState(0);
   const [sellingPrice, setSellingPrice] = useState(0);
+
+  const handleAddItem = () => {
+    AddItemCall({ itemName, stock, buyingPrice, sellingPrice });
+  };
   return (
     <div className="flex w-full h-full justify-center items-center">
       <div className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg">
@@ -43,7 +48,9 @@ export default function AddItem() {
           setSellingPrice={setSellingPrice}
         />
         <div className="w-full flex justify-center mt-5">
-          <button className="py-2 px-1 w-1/2 border-2 border-black rounded-lg text-2xl font-bold bg-orange-500 ">
+          <button
+            className="py-2 px-1 w-1/2 border-2 border-black rounded-lg text-2xl font-bold bg-orange-500"
+            onClick={handleAddItem}>
             Add Item
           </button>
         </div>

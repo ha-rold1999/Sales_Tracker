@@ -1,65 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../Style/style.css";
+import { useState, useEffect } from "react";
+import { GetItems } from "../../Utility/APICalls";
 
 export default function Items() {
-  const items = [
-    { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 2, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 3, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 4, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 5, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 6, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 7, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 8, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 9, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 2, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 3, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 4, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 5, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 6, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 7, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 8, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 9, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 2, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 3, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 4, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 5, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 6, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 7, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 8, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 9, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    {
-      id: 10,
-      itemName: "Tanduay",
-      stock: 50,
-      buyingPrice: 9,
-      sellingPrice: 10,
-    },
-    {
-      id: 11,
-      itemName: "Tanduay",
-      stock: 50,
-      buyingPrice: 9,
-      sellingPrice: 10,
-    },
-    {
-      id: 12,
-      itemName: "Tanduay",
-      stock: 50,
-      buyingPrice: 9,
-      sellingPrice: 10,
-    },
-    {
-      id: 13,
-      itemName: "Tanduay",
-      stock: 50,
-      buyingPrice: 9,
-      sellingPrice: 10,
-    },
-  ];
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    GetItems({ setItems });
+  }, []);
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">

@@ -6,37 +6,14 @@ import Sold from "./Form/Sold";
 import Total from "./Total";
 import SoldItems from "./Sold";
 import Stock from "./Stock";
+import { GetItems } from "../../Utility/APICalls";
 
 export default function Sales() {
-  const items = [
-    { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    {
-      id: 2,
-      itemName: "C2",
-      stock: 50,
-      buyingPrice: 9.11,
-      sellingPrice: 10.25,
-    },
-    { id: 3, itemName: "Colt", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    {
-      id: 4,
-      itemName: "Red Horse",
-      stock: 50,
-      buyingPrice: 9,
-      sellingPrice: 10,
-    },
-    { id: 5, itemName: "Kulafu", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 6, itemName: "Coke", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 7, itemName: "Pepsi", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    { id: 8, itemName: "Royal", stock: 50, buyingPrice: 9, sellingPrice: 10 },
-    {
-      id: 9,
-      itemName: "Small Mountain Dew",
-      stock: 50,
-      buyingPrice: 9,
-      sellingPrice: 10,
-    },
-  ];
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    GetItems({ setItems });
+  }, []);
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
