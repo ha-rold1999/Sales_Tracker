@@ -1,4 +1,5 @@
 import React from "react";
+import "../../Style/style.css";
 
 export default function Sales() {
   return (
@@ -40,7 +41,7 @@ export default function Sales() {
           </div>
         </div>
       </div>
-      <div className="h-full w-3/5 bg-white px-10 py-5 space-y-1 rounded-3xl">
+      <div className="h-full w-3/5 bg-white px-10 py-5 space-y-1 rounded-bl-3xl rounded-tl-3xl border-4 border-black overflow-y-auto hide-scrollbar">
         <div className="text-2xl font-bold">Sales</div>
         <div className="flex flex-col-4 w-full mb-10">
           <div className="w-1/4  flex  text-lg font-bold">Item</div>
@@ -67,6 +68,120 @@ export default function Sales() {
           <div className="w-1/4 flex text-lg">10.00</div>
         </div>
 
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
+        <div className="flex flex-col-4 w-full ">
+          <div className="w-1/4  flex text-lg">Item</div>
+          <div className="w-1/4 flex text-lg">30</div>
+          <div className="w-1/4  flex text-lg">10.00</div>
+          <div className="w-1/4 flex text-lg">10.00</div>
+        </div>
         <div className="flex flex-col-4 w-full ">
           <div className="w-1/4  flex text-lg">Item</div>
           <div className="w-1/4 flex text-lg">30</div>

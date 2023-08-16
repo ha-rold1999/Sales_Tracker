@@ -1,8 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../Style/style.css";
 
 export default function Items() {
   const items = [
+    { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 2, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 3, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 4, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 5, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 6, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 7, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 8, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 9, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 2, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 3, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 4, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 5, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 6, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 7, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 8, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
+    { id: 9, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
     { id: 1, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
     { id: 2, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
     { id: 3, itemName: "Tanduay", stock: 50, buyingPrice: 9, sellingPrice: 10 },
@@ -43,7 +62,7 @@ export default function Items() {
   ];
 
   return (
-    <div className="p-5 space-y-5">
+    <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
       <div className="flex flex-row items-center space-x-5  p-3">
         <div className="text-5xl font-bold text-yellow-300">Items</div>
         <Link
@@ -53,20 +72,22 @@ export default function Items() {
         </Link>
       </div>
 
-      <div className="grid gap-2 grid-cols-3 ">
-        {items.map((item, index) => {
-          return (
-            <Link
-              to="/inventory/item"
-              state={item}
-              key={index}
-              className={`flex justify-center h-20 items-center rounded-lg ${
-                item.stock < 10 ? "bg-red-500" : "bg-white"
-              }`}>
-              <div className="text-xl font-bold">{item.itemName}</div>
-            </Link>
-          );
-        })}
+      <div className="h-full overflow-y-auto hide-scrollbar">
+        <div className="grid gap-2 grid-cols-3 ">
+          {items.map((item, index) => {
+            return (
+              <Link
+                to="/inventory/item"
+                state={item}
+                key={index}
+                className={`flex justify-center h-20 items-center rounded-lg ${
+                  item.stock < 10 ? "bg-red-500" : "bg-white"
+                }`}>
+                <div className="text-xl font-bold">{item.itemName}</div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
