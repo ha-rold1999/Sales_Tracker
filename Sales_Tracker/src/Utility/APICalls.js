@@ -64,18 +64,10 @@ export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {
     });
 }
 
-export function GetCurrentDateSalesReport({ setProfit, setIncome }) {
-  fetch(`${SOURCE}/api/Sale/GetCurrentDateSalesReport`, {
+export function GetCurrentDateSalesReport() {
+  return fetch(`${SOURCE}/api/Sale/GetCurrentDateSalesReport`, {
     method: "GET",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setProfit(data.totalProfit);
-      setIncome(data.totalIncome);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  }).then((res) => res.json());
 }
 
 export function AddSales({ sales }) {
