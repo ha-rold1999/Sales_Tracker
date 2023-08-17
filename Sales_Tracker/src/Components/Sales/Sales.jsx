@@ -22,7 +22,9 @@ export default function Sales() {
   const [totalProfit, setTootalProfit] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
 
-  useEffect(() => {}, [sales]);
+  useEffect(() => {
+    console.log(sales);
+  }, [sales]);
   useEffect(() => {}, [selectedItem]);
 
   const handelSelectChange = (e) => {
@@ -47,6 +49,28 @@ export default function Sales() {
     setSold([...sold, itemSold]);
   };
 
+  const handleSaveAllSales = () => {
+    sales.map((sale) => {
+      console.log(sale.item);
+      console.log(sale.quantity);
+      fetch("https://localhost:7114/api/Sale/Add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          item: sale.item,
+          quantity: sale.quantity,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  };
+
   return (
     <div className="flex flex-col-2 h-full">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
@@ -69,7 +93,9 @@ export default function Sales() {
             </button>
           </div>
           <div className="flex justify-center mt-10">
-            <button className="bg-orange-500 w-full py-5 text-xl font-bold border-2 border-black rounded-lg">
+            <button
+              className="bg-orange-500 w-full py-5 text-xl font-bold border-2 border-black rounded-lg"
+              onClick={handleSaveAllSales}>
               Save All Sales
             </button>
           </div>
