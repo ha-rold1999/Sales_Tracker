@@ -10,6 +10,7 @@ namespace SalesTracker.DatabaseHelpers.DateReport
     {
         private readonly DatabaseContext _context;
         private readonly IMapper _mapper;
+        private bool _disposed = false;
 
         public SaleDateHelper(DatabaseContext context, IMapper mapper)
         {
@@ -31,7 +32,6 @@ namespace SalesTracker.DatabaseHelpers.DateReport
             _context.SaveChanges();
             return sale;
         }
-
         public Sale GetLastReport()
         {
             
@@ -45,10 +45,20 @@ namespace SalesTracker.DatabaseHelpers.DateReport
         {
             return _context.Sales.Where(sale => sale.Sale.Id == id).Include(sale => sale.Item).ToList();
         }
-
         public void Dispose()
         {
-            GC.Collect();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!_disposed)
+            {
+                if(disposing) { _context.Dispose(); }
+                _disposed = true; 
+            }
+        }
+        ~SaleDateHelper()
+        { Dispose(false); }
     }
 }

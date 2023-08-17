@@ -5,27 +5,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class ItemHelper : IDBHelper<ItemDTO, Item>
+    public class ItemHelper : IDBHelper<ItemDTO, Item>, IDisposable
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private bool _disposed = false;
 
         public ItemHelper(DatabaseContext databaseContext, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
         }
-
         public List<Item> GetAll()
         {
             return _databaseContext.Item.ToList();
         }
-
         public Item Get(int id) 
         {
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
         }
-
         public Item Add(ItemDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
@@ -44,7 +42,6 @@ namespace SalesTracker.DatabaseHelpers
             _databaseContext.SaveChanges();
             return item;
         }
-
         public Item Delete(int id)
         {
             var item = isExist(id);
@@ -52,12 +49,10 @@ namespace SalesTracker.DatabaseHelpers
             _databaseContext.SaveChanges();
             return item;
         }
-
         private Item isExist(int id)
         {
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
         }
-
         private void isValid(Item item)
         {
             var validationResult = new List<ValidationResult>();
@@ -68,5 +63,20 @@ namespace SalesTracker.DatabaseHelpers
 
             if (!isValid) { throw new ValidationException(); }
         }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing) { _databaseContext.Dispose(); }
+                _disposed = true;
+            }
+        }
+        ~ItemHelper()
+        { Dispose(false); }
     }
 }

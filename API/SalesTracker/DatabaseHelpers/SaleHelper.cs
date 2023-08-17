@@ -13,13 +13,13 @@ namespace SalesTracker.DatabaseHelpers
     {
         private readonly DatabaseContext _context;
         private readonly IMapper _mapper;
+        private bool _disposed = false;
 
         public SaleHelper(DatabaseContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
-
         public Sales Add(SalesDTO DTO)
         {
             if (isValid(DTO))
@@ -37,7 +37,6 @@ namespace SalesTracker.DatabaseHelpers
             
             return sales;
         }
-
         public Sales Delete(int id)
         {
             var sales = isExist(id);
@@ -45,12 +44,10 @@ namespace SalesTracker.DatabaseHelpers
             _context.SaveChanges();
             return sales;
         }
-
         public List<Sales> GetAll()
         {
             return _context.Sales.Include(s => s.Item).Include(s => s.Sale).ToList();
         }
-
         public Sales Update(SalesDTO DTO)
         {
             var sales = isExist(DTO.Id);
@@ -59,12 +56,10 @@ namespace SalesTracker.DatabaseHelpers
             _context.SaveChanges();
             return sales;
         }
-
         private Sales isExist(int id)
         {
             return _context.Sales.Find(id) ?? throw new NullReferenceException();
         }
-
         private bool isValid(SalesDTO dto)
         {
             bool isValid = dto.Quantity > 0;
@@ -77,10 +72,20 @@ namespace SalesTracker.DatabaseHelpers
 
             return isValid;
         }
-
         public void Dispose()
         {
-            GC.Collect();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if(disposing) { _context.Dispose(); }
+                _disposed = true;
+            }
+        }
+        ~SaleHelper()
+        { Dispose(false); }
     }
 }
