@@ -11,6 +11,8 @@ using SalesTracker.DatabaseHelpers;
 using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.EntityFramework;
+using Serilog;
+using Serilog.Formatting.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +47,15 @@ builder.Services.AddApiVersioning(config =>
     config.AssumeDefaultVersionWhenUnspecified = true;
     config.ReportApiVersions = true;
 });
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .WriteTo.File(new JsonFormatter(), @"C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\log\log.json")
+    .WriteTo.Seq("http://localhost:5341")
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
 

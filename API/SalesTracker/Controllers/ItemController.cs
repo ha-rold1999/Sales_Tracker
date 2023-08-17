@@ -13,13 +13,15 @@ namespace SalesTracker.Controllers
         private IDBHelper<ItemDTO, Item> _database;
         private IMapper _mapper;
         private ItemsConfiguration _configuration;
+        private ILogger<ItemController> _logger;
 
         //Running constructor
-        public ItemController(IDBHelper<ItemDTO, Item> database, IMapper mapper, IOptionsSnapshot<ItemsConfiguration> configuration)
+        public ItemController(IDBHelper<ItemDTO, Item> database, IMapper mapper, IOptionsSnapshot<ItemsConfiguration> configuration, ILogger<ItemController> logger)
         {
             _database = database;
             _mapper = mapper;
             _configuration = configuration.Value;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -27,8 +29,16 @@ namespace SalesTracker.Controllers
         [ApiVersion("1.0")]
         public IActionResult GetAll()
         {
-            List<Item> items = _database.GetAll();
-            return Ok(items);
+            try
+            {
+                List<Item> items = _database.GetAll();
+                return Ok(items);
+            }
+            catch(Exception ex) 
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -40,7 +50,6 @@ namespace SalesTracker.Controllers
             {
                 return StatusCode(500, "Adding new Item Under Construction");
             }
-
             try
             {
                 var itemDTO = _mapper.Map<ItemDTO>(item);
@@ -53,6 +62,7 @@ namespace SalesTracker.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -74,6 +84,7 @@ namespace SalesTracker.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }

@@ -3,7 +3,6 @@ using CustomException;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Models.Model.Items;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
 using Models.Model.Sale.Sales;
@@ -23,13 +22,15 @@ namespace SalesTracker.Controllers
         private readonly Sale saleDate;
         private readonly SaleReport saleReport;
         private readonly SalesConfiguration _salesConfiguration;
+        private readonly ILogger<SaleController> _logger;
 
         //Running Constructor
-        public SaleController(IDBHelper<SalesDTO,Sales> saleHelper,
+        public SaleController(IDBHelper<SalesDTO, Sales> saleHelper,
             IDateHelper<SaleDTO> saleDateHelper,
             ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO> saleReportHelper,
-            IMapper mapper, 
-            IOptionsSnapshot<SalesConfiguration> configuration)
+            IMapper mapper,
+            IOptionsSnapshot<SalesConfiguration> configuration,
+            ILogger<SaleController> logger)
         {
             _saleHelper = saleHelper;
             _saleDateHelper = saleDateHelper;
@@ -40,6 +41,8 @@ namespace SalesTracker.Controllers
             saleReport = _saleReportHelper.GetLastReport(saleDate);
 
             _salesConfiguration = configuration.Value;
+
+            _logger = logger;
         }
 
 
@@ -70,6 +73,7 @@ namespace SalesTracker.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -78,31 +82,65 @@ namespace SalesTracker.Controllers
         [Route("api/[controller]/GetAllSales")]
         public IActionResult GetAllSales()
         {
-            List<Sales> sales = _saleHelper.GetAll();
-            return Ok(sales);
+            try
+            {
+                List<Sales> sales = _saleHelper.GetAll();
+                return Ok(sales);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("api/[controller]/GetAllDailyReport")]
         public IActionResult GetAllDailyReport()
         {
-            List<SaleReport> saleReports = _saleReportHelper.GetAllReport();
-            return Ok(saleReports);
+            try
+            {
+                List<SaleReport> saleReports = _saleReportHelper.GetAllReport();
+                return Ok(saleReports);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpGet]
         [Route("api/[controller]/GetCurrentDateSales")]
         public IActionResult GetCurrentDateSales()
         {
-            List<Sales> sales = _saleDateHelper.GetCurrentDateSales(saleDate.Id);
-            return Ok(sales);
+            try
+            {
+                List<Sales> sales = _saleDateHelper.GetCurrentDateSales(saleDate.Id);
+                return Ok(sales);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         [Route("api/[controller]/GetCurrentDateSalesReport")]
         public IActionResult GetCurrentDateSalesReport()
         {
-            return Ok(saleReport);
+            try
+            {
+                return Ok(saleReport);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
