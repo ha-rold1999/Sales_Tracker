@@ -7,6 +7,7 @@ import Total from "./Total";
 import SoldItems from "./Sold";
 import Stock from "./Stock";
 import { AddSales, GetItems } from "../../Utility/APICalls";
+import { SetSales } from "../../Utility/SetData";
 
 export default function Sales() {
   const [items, setItems] = useState([]);
@@ -32,21 +33,18 @@ export default function Sales() {
   };
 
   const handleSales = () => {
-    const profit = JSON.parse(selectedItem).sellingPrice * quantity;
-    const income = profit - JSON.parse(selectedItem).buyingPrice * quantity;
-
-    setTootalProfit(totalProfit + profit);
-    setTotalIncome(totalIncome + income);
-
-    const bought = { item: JSON.parse(selectedItem), quantity: quantity };
-    const itemSold = {
-      item: JSON.parse(selectedItem).itemName,
-      quantity: quantity,
-      profit: parseFloat(profit).toFixed(2),
-      income: parseFloat(income).toFixed(2),
-    };
-    setSales([...sales, bought]);
-    setSold([...sold, itemSold]);
+    SetSales({
+      selectedItem,
+      setTootalProfit,
+      totalProfit,
+      setTotalIncome,
+      totalIncome,
+      quantity,
+      setSales,
+      sales,
+      setSold,
+      sold,
+    });
   };
 
   const handleSaveAllSales = () => {
