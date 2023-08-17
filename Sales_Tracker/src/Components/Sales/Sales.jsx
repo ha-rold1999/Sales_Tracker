@@ -6,7 +6,7 @@ import Sold from "./Form/Sold";
 import Total from "./Total";
 import SoldItems from "./Sold";
 import Stock from "./Stock";
-import { GetItems } from "../../Utility/APICalls";
+import { AddSales, GetItems } from "../../Utility/APICalls";
 
 export default function Sales() {
   const [items, setItems] = useState([]);
@@ -50,25 +50,7 @@ export default function Sales() {
   };
 
   const handleSaveAllSales = () => {
-    sales.map((sale) => {
-      console.log(sale.item);
-      console.log(sale.quantity);
-      fetch("https://localhost:7114/api/Sale/Add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          item: sale.item,
-          quantity: sale.quantity,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+    AddSales({ sales });
   };
 
   return (

@@ -77,3 +77,25 @@ export function GetCurrentDateSalesReport({ setProfit, setIncome }) {
       console.log(error);
     });
 }
+
+export function AddSales({ sales }) {
+  sales.map((sale) => {
+    console.log(sale.item);
+    console.log(sale.quantity);
+    fetch("https://localhost:7114/api/Sale/Add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        item: sale.item,
+        quantity: sale.quantity,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+}
