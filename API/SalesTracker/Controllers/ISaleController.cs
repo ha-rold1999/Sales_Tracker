@@ -9,5 +9,6 @@ namespace SalesTracker.Controllers
         IActionResult GetAllDailyReport();
         IActionResult GetAllSales();
         IActionResult GetCurrentDateSales();
+        IActionResult GetCurrentDateSalesReport();
     }
 }

@@ -23,7 +23,8 @@ namespace SalesTracker.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [Route("api/v{version}/[controller]/GetAll")]
+        [ApiVersion("1.0")]
         public IActionResult GetAll()
         {
             List<Item> items = _database.GetAll();
@@ -31,7 +32,8 @@ namespace SalesTracker.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/Add")]
+        [Route("api/v{version}/[controller]/Add")]
+        [ApiVersion("1.0")]
         public IActionResult Add([FromBody] Item item)
         {
             if(_configuration.IsAddItemDisabled)
@@ -56,7 +58,8 @@ namespace SalesTracker.Controllers
         }
 
         [HttpPut]
-        [Route("api/[controller]/Update")]
+        [Route("api/v{version}/[controller]/Update")]
+        [ApiVersion("1.0")]
         public IActionResult Update([FromBody] Item item)
         {
             try

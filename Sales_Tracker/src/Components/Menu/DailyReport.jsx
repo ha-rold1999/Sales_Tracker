@@ -1,6 +1,10 @@
 import React from "react";
+import { useState } from "react";
 
 export default function DailyReport() {
+  const [profit, setProfit] = useState(0);
+  const [income, setIncome] = useState(0);
+
   return (
     <div className="w-2/5 h-screen bg-white flex flex-1 item-center justify-center flex-col space-y-5">
       <div className="flex justify-center text-4xl font-bold">01/01/2023</div>

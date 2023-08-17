@@ -97,5 +97,12 @@ namespace SalesTracker.Controllers
             List<Sales> sales = _saleDateHelper.GetCurrentDateSales(saleDate.Id);
             return Ok(sales);
         }
+
+        [HttpGet]
+        [Route("api/[controller]/GetCurrentDateSalesReport")]
+        public IActionResult GetCurrentDateSalesReport()
+        {
+            return Ok(saleReport);
+        }
     }
 }

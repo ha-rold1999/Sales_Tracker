@@ -1,7 +1,7 @@
 const SOURCE = "https://localhost:7114";
 
 export function GetItems({ setItems }) {
-  fetch(`${SOURCE}/api/Item/GetAll`, {
+  fetch(`${SOURCE}/api/v1/Item/GetAll`, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -14,7 +14,7 @@ export function GetItems({ setItems }) {
 }
 
 export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {
-  fetch(`${SOURCE}/api/Item/Add`, {
+  fetch(`${SOURCE}/api/v1/Item/Add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -39,7 +39,7 @@ export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {
 }
 
 export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {
-  fetch("https://localhost:7114/api/Item/Update", {
+  fetch(`${SOURCE}/api/v1/Item/Update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
