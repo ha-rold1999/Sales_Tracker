@@ -7,7 +7,7 @@ export function GetItems() {
 }
 
 export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {
-  fetch(`${SOURCE}/api/v1/Item/Add`, {
+  return fetch(`${SOURCE}/api/v1/Item/Add`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -16,19 +16,7 @@ export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {
       buyingPrice: buyingPrice,
       sellingPrice: sellingPrice,
     }),
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((error) => {
-      if (error instanceof SyntaxError) {
-        console.error("Invalid JSON format"); // Handle invalid JSON format
-      } else {
-        console.error("Error: ", error.message); // Log the error message from the server
-        console.error("Server Error Message: ", error.message); // Display the server error message
-      }
-    });
+  }).then((res) => res.json());
 }
 
 export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {

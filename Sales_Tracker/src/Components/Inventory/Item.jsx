@@ -8,8 +8,13 @@ import { UpdateItemAPI } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function Item() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
 
@@ -52,11 +57,31 @@ export default function Item() {
     },
   });
 
-  const handleUpdateItem = () => {
+  const handleUpdateItem = async () => {
     const stock = watch("stock");
     const buyingPrice = watch("buyingPrice");
     const sellingPrice = watch("sellingPrice");
-    UpdateItemAPI({ data, stock, buyingPrice, sellingPrice });
+
+    try {
+      await queryClient.fetchQuery("update item", () =>
+        UpdateItemAPI({ data, stock, buyingPrice, sellingPrice })
+      );
+
+      await Swal.fire({
+        icon: "success",
+        title: "Item updated",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      navigate("/inventory");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
+    }
   };
 
   return (

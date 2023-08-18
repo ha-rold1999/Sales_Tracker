@@ -9,8 +9,13 @@ import Stock from "./Stock";
 import { AddSales, GetItems } from "../../Utility/APICalls";
 import { SetSales } from "../../Utility/SetData";
 import { useQuery } from "react-query";
+import Swal from "sweetalert2";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function Sales() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const { data } = useQuery(["items"], GetItems);
 
   const [selectedItem, setSelectedItem] = useState();
@@ -57,9 +62,27 @@ export default function Sales() {
     }
   };
 
-  const handleSaveAllSales = () => {
+  const handleSaveAllSales = async () => {
     if (sales.length > 0) {
-      AddSales({ sales });
+      try {
+        await queryClient.fetchQuery("save sales", () => AddSales({ sales }));
+
+        await Swal.fire({
+          icon: "success",
+          title: "Sales saved",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        navigate("/");
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "This is on us we are working on it",
+        });
+      }
+
       setIsSalesExist(true);
     } else {
       setIsSalesExist(false);

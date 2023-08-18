@@ -6,8 +6,14 @@ import { AddItemCall } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function AddItem() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const schema = yup.object().shape({
     itemName: yup.string().required("Item name is required"),
     stock: yup
@@ -52,13 +58,33 @@ export default function AddItem() {
   const stock = watch("stock");
   const buyingPrice = watch("buyingPrice");
   const sellingPrice = watch("sellingPrice");
-  const handleAddItem = () => {
-    AddItemCall({ itemName, stock, buyingPrice, sellingPrice });
+
+  const handleClick = async () => {
+    try {
+      await queryClient.fetchQuery("add item", () =>
+        AddItemCall({ itemName, stock, buyingPrice, sellingPrice })
+      );
+
+      await Swal.fire({
+        icon: "success",
+        title: "Item added",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      navigate("/inventory");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
+    }
   };
   return (
     <div className="flex w-full h-full justify-center items-center">
       <form
-        onSubmit={handleSubmit(handleAddItem)}
+        onSubmit={handleSubmit(handleClick)}
         className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg">
         <div className="flex justify-center text-3xl font-bold">
           Add New Item
