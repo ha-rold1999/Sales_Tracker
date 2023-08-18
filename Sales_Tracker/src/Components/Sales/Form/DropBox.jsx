@@ -3,7 +3,7 @@ import React from "react";
 export default function DropBox({ handelSelectChange, selectedItem, items }) {
   return (
     <select
-      className="w-full p-2 text-2xl rounded-lg mb-5"
+      className="w-full p-2 text-2xl rounded-lg "
       onChange={handelSelectChange}
       value={selectedItem}>
       <option>Select Item</option>

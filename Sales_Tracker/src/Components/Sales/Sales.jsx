@@ -19,28 +19,51 @@ export default function Sales() {
   const [sold, setSold] = useState([]);
   const [totalProfit, setTootalProfit] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
+  const [isItemSelected, setIsItemSelected] = useState(true);
+  const [isSoldGreaterThanZero, setIsSoldGreaterThanZero] = useState(true);
+  const [isSoldLessThanStock, setIsSoldLessThanStock] = useState(true);
+  const [isSalesExist, setIsSalesExist] = useState(true);
 
   const handelSelectChange = (e) => {
     setSelectedItem(e.target.value);
+    setIsItemSelected(true);
   };
 
   const handleSales = () => {
-    SetSales({
-      selectedItem,
-      setTootalProfit,
-      totalProfit,
-      setTotalIncome,
-      totalIncome,
-      quantity,
-      setSales,
-      sales,
-      setSold,
-      sold,
-    });
+    if (typeof selectedItem === "undefined") {
+      setIsItemSelected(false);
+    } else if (quantity <= 0) {
+      setIsSoldGreaterThanZero(false);
+      setIsSoldLessThanStock(true);
+    } else if (quantity > JSON.parse(selectedItem).stock) {
+      setIsSoldLessThanStock(false);
+      setIsSoldGreaterThanZero(true);
+    } else {
+      SetSales({
+        selectedItem,
+        setTootalProfit,
+        totalProfit,
+        setTotalIncome,
+        totalIncome,
+        quantity,
+        setSales,
+        sales,
+        setSold,
+        sold,
+      });
+      setIsItemSelected(true);
+      setIsSoldGreaterThanZero(true);
+      setIsSoldLessThanStock(true);
+    }
   };
 
   const handleSaveAllSales = () => {
-    AddSales({ sales });
+    if (sales.length > 0) {
+      AddSales({ sales });
+      setIsSalesExist(true);
+    } else {
+      setIsSalesExist(false);
+    }
   };
 
   return (
@@ -52,11 +75,24 @@ export default function Sales() {
             selectedItem={selectedItem}
             items={data}
           />
-          <Stock selectedItem={selectedItem} />
+          {!isItemSelected && (
+            <span className="text-red-600">Please select an item</span>
+          )}
+          <Stock
+            selectedItem={selectedItem}
+            setIsItemSelected={setIsItemSelected}
+          />
           <div className="flex justify-center space-x-2">
             <div className="text-3xl font-semibold">Sold</div>
             <Sold setQuantity={setQuantity} />
           </div>
+          {!isSoldGreaterThanZero && (
+            <span className="text-red-600">Set sold greater than 0</span>
+          )}
+          <div></div>
+          {!isSoldLessThanStock && (
+            <span className="text-red-600">Set sold lesser than the stock</span>
+          )}
           <div className="flex justify-center mt-5">
             <button
               className="bg-green-500 w-1/2 py-5 text-xl font-bold border-2 border-black rounded-lg"
@@ -71,6 +107,9 @@ export default function Sales() {
               Save All Sales
             </button>
           </div>
+          {!isSalesExist && (
+            <span className="text-red-600">There is no sales to save</span>
+          )}
           <Total totalProfit={totalProfit} totalIncome={totalIncome} />
         </div>
       </div>
