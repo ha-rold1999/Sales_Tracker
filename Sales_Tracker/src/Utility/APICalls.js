@@ -1,16 +1,9 @@
 const SOURCE = "https://localhost:7114";
 
-export function GetItems({ setItems }) {
-  fetch(`${SOURCE}/api/v1/Item/GetAll`, {
+export function GetItems() {
+  return fetch(`${SOURCE}/api/v1/Item/GetAll`, {
     method: "GET",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      setItems(data); // Update state with fetched items
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  }).then((res) => res.json());
 }
 
 export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {

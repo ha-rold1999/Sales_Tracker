@@ -1,7 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { GetCurrentDateSalesReport } from "../../Utility/APICalls";
-import { isError, useQuery } from "react-query";
+import { useQuery } from "react-query";
 
 export default function DailyReport() {
   const currenDate = new Date();

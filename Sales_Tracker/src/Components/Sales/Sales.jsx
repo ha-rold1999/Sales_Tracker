@@ -8,13 +8,10 @@ import SoldItems from "./Sold";
 import Stock from "./Stock";
 import { AddSales, GetItems } from "../../Utility/APICalls";
 import { SetSales } from "../../Utility/SetData";
+import { useQuery } from "react-query";
 
 export default function Sales() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    GetItems({ setItems });
-  }, []);
+  const { data } = useQuery(["items"], GetItems);
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
@@ -22,11 +19,6 @@ export default function Sales() {
   const [sold, setSold] = useState([]);
   const [totalProfit, setTootalProfit] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
-
-  useEffect(() => {
-    console.log(sales);
-  }, [sales]);
-  useEffect(() => {}, [selectedItem]);
 
   const handelSelectChange = (e) => {
     setSelectedItem(e.target.value);
@@ -58,7 +50,7 @@ export default function Sales() {
           <DropBox
             handelSelectChange={handelSelectChange}
             selectedItem={selectedItem}
-            items={items}
+            items={data}
           />
           <Stock selectedItem={selectedItem} />
           <div className="flex justify-center space-x-2">

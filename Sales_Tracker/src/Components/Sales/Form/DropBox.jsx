@@ -7,7 +7,7 @@ export default function DropBox({ handelSelectChange, selectedItem, items }) {
       onChange={handelSelectChange}
       value={selectedItem}>
       <option>Select Item</option>
-      {items.map((option) => (
+      {items?.map((option) => (
         <option key={option.id} value={JSON.stringify(option)}>
           {option.itemName}
         </option>
