@@ -11,8 +11,6 @@ using SalesTracker.DatabaseHelpers;
 using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.EntityFramework;
-using Serilog;
-using Serilog.Formatting.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //Set CORS
-builder.Services.AddCors(o=> o.AddDefaultPolicy(builder=>builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+builder.Services.AddCors(o=> o.AddDefaultPolicy(builder=> builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
 //Set Connection to the Database
 builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnection")));
 //Set Auto mapper
@@ -59,19 +57,19 @@ builder.Services.AddApiVersioning(config =>
 
 var app = builder.Build();
 
-//using (var migrate = app.Services.CreateScope())
-//{
-//    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
-//    dbMigrate.Database.Migrate();
-//}
+using (var migrate = app.Services.CreateScope())
+{
+    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
+    dbMigrate.Database.Migrate();
+}
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 

@@ -94,9 +94,6 @@ export async function HandleUpdateItem({
   queryClient,
   UpdateItemAPI,
   data,
-  stock,
-  buyingPrice,
-  sellingPrice,
   navigate,
 }) {
   const stock = watch("stock");

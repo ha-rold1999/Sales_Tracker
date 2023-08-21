@@ -40,9 +40,6 @@ export default function Item() {
       queryClient,
       UpdateItemAPI,
       data,
-      stock,
-      buyingPrice,
-      sellingPrice,
       navigate,
     });
   };

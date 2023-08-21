@@ -6,7 +6,7 @@ services:
       context: ./API
       dockerfile: Dockerfile
     ports:
-      - 9000:80
+      - 9001:80
   postgres:
     image: postgres:latest
     environment:
@@ -17,5 +17,11 @@ services:
       - 5432:5432
     volumes:
       - my_postgres_data:/var/lib/postgresql/data
+  web:
+    build: 
+      context: ./Sales_Tracker
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
 volumes:
   my_postgres_data:

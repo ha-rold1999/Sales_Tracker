@@ -1,4 +1,4 @@
-const SOURCE = "https://localhost:7114";
+const SOURCE = "http://localhost:9001";
 
 export function GetItems() {
   return fetch(`${SOURCE}/api/v1/Item/GetAll`, {
@@ -53,7 +53,7 @@ export function GetCurrentDateSalesReport() {
 
 export async function AddSales({ sales }) {
   try {
-    const response = await fetch("https://localhost:7114/api/Sale/Add", {
+    const response = await fetch(`${SOURCE}/api/Sale/Add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(sales), // Send the entire array as the body
