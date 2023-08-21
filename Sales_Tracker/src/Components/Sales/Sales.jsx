@@ -133,7 +133,7 @@ export default function Sales() {
           <Total totalProfit={totalProfit} totalIncome={totalIncome} />
         </div>
       </div>
-      <SoldItems sales={sales} />
+      <SoldItems sales={sales} setSales={setSales} />
     </div>
   );
 }
