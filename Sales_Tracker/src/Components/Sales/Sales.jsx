@@ -21,7 +21,6 @@ export default function Sales() {
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
   const [quantity, setQuantity] = useState(0);
-  const [sold, setSold] = useState([]);
   const [totalProfit, setTootalProfit] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   const [isItemSelected, setIsItemSelected] = useState(true);
@@ -53,8 +52,6 @@ export default function Sales() {
         quantity,
         setSales,
         sales,
-        setSold,
-        sold,
       });
       setIsItemSelected(true);
       setIsSoldGreaterThanZero(true);
@@ -136,7 +133,7 @@ export default function Sales() {
           <Total totalProfit={totalProfit} totalIncome={totalIncome} />
         </div>
       </div>
-      <SoldItems sold={sold} />
+      <SoldItems sales={sales} />
     </div>
   );
 }
