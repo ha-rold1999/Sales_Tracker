@@ -48,24 +48,28 @@ namespace SalesTracker.Controllers
 
         [HttpPost]
         [Route("api/[controller]/Add")]
-        public IActionResult Add([FromBody] Sales sales)
+        public IActionResult Add([FromBody] Sales[] sales)
         {
             if (_salesConfiguration.IsAddSalesDisabled)
             { return StatusCode(500, "Adding new feature under construction"); }
 
             try
             {
-                sales.Sale = saleDate;
+                foreach (var sale in sales)
+                {
+                    sale.Sale = saleDate;
 
-                var salesDTO = _mapper.Map<SalesDTO>(sales);
+                    var salesDTO = _mapper.Map<SalesDTO>(sale);
 
-                _saleHelper.Add(salesDTO);
-                _saleReportHelper.UpdateSaleReport(saleReport, salesDTO);
+                    _saleHelper.Add(salesDTO);
+                    _saleReportHelper.UpdateSaleReport(saleReport, salesDTO);
+                }
                 return Ok(sales);
+
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest($"Item does not exist {sales.Item}");
+                return BadRequest($"Item does not exist");
             }
             catch (SalesQuantityException)
             {
@@ -136,7 +140,7 @@ namespace SalesTracker.Controllers
             {
                 return Ok(saleReport);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);

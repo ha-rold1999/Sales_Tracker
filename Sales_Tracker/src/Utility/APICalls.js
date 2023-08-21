@@ -51,24 +51,17 @@ export function GetCurrentDateSalesReport() {
   }).then((res) => res.json());
 }
 
-export function AddSales({ sales }) {
-  sales.map((sale) => {
-    console.log(sale.item);
-    console.log(sale.quantity);
-    fetch("https://localhost:7114/api/Sale/Add", {
+export async function AddSales({ sales }) {
+  try {
+    const response = await fetch("https://localhost:7114/api/Sale/Add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        item: sale.item,
-        quantity: sale.quantity,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+      body: JSON.stringify(sales), // Send the entire array as the body
+    });
+
+    const data = await response.json();
+    console.log(data); // Handle the response data as needed
+  } catch (error) {
+    console.log(error);
+  }
 }

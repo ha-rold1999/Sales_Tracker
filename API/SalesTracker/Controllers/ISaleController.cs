@@ -5,7 +5,7 @@ namespace SalesTracker.Controllers
 {
     public interface ISaleController<T>
     {
-        IActionResult Add([FromBody] T sales);
+        IActionResult Add([FromBody] T[] sales);
         IActionResult GetAllDailyReport();
         IActionResult GetAllSales();
         IActionResult GetCurrentDateSales();
