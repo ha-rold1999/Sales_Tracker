@@ -1,27 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../Style/style.css";
 import { GetItems } from "../../Utility/APICalls";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
+import { LoadItem } from "../../Utility/configuration";
 
 export default function Items() {
   const { data, isLoading, isError, isSuccess } = useQuery(["items"], GetItems);
 
-  if (isLoading) {
-    Swal.showLoading();
-  }
-  if (isError) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "This is on us we are working on it",
-    });
-  }
-
-  if (isSuccess) {
-    Swal.close();
-  }
+  LoadItem({ isLoading, isError, isSuccess });
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">

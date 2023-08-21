@@ -9,10 +9,10 @@ import Stock from "./Stock";
 import { AddSales, GetItems } from "../../Utility/APICalls";
 import { SetSales } from "../../Utility/SetData";
 import { useQuery } from "react-query";
-import Swal from "sweetalert2";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { HandleSales, HandleSaveAllSales } from "../../Utility/configuration";
 
 export default function Sales() {
   const queryClient = useQueryClient();
@@ -35,56 +35,30 @@ export default function Sales() {
   };
 
   const handleSales = () => {
-    if (typeof selectedItem === "undefined") {
-      setIsItemSelected(false);
-    } else if (quantity <= 0) {
-      setIsSoldGreaterThanZero(false);
-      setIsSoldLessThanStock(true);
-    } else if (quantity > JSON.parse(selectedItem).stock) {
-      setIsSoldLessThanStock(false);
-      setIsSoldGreaterThanZero(true);
-    } else {
-      SetSales({
-        selectedItem,
-        setTootalProfit,
-        totalProfit,
-        setTotalIncome,
-        totalIncome,
-        quantity,
-        setSales,
-        sales,
-      });
-      setIsItemSelected(true);
-      setIsSoldGreaterThanZero(true);
-      setIsSoldLessThanStock(true);
-    }
+    HandleSales({
+      selectedItem,
+      setIsItemSelected,
+      quantity,
+      setIsSoldGreaterThanZero,
+      setIsSoldLessThanStock,
+      SetSales,
+      setTootalProfit,
+      totalProfit,
+      setTotalIncome,
+      totalIncome,
+      setSales,
+      sales,
+    });
   };
 
   const handleSaveAllSales = async () => {
-    if (sales.length > 0) {
-      try {
-        await queryClient.fetchQuery("save sales", () => AddSales({ sales }));
-
-        await Swal.fire({
-          icon: "success",
-          title: "Sales saved",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
-        navigate("/");
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "This is on us we are working on it",
-        });
-      }
-
-      setIsSalesExist(true);
-    } else {
-      setIsSalesExist(false);
-    }
+    await HandleSaveAllSales({
+      sales,
+      queryClient,
+      AddSales,
+      navigate,
+      setIsSalesExist,
+    });
   };
 
   return (

@@ -1,16 +1,15 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
 import { UpdateItemAPI } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Swal from "sweetalert2";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { ItemValidation } from "../../Utility/YupSchema";
+import { HandleUpdateItem } from "../../Utility/configuration";
 
 export default function Item() {
   const queryClient = useQueryClient();
@@ -18,29 +17,7 @@ export default function Item() {
   const location = useLocation();
   const data = location.state;
 
-  const [isItemTheSame, setIsItemTheSame] = useState(true);
-  const schema = yup.object().shape({
-    stock: yup
-      .number()
-      .typeError("Invalid number")
-      .required("Stock is required")
-      .moreThan(0, "Stock should be more than 0"),
-    buyingPrice: yup
-      .number()
-      .typeError("Invalid number")
-      .required("Buying price is required")
-      .moreThan(0, "Stock should be more than 0"),
-    sellingPrice: yup
-      .number()
-      .typeError("Invalid number")
-      .required("Selling price is required")
-      .when("buyingPrice", (buyingPrice, schema) => {
-        return schema.moreThan(
-          buyingPrice,
-          "Selling price should be more than the buying price"
-        );
-      }),
-  });
+  const schema = ItemValidation();
 
   const {
     register,
@@ -57,31 +34,17 @@ export default function Item() {
     },
   });
 
-  const handleUpdateItem = async () => {
-    const stock = watch("stock");
-    const buyingPrice = watch("buyingPrice");
-    const sellingPrice = watch("sellingPrice");
-
-    try {
-      await queryClient.fetchQuery("update item", () =>
-        UpdateItemAPI({ data, stock, buyingPrice, sellingPrice })
-      );
-
-      await Swal.fire({
-        icon: "success",
-        title: "Item updated",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
-      navigate("/inventory");
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "This is on us we are working on it",
-      });
-    }
+  const handleUpdateItem = () => {
+    HandleUpdateItem({
+      watch,
+      queryClient,
+      UpdateItemAPI,
+      data,
+      stock,
+      buyingPrice,
+      sellingPrice,
+      navigate,
+    });
   };
 
   return (

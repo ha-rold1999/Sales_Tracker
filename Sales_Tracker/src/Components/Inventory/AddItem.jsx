@@ -4,39 +4,18 @@ import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
 import { AddItemCall } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { AddItemValidation } from "../../Utility/YupSchema";
+import { HandleAddItem } from "../../Utility/configuration";
 
 export default function AddItem() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const schema = yup.object().shape({
-    itemName: yup.string().required("Item name is required"),
-    stock: yup
-      .number()
-      .typeError("Invalid number")
-      .required("Stock is required")
-      .moreThan(0, "Stock should be more than 0"),
-    buyingPrice: yup
-      .number()
-      .typeError("Invalid number")
-      .required("Buying price is required")
-      .moreThan(0, "Stock should be more than 0"),
-    sellingPrice: yup
-      .number()
-      .typeError("Invalid number")
-      .required("Selling price is required")
-      .when("buyingPrice", (buyingPrice, schema) => {
-        return schema.moreThan(
-          buyingPrice,
-          "Selling price should be more than the buying price"
-        );
-      }),
-  });
+  const schema = AddItemValidation();
 
   const {
     register,
@@ -59,28 +38,18 @@ export default function AddItem() {
   const buyingPrice = watch("buyingPrice");
   const sellingPrice = watch("sellingPrice");
 
-  const handleClick = async () => {
-    try {
-      await queryClient.fetchQuery("add item", () =>
-        AddItemCall({ itemName, stock, buyingPrice, sellingPrice })
-      );
-
-      await Swal.fire({
-        icon: "success",
-        title: "Item added",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
-      navigate("/inventory");
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "This is on us we are working on it",
-      });
-    }
+  const handleClick = () => {
+    HandleAddItem({
+      queryClient,
+      AddItemCall,
+      itemName,
+      stock,
+      buyingPrice,
+      sellingPrice,
+      navigate,
+    });
   };
+
   return (
     <div className="flex w-full h-full justify-center items-center">
       <form
