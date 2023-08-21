@@ -1,6 +1,6 @@
 import React from "react";
 import "../../Style/style.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DropBox from "./Form/DropBox";
 import Sold from "./Form/Sold";
 import Total from "./Total";
@@ -133,7 +133,14 @@ export default function Sales() {
           <Total totalProfit={totalProfit} totalIncome={totalIncome} />
         </div>
       </div>
-      <SoldItems sales={sales} setSales={setSales} />
+      <SoldItems
+        sales={sales}
+        setSales={setSales}
+        totalProfit={totalProfit}
+        setTootalProfit={setTootalProfit}
+        totalIncome={totalIncome}
+        setTotalIncome={setTotalIncome}
+      />
     </div>
   );
 }
