@@ -25,6 +25,9 @@ export default function Items() {
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
+      <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/">
+        back to menu
+      </Link>
       <div className="flex flex-row items-center space-x-5  p-3">
         <div className="text-5xl font-bold text-yellow-300">Items</div>
         <Link

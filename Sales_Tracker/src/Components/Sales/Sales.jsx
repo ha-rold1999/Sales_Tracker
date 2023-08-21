@@ -12,6 +12,7 @@ import { useQuery } from "react-query";
 import Swal from "sweetalert2";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Sales() {
   const queryClient = useQueryClient();
@@ -89,6 +90,11 @@ export default function Sales() {
   return (
     <div className="flex flex-col-2 h-full">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
+        <div className="flex flex-1 items-start">
+          <Link className="bg-white px-3 py-1 rounded-lg" to="/">
+            back to menu
+          </Link>
+        </div>
         <div className="w-full">
           <DropBox
             handelSelectChange={handelSelectChange}

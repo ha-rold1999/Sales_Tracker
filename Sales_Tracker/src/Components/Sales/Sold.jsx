@@ -25,21 +25,22 @@ export default function SoldItems({
         <div className="w-1/4 flex  text-lg font-bold">Income</div>
         <div className="w-1/4 flex  text-lg font-bold"></div>
       </div>
+
       {sales?.map((item, index) => {
         const profit = parseFloat(item.item.sellingPrice * item.quantity);
         const income = parseFloat(
           profit - item.item.buyingPrice * item.quantity
         );
         return (
-          <div className="flex flex-col-5 w-full items-center">
+          <div className="flex flex-col-5 w-full items-center hover:bg-slate-500 hover:text-white">
             <div className="w-1/4  flex text-lg">{item.item.itemName}</div>
             <div className="w-1/4 flex text-lg">{item.quantity}</div>
             <div className="w-1/4  flex text-lg">{profit.toFixed(2)}</div>
             <div className="w-1/4 flex text-lg">{income.toFixed(2)}</div>
-            <div className="w-1/4">
+            <div className="w-1/4 flex justify-center ">
               <img
                 src={deleteButton}
-                className="w-5 h-5"
+                className="w-5 h-5 bg-white rounded-xl"
                 onClick={() => {
                   deleteItem(index, profit, income);
                 }}
