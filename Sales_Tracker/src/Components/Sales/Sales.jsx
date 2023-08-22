@@ -35,6 +35,7 @@ export default function Sales() {
   };
 
   const handleSales = () => {
+    setQuantity(0);
     HandleSales({
       selectedItem,
       setIsItemSelected,
@@ -84,7 +85,7 @@ export default function Sales() {
           />
           <div className="flex justify-center space-x-2">
             <div className="text-3xl font-semibold">Sold</div>
-            <Sold setQuantity={setQuantity} />
+            <Sold setQuantity={setQuantity} quantity={quantity} />
           </div>
           {!isSoldGreaterThanZero && (
             <span className="text-red-600">Set sold greater than 0</span>

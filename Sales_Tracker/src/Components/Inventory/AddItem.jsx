@@ -28,8 +28,6 @@ export default function AddItem() {
     defaultValues: {
       itemName: "",
       stock: 0,
-      buyingPrice: 0.0,
-      sellingPrice: 0.0,
     },
   });
 
