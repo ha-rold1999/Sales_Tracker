@@ -11,7 +11,7 @@ export function ItemValidation() {
       .number()
       .typeError("Invalid number")
       .required("Buying price is required")
-      .moreThan(0, "Stock should be more than 0"),
+      .min(1, "Stock should be more than 1"),
     sellingPrice: yup
       .number()
       .typeError("Invalid number")
@@ -37,7 +37,7 @@ export function AddItemValidation() {
       .number()
       .typeError("Invalid number")
       .required("Buying price is required")
-      .moreThan(0, "Stock should be more than 0"),
+      .min(1, "Stock should be more than 1"),
     sellingPrice: yup
       .number()
       .typeError("Invalid number")
