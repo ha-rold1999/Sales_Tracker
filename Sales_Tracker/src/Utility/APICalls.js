@@ -95,3 +95,14 @@ export function GetItemSellingPriceLog({ id, setSellingPrice }) {
       setSellingPrice(res);
     });
 }
+
+export function GetItemSaleLog({ id, setSales }) {
+  fetch(`${SOURCE}/api/Log/item-sales-log/${id}`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      setSales(res);
+      console.log(res);
+    });
+}

@@ -8,7 +8,7 @@ namespace Models.Model.Sale
 {
     public class SaleDTO : ISale
     {
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
         public int Id { get; set; }
     }
 }

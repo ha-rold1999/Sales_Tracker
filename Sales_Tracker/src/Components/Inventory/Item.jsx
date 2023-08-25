@@ -77,6 +77,12 @@ export default function Item() {
             className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
             Item Report
           </Link>
+          <Link
+            to="/inventory/item-sales"
+            state={data}
+            className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
+            Sale Report
+          </Link>
         </div>
       </form>
     </div>

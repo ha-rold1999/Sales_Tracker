@@ -35,9 +35,9 @@ namespace SalesTracker.DatabaseHelpers.DateReport
         public Sale GetLastReport()
         {
             
-            var todayReport = _context.Sale.FirstOrDefault(x => x.Date == DateTime.Today)
+            var todayReport = _context.Sale.FirstOrDefault(x => x.Date == DateOnly.FromDateTime(DateTime.Now))
                 ?? Add(new SaleDTO() 
-                { Date = DateTime.Today.ToUniversalTime() });
+                { Date = DateOnly.FromDateTime(DateTime.Now)});
 
             return todayReport;
         }

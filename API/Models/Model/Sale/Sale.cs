@@ -17,6 +17,6 @@ namespace Models.Model.Sale
         public int Id { get; set; }
         [Column("date")]
         [Required]
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
     }
 }
