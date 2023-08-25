@@ -1,4 +1,4 @@
-const SOURCE = "http://localhost:9001";
+const SOURCE = "https://localhost:7114";
 
 export function GetItems() {
   return fetch(`${SOURCE}/api/v1/Item/GetAll`, {
@@ -64,4 +64,15 @@ export async function AddSales({ sales }) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export function GetItemStockLog({ id, setStock }) {
+  fetch(`${SOURCE}/api/Log/item-stock-log/${id}`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      setStock(res);
+      console.log(res);
+    });
 }

@@ -10,6 +10,7 @@ import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ItemValidation } from "../../Utility/YupSchema";
 import { HandleUpdateItem } from "../../Utility/configuration";
+import { Link } from "react-router-dom";
 
 export default function Item() {
   const queryClient = useQueryClient();
@@ -52,6 +53,7 @@ export default function Item() {
         <div className="flex justify-center text-3xl font-bold">
           {data.itemName}
         </div>
+
         <div className="text-lg font-semibold">Stock</div>
         <StockInput setValue={setValue} watch={watch} schema={schema} />
         <span className="text-red-600">{errors.stock?.message}</span>
@@ -67,6 +69,14 @@ export default function Item() {
             type="submit">
             Save Changes
           </button>
+        </div>
+        <div className="flex justify-center mt-5">
+          <Link
+            to="/inventory/item-report"
+            state={data}
+            className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
+            Item Report
+          </Link>
         </div>
       </form>
     </div>
