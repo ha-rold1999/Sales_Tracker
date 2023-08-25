@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SalesTracker.EntityFramework;
@@ -11,9 +12,11 @@ using SalesTracker.EntityFramework;
 namespace SalesTracker.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230825103524_AddedStockLogTable")]
+    partial class AddedStockLogTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,36 +178,6 @@ namespace SalesTracker.Migrations
                     b.ToTable("expense_report");
                 });
 
-            modelBuilder.Entity("Models.Model.Items.BuyingPriceLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("DateUpdate")
-                        .HasColumnType("date")
-                        .HasColumnName("date_update");
-
-                    b.Property<int>("ItemIDId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("NewPrice")
-                        .HasColumnType("numeric")
-                        .HasColumnName("new_price");
-
-                    b.Property<decimal>("OldPrice")
-                        .HasColumnType("numeric")
-                        .HasColumnName("old_price");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemIDId");
-
-                    b.ToTable("buying_price_log");
-                });
-
             modelBuilder.Entity("Models.Model.Items.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -236,36 +209,6 @@ namespace SalesTracker.Migrations
                     b.ToTable("item");
                 });
 
-            modelBuilder.Entity("Models.Model.Items.SellingPriceLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("DateUpdate")
-                        .HasColumnType("date")
-                        .HasColumnName("date_update");
-
-                    b.Property<int>("ItemIDId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("NewPrice")
-                        .HasColumnType("numeric")
-                        .HasColumnName("new_price");
-
-                    b.Property<decimal>("OldPrice")
-                        .HasColumnType("numeric")
-                        .HasColumnName("old_price");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemIDId");
-
-                    b.ToTable("selling_price_log");
-                });
-
             modelBuilder.Entity("Models.Model.Items.StockLog", b =>
                 {
                     b.Property<int>("Id")
@@ -293,7 +236,7 @@ namespace SalesTracker.Migrations
 
                     b.HasIndex("ItemIDId");
 
-                    b.ToTable("stock_log");
+                    b.ToTable("StockLog");
                 });
 
             modelBuilder.Entity("Models.Model.Sale.Reports.SaleReport", b =>
@@ -427,28 +370,6 @@ namespace SalesTracker.Migrations
                         .IsRequired();
 
                     b.Navigation("Expense");
-                });
-
-            modelBuilder.Entity("Models.Model.Items.BuyingPriceLog", b =>
-                {
-                    b.HasOne("Models.Model.Items.Item", "ItemID")
-                        .WithMany()
-                        .HasForeignKey("ItemIDId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ItemID");
-                });
-
-            modelBuilder.Entity("Models.Model.Items.SellingPriceLog", b =>
-                {
-                    b.HasOne("Models.Model.Items.Item", "ItemID")
-                        .WithMany()
-                        .HasForeignKey("ItemIDId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ItemID");
                 });
 
             modelBuilder.Entity("Models.Model.Items.StockLog", b =>

@@ -26,5 +26,8 @@ namespace SalesTracker.EntityFramework
         public DbSet<Principal> Principal { get; set; }
         public DbSet<CashFlow> CashFlow { get; set; }
         public DbSet<CashFlowReport> CashFlowReport { get; set; }
+        public DbSet<StockLog> StockLog { get; set; }
+        public DbSet<BuyingPriceLog> BuyingPriceLogs { get; set; }
+        public DbSet<SellingPriceLog> SellingPriceLogs { get; set; }
     }
 }

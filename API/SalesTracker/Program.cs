@@ -57,11 +57,11 @@ builder.Services.AddApiVersioning(config =>
 
 var app = builder.Build();
 
-using (var migrate = app.Services.CreateScope())
-{
-    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
-    dbMigrate.Database.Migrate();
-}
+//using (var migrate = app.Services.CreateScope())
+//{
+//    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
+//    dbMigrate.Database.Migrate();
+//}
 
 
 // Configure the HTTP request pipeline.

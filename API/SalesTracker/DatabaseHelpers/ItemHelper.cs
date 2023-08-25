@@ -20,7 +20,7 @@ namespace SalesTracker.DatabaseHelpers
         {
             return _databaseContext.Item.ToList();
         }
-        public Item Get(int id) 
+        public Item Get(int id)
         {
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
         }
@@ -38,6 +38,7 @@ namespace SalesTracker.DatabaseHelpers
             var item = isExist(itemDTO.Id);
             _mapper.Map(itemDTO, item);
             isValid(item);
+            LogUpdate(item);
 
             _databaseContext.SaveChanges();
             return item;
@@ -49,6 +50,51 @@ namespace SalesTracker.DatabaseHelpers
             _databaseContext.SaveChanges();
             return item;
         }
+        private void LogUpdate(Item item)
+        {
+            var entry = _databaseContext.Entry(item);
+            var changes = entry.Properties.Where(p => p.IsModified).ToList();
+            string changeSummary = string.Join(", ", entry.Properties
+                .Where(p => p.IsModified)
+                .Select(p => $"Changed: {p.Metadata.Name} - Old Value: {p.OriginalValue} - New Value: {p.CurrentValue}"));
+
+            foreach(var change in changes)
+            {
+                if(change.Metadata.Name == "Stock")
+                {
+                    var stockLog = new StockLog
+                    {
+                        OldStock = (int)change.OriginalValue!,
+                        NewStock = (int)change.CurrentValue!,
+                        DateUpdate = DateOnly.FromDateTime(DateTime.UtcNow.Date),
+                        ItemID = item
+                    };
+                    _databaseContext.StockLog.Add(stockLog);
+                }
+                else if(change.Metadata.Name == "BuyingPrice")
+                {
+                    var buyingPriceLog = new BuyingPriceLog
+                    {
+                        OldPrice = (decimal)change.OriginalValue!,
+                        NewPrice = (decimal)change.CurrentValue!,
+                        DateUpdate = DateOnly.FromDateTime(DateTime.UtcNow.Date),
+                        ItemID = item
+                    };
+                    _databaseContext.BuyingPriceLogs.Add(buyingPriceLog);
+                }
+                else if( change.Metadata.Name == "SellingPrice")
+                {
+                    var sellingPricelog = new SellingPriceLog
+                    {
+                        OldPrice = (decimal)change.OriginalValue!,
+                        NewPrice = (decimal)change.CurrentValue!,
+                        DateUpdate = DateOnly.FromDateTime(DateTime.UtcNow.Date),
+                        ItemID = item
+                    };
+                    _databaseContext.SellingPriceLogs.Add(sellingPricelog);
+                }
+            }
+        }
         private Item isExist(int id)
         {
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
@@ -58,7 +104,7 @@ namespace SalesTracker.DatabaseHelpers
             var validationResult = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(item, new ValidationContext(item), validationResult, validateAllProperties: true);
 
-            if(item.SellingPrice<=item.BuyingPrice)
+            if (item.SellingPrice <= item.BuyingPrice)
             { isValid = false; }
 
             if (!isValid) { throw new ValidationException(); }
