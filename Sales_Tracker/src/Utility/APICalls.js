@@ -73,6 +73,25 @@ export function GetItemStockLog({ id, setStock }) {
     .then((res) => res.json())
     .then((res) => {
       setStock(res);
-      console.log(res);
+    });
+}
+
+export function GetItemBuyingPriceLog({ id, setBuyingPrice }) {
+  fetch(`${SOURCE}/api/Log/item-buyingPrice-log/${id}`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      setBuyingPrice(res);
+    });
+}
+
+export function GetItemSellingPriceLog({ id, setSellingPrice }) {
+  fetch(`${SOURCE}/api/Log/item-sellingPrice-log/${id}`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      setSellingPrice(res);
     });
 }

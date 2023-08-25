@@ -16,5 +16,15 @@ namespace SalesTracker.DatabaseHelpers
         {
             return _databaseContext.StockLog.Where(x=> x.ItemID.Id == id).ToList();
         }
+
+        public List<BuyingPriceLog> GetBuyingPriceLogs(int id)
+        {
+            return _databaseContext.BuyingPriceLogs.Where(x=>x.ItemID.Id ==id).ToList();    
+        }
+
+        public List<SellingPriceLog> GetSellingPriceLogs(int id)
+        {
+            return _databaseContext.SellingPriceLogs.Where(x => x.ItemID.Id == id).ToList();
+        }
     }
 }
