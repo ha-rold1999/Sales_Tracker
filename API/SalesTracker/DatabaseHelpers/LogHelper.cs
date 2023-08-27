@@ -5,7 +5,7 @@ using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class LogHelper
+    public class LogHelper : ILogHelper
     {
         private readonly DatabaseContext _databaseContext;
 
@@ -14,14 +14,14 @@ namespace SalesTracker.DatabaseHelpers
             _databaseContext = databaseContext;
         }
 
-        public List<StockLog> GetStockLogs(int id) 
+        public List<StockLog> GetStockLogs(int id)
         {
-            return _databaseContext.StockLog.Where(x=> x.ItemID.Id == id).ToList();
+            return _databaseContext.StockLog.Where(x => x.ItemID.Id == id).ToList();
         }
 
         public List<BuyingPriceLog> GetBuyingPriceLogs(int id)
         {
-            return _databaseContext.BuyingPriceLogs.Where(x=>x.ItemID.Id ==id).ToList();    
+            return _databaseContext.BuyingPriceLogs.Where(x => x.ItemID.Id == id).ToList();
         }
 
         public List<SellingPriceLog> GetSellingPriceLogs(int id)
@@ -31,7 +31,7 @@ namespace SalesTracker.DatabaseHelpers
 
         public List<Sales> GetSaleReport(int id)
         {
-            return _databaseContext.Sales.Include(x=>x.Sale).Where(x=>x.Item.Id == id).ToList();
+            return _databaseContext.Sales.Include(x => x.Sale).Where(x => x.Item.Id == id).ToList();
         }
     }
 }

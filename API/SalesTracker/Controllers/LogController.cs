@@ -5,11 +5,11 @@ using SalesTracker.DatabaseHelpers;
 
 namespace SalesTracker.Controllers
 {
-    public class LogController : Controller
+    public class LogController : Controller, ILogController
     {
-        private LogHelper _log;
+        private ILogHelper _log;
 
-        public LogController(LogHelper log)
+        public LogController(ILogHelper log)
         {
             _log = log;
         }

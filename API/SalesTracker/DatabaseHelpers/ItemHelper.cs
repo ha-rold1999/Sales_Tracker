@@ -54,9 +54,6 @@ namespace SalesTracker.DatabaseHelpers
         {
             var entry = _databaseContext.Entry(item);
             var changes = entry.Properties.Where(p => p.IsModified).ToList();
-            string changeSummary = string.Join(", ", entry.Properties
-                .Where(p => p.IsModified)
-                .Select(p => $"Changed: {p.Metadata.Name} - Old Value: {p.OriginalValue} - New Value: {p.CurrentValue}"));
 
             foreach(var change in changes)
             {

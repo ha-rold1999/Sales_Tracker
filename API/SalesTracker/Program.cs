@@ -27,7 +27,7 @@ builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configur
 //Set Auto mapper
 builder.Services.AddAutoMapper(typeof(Program));
 //Dependency Injection
-builder.Services.AddScoped(typeof(LogHelper));
+builder.Services.AddScoped<ILogHelper, LogHelper>();
 builder.Services.AddScoped<IDBHelper<ItemDTO, Item>, ItemHelper>();
 builder.Services.AddScoped<IDBHelper<SalesDTO, Sales>, SaleHelper>();
 builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
