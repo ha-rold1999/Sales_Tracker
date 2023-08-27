@@ -1,4 +1,4 @@
-const SOURCE = "https://localhost:7114";
+const SOURCE = "http://localhost:9001";
 
 export function GetItems() {
   return fetch(`${SOURCE}/api/v1/Item/GetAll`, {
