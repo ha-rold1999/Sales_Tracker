@@ -152,3 +152,65 @@ export async function HandleAddItem({
     });
   }
 }
+
+export function HandleExpenses({
+  selectedItem,
+  setIsItemSelected,
+  quantity,
+  setIsSoldGreaterThanZero,
+  SetExpense,
+  setTotalExpense,
+  totalExpense,
+  setExpenses,
+  expenses,
+}) {
+  if (quantity <= 0) {
+    setIsSoldGreaterThanZero(false);
+  } else {
+    SetExpense({
+      selectedItem,
+      setTotalExpense,
+      totalExpense,
+      quantity,
+      expenses,
+      setExpenses,
+    });
+    setIsItemSelected(true);
+    setIsSoldGreaterThanZero(true);
+  }
+}
+
+export async function HandleSaveAllExpenses({
+  expenses,
+  queryClient,
+  AddExpenses,
+  navigate,
+  setIsExpensesExist,
+}) {
+  if (expenses.length > 0) {
+    try {
+      await queryClient.fetchQuery("save sales", () =>
+        AddExpenses({ expenses })
+      );
+
+      await Swal.fire({
+        icon: "success",
+        title: "Expenses saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      navigate("/");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
+    }
+
+    setIsExpensesExist(true);
+  } else {
+    setIsExpensesExist(false);
+  }
+}

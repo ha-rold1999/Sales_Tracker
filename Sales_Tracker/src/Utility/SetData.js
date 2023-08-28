@@ -18,3 +18,20 @@ export function SetSales({
   const bought = { item: JSON.parse(selectedItem), quantity: quantity };
   setSales([...sales, bought]);
 }
+
+export function SetExpense({
+  selectedItem,
+  setTotalExpense,
+  totalExpense,
+  quantity,
+  expenses,
+  setExpenses,
+}) {
+  console.log(JSON.parse(selectedItem));
+  const expense = JSON.parse(selectedItem).buyingPrice * quantity;
+
+  setTotalExpense(totalExpense + expense);
+
+  const bought = { item: JSON.parse(selectedItem), quantity: quantity };
+  setExpenses([...expenses, bought]);
+}

@@ -15,6 +15,11 @@ export default function MainMenu() {
           className="bg-red-400 w-4/5 justify-center items-center flex py-2 text-2xl font-bold rounded-lg cursor-pointer">
           Sales
         </Link>
+        <Link
+          to="/expenses"
+          className="bg-red-900 w-4/5 justify-center items-center flex py-2 text-2xl font-bold rounded-lg cursor-pointer">
+          Expenses
+        </Link>
       </div>
     </div>
   );

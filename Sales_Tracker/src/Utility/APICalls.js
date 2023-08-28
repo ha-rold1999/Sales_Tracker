@@ -1,4 +1,4 @@
-const SOURCE = "http://localhost:9001";
+const SOURCE = "https://localhost:7114";
 
 export function GetItems() {
   return fetch(`${SOURCE}/api/v1/Item/GetAll`, {
@@ -105,4 +105,19 @@ export function GetItemSaleLog({ id, setSales }) {
       setSales(res);
       console.log(res);
     });
+}
+
+export async function AddExpenses({ expenses }) {
+  try {
+    const response = await fetch(`${SOURCE}/api/Expense/AddReport`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(expenses), // Send the entire array as the body
+    });
+
+    const data = await response.json();
+    console.log(data); // Handle the response data as needed
+  } catch (error) {
+    console.log(error);
+  }
 }
