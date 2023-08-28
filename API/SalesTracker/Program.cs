@@ -34,6 +34,9 @@ builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
 builder.Services.AddScoped<ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>, SaleReportHelper>();
 builder.Services.AddScoped<IController<Item>, ItemController>();
 builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
+builder.Services.AddScoped(typeof(ExpenseReportHelper));
+builder.Services.AddScoped(typeof(ExpenseDateHelper));
+builder.Services.AddScoped(typeof(ExpenseHelper));
 
 //Configuration Binding
 builder.Services.Configure<SalesConfiguration>(builder.Configuration.GetSection("ApiFeatures:SalesConfiguration"));
@@ -58,11 +61,11 @@ builder.Services.AddApiVersioning(config =>
 
 var app = builder.Build();
 
-using (var migrate = app.Services.CreateScope())
-{
-    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
-    dbMigrate.Database.Migrate();
-}
+//using (var migrate = app.Services.CreateScope())
+//{
+//    var dbMigrate = migrate.ServiceProvider.GetRequiredService<DatabaseContext>();
+//    dbMigrate.Database.Migrate();
+//}
 
 
 // Configure the HTTP request pipeline.

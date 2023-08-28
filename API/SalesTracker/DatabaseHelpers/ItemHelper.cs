@@ -102,7 +102,7 @@ namespace SalesTracker.DatabaseHelpers
             bool isValid = Validator.TryValidateObject(item, new ValidationContext(item), validationResult, validateAllProperties: true);
 
             if (item.SellingPrice <= item.BuyingPrice)
-            { isValid = false; }
+            {  isValid = false; }
 
             if (!isValid) { throw new ValidationException(); }
         }
