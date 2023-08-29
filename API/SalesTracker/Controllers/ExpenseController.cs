@@ -64,5 +64,34 @@ namespace SalesTracker.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("api/[controller]/GetItemExpenseReport/{id}")]
+        public IActionResult GetItemExpenseReport(int id)
+        {
+            try
+            {
+                return Ok(_expenseHelper.GetItemExpense(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("api/[controller]/GetDailyExpenseReport")]
+        public IActionResult GetDailyExpenseReport()
+        {
+            try
+            {
+                return Ok(_expenseHelper.GetDailyExpense());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
