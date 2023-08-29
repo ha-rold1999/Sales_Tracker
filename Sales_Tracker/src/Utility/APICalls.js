@@ -121,3 +121,15 @@ export async function AddExpenses({ expenses }) {
     console.log(error);
   }
 }
+
+export function GetItemExpenseReport({ id, setExpenses }) {
+  fetch(`${SOURCE}/api/Expense/GetItemExpenseReport/${id}`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      setExpenses(res);
+      console.log(res);
+    })
+    .then((err) => console.log(err));
+}

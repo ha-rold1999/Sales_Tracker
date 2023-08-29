@@ -4,6 +4,7 @@ import Item from "./Item";
 import AddItem from "./AddItem";
 import ItemReport from "./ItemReport";
 import ItemSaleReport from "./ItemSaleReport";
+import ExpenseLog from "./Report/ExpenseLog";
 
 export default function Inventory() {
   return (
@@ -13,6 +14,7 @@ export default function Inventory() {
       <Route path="/add-item" element={<AddItem />} />
       <Route path="/item-report" element={<ItemReport />} />
       <Route path="/item-sales" element={<ItemSaleReport />} />
+      <Route path="/item-expenses" element={<ExpenseLog />} />
     </Routes>
   );
 }
