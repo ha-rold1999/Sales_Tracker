@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Models.Model.Expense;
 using Models.Model.Expense.Expenses;
 using Models.Model.Expense.Reports;
 using Models.Model.Items;
@@ -21,7 +20,7 @@ namespace SalesTracker.DatabaseHelpers
             _itemHepler = itemHelper;
         }
 
-        public Expenses Add(Expenses expenses) 
+        public Expenses Add(Expenses expenses)
         {
             expenses.Cost = expenses.Quantity * expenses.Item.BuyingPrice;
 
@@ -29,8 +28,7 @@ namespace SalesTracker.DatabaseHelpers
             _databaseContext.Entry(item).State = EntityState.Modified;
             item.Stock += expenses.Quantity;
 
-            var itemDTO = _mapper.Map<ItemDTO>(item);
-            _itemHepler.Update(itemDTO);
+            LogStockUpdate(item);
 
             _databaseContext.Expenses.Add(expenses);
             return expenses;
@@ -43,6 +41,19 @@ namespace SalesTracker.DatabaseHelpers
         public List<ExpenseReport> GetDailyExpense()
         {
             return _databaseContext.ExpensesReport.ToList();
+        }
+        private void LogStockUpdate(Item item)
+        {
+            var entry = _databaseContext.Entry(item);
+            var change = entry.Properties.FirstOrDefault(p => p.IsModified && p.Metadata.Name == "Stock")!;
+            var stockLog = new StockLog
+            {
+                OldStock = (int)change.OriginalValue!,
+                NewStock = (int)change.CurrentValue!,
+                DateUpdate = DateOnly.FromDateTime(DateTime.UtcNow.Date),
+                ItemID = item
+            };
+            _databaseContext.StockLog.Add(stockLog);
         }
     }
 }
