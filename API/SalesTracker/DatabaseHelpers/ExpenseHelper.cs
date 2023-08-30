@@ -10,14 +10,10 @@ namespace SalesTracker.DatabaseHelpers
     public class ExpenseHelper
     {
         private DatabaseContext _databaseContext;
-        private IMapper _mapper;
-        private IDBHelper<ItemDTO, Item> _itemHepler;
 
-        public ExpenseHelper(DatabaseContext databaseContext, IDBHelper<ItemDTO, Item> itemHelper, IMapper mapper)
+        public ExpenseHelper(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
-            _mapper = mapper;
-            _itemHepler = itemHelper;
         }
 
         public Expenses Add(Expenses expenses)

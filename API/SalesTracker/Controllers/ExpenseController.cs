@@ -93,5 +93,19 @@ namespace SalesTracker.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet]
+        [Route("api/[controller]/GetCurrentDateExpenseReport")]
+        public IActionResult GetCurrentDateExpenseReport()
+        {
+            try
+            {
+                return Ok(expenseReport);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

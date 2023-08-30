@@ -133,3 +133,9 @@ export function GetItemExpenseReport({ id, setExpenses }) {
     })
     .then((err) => console.log(err));
 }
+
+export function GetCurrentDateExpenseReport() {
+  return fetch(`${SOURCE}/api/Expense/GetCurrentDateExpenseReport`, {
+    method: "GET",
+  }).then((res) => res.json());
+}
