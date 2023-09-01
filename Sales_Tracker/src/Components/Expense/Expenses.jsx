@@ -2,10 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
 import DropBox from "../Sales/Form/DropBox";
 import { useState } from "react";
-import { GetItems } from "../../Utility/APICalls";
 import Stock from "../Sales/Stock";
 import Sold from "../Sales/Form/Sold";
 import BoughtItems from "./BoughtItems";
@@ -16,11 +14,12 @@ import {
 } from "../../Utility/configuration";
 import { SetExpense } from "../../Utility/SetData";
 import { AddExpenses } from "../../Utility/APICalls";
+import { useSelector } from "react-redux";
 
 export default function Expenses() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data } = useQuery(["items"], GetItems);
+  const { items } = useSelector((state) => state.itemSlice);
 
   const [selectedItem, setSelectedItem] = useState();
   const [isItemSelected, setIsItemSelected] = useState(true);
@@ -72,7 +71,7 @@ export default function Expenses() {
           <DropBox
             handelSelectChange={handelSelectChange}
             selectedItem={selectedItem}
-            items={data}
+            items={items}
           />
           {!isItemSelected && (
             <span className="text-red-600">Please select an item</span>

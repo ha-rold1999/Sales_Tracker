@@ -72,23 +72,6 @@ export async function HandleSaveAllSales({
   }
 }
 
-export function LoadItem({ isLoading, isError, isSuccess }) {
-  if (isLoading) {
-    Swal.showLoading();
-  }
-  if (isError) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "This is on us we are working on it",
-    });
-  }
-
-  if (isSuccess) {
-    Swal.close();
-  }
-}
-
 export async function HandleUpdateItem({
   watch,
   queryClient,

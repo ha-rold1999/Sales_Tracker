@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../../Style/style.css";
-import { GetItems } from "../../Utility/APICalls";
-import { useQuery } from "react-query";
-import Swal from "sweetalert2";
-import { LoadItem } from "../../Utility/configuration";
+import { useSelector } from "react-redux";
 
 export default function Items() {
-  const { data, isLoading, isError, isSuccess } = useQuery(["items"], GetItems);
-
-  LoadItem({ isLoading, isError, isSuccess });
+  const { items } = useSelector((state) => state.itemSlice);
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
@@ -27,7 +22,7 @@ export default function Items() {
 
       <div className="h-full overflow-y-auto hide-scrollbar">
         <div className="grid gap-2 grid-cols-3 ">
-          {data?.map((item, index) => {
+          {items?.map((item, index) => {
             return (
               <Link
                 to="/inventory/item"
