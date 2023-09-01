@@ -7,7 +7,7 @@ using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class ExpenseHelper
+    public class ExpenseHelper : IExpenseHelper
     {
         private DatabaseContext _databaseContext;
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Models.Model.Expense.Expenses;
 using Models.Model.Items;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
@@ -15,6 +16,7 @@ namespace SalesTracker
             CreateMap<SaleDTO, Sale>().ReverseMap();
             CreateMap<SalesDTO, Sales>().ReverseMap();
             CreateMap<SaleReportDTO, SaleReport>().ReverseMap();
+            CreateMap<ExpensesDTO, Expenses>().ReverseMap();
         }
     }
 }

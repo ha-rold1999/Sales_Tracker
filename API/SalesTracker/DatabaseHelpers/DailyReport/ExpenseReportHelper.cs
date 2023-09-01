@@ -5,7 +5,7 @@ using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers.DailyReport
 {
-    public class ExpenseReportHelper
+    public class ExpenseReportHelper : IExpenseReportHelper
     {
         private DatabaseContext _databaseContext;
 
@@ -30,7 +30,7 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
 
         public ExpenseReport UpdateExpenseReport(Expenses expenses, ExpenseReport expenseReport)
         {
-            expenseReport.TotalExpense = expenseReport.TotalExpense + expenses.Cost;
+            expenseReport.TotalExpense += expenses.Cost;
 
             _databaseContext.SaveChanges();
             return expenseReport;

@@ -3,7 +3,7 @@ using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers.DateReport
 {
-    public class ExpenseDateHelper
+    public class ExpenseDateHelper : IExpenseDateHelper
     {
         private DatabaseContext _databaseContext;
 

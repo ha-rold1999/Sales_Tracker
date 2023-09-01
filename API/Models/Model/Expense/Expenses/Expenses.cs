@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Models.Model.Expense.Expenses
 {
     [Table("expenses")]
-    public class Expenses : IExpenses
+    public class Expenses : IExpenses, IExpensesDTO
     {
         [Key]
         [Column("id")]

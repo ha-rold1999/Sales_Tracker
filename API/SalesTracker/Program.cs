@@ -34,10 +34,9 @@ builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
 builder.Services.AddScoped<ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>, SaleReportHelper>();
 builder.Services.AddScoped<IController<Item>, ItemController>();
 builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
-builder.Services.AddScoped(typeof(ExpenseReportHelper));
-builder.Services.AddScoped(typeof(ExpenseDateHelper));
-builder.Services.AddScoped(typeof(ExpenseHelper));
-
+builder.Services.AddScoped<IExpenseHelper,  ExpenseHelper>();
+builder.Services.AddScoped<IExpenseDateHelper, ExpenseDateHelper>();
+builder.Services.AddScoped<IExpenseReportHelper,  ExpenseReportHelper>();
 //Configuration Binding
 builder.Services.Configure<SalesConfiguration>(builder.Configuration.GetSection("ApiFeatures:SalesConfiguration"));
 builder.Services.Configure<ItemsConfiguration>(builder.Configuration.GetSection("ApiFeatures:ItemConfiguration"));
