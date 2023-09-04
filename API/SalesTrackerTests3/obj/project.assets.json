@@ -37,8 +37,6 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
-<<<<<<< HEAD
-=======
       "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.21": {
         "type": "package",
         "dependencies": {
@@ -104,7 +102,6 @@
           }
         }
       },
->>>>>>> NewMaster
       "Microsoft.AspNetCore.Mvc.Versioning/5.1.0": {
         "type": "package",
         "compile": {
@@ -405,8 +402,6 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-<<<<<<< HEAD
-=======
       "Microsoft.Extensions.Identity.Core/6.0.21": {
         "type": "package",
         "dependencies": {
@@ -443,7 +438,6 @@
           }
         }
       },
->>>>>>> NewMaster
       "Microsoft.Extensions.Logging/7.0.0": {
         "type": "package",
         "dependencies": {
@@ -521,8 +515,6 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-<<<<<<< HEAD
-=======
       "Microsoft.IdentityModel.JsonWebTokens/6.10.0": {
         "type": "package",
         "dependencies": {
@@ -604,7 +596,6 @@
           }
         }
       },
->>>>>>> NewMaster
       "Microsoft.NET.Test.Sdk/17.5.0": {
         "type": "package",
         "dependencies": {
@@ -1358,8 +1349,6 @@
           }
         }
       },
-<<<<<<< HEAD
-=======
       "System.IdentityModel.Tokens.Jwt/6.10.0": {
         "type": "package",
         "dependencies": {
@@ -1377,7 +1366,6 @@
           }
         }
       },
->>>>>>> NewMaster
       "System.IO/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1490,8 +1478,6 @@
           }
         }
       },
-<<<<<<< HEAD
-=======
       "System.Security.Cryptography.Cng/4.5.0": {
         "type": "package",
         "compile": {
@@ -1509,7 +1495,6 @@
           }
         }
       },
->>>>>>> NewMaster
       "System.Text.Encoding/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1633,11 +1618,8 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "BusinessLogic": "1.0.0",
           "CustomException": "1.0.0",
-<<<<<<< HEAD
-=======
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.21",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.21",
->>>>>>> NewMaster
           "Microsoft.AspNetCore.Mvc.Versioning": "5.1.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.18.1",
           "Models": "1.0.0",
@@ -1743,8 +1725,6 @@
         "coverlet.collector.nuspec"
       ]
     },
-<<<<<<< HEAD
-=======
     "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.21": {
       "sha512": "EZfFWxMTd2Su5kfhaL5gIhEGANVcBV89qQX4nu/akSQNutW4AjfEujniQJTn/PXUaqOhWnykyKmly4p66CzbRA==",
       "type": "package",
@@ -1813,7 +1793,6 @@
         "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
->>>>>>> NewMaster
     "Microsoft.AspNetCore.Mvc.Versioning/5.1.0": {
       "sha512": "UX8w9BlCiZpr6Ox4YAve1w0CkI1CAovukGNzKd7v0+5pZc8lzuG5tRovucr1RWIKHs0E/Yx8563CN7KzaB3bpw==",
       "type": "package",
@@ -2319,8 +2298,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-<<<<<<< HEAD
-=======
     "Microsoft.Extensions.Identity.Core/6.0.21": {
       "sha512": "yYbRf/iLYM8jwjLJtbX3iDsHjSB+6tr/tmnSkjM/ZUUIbv/76OUD8+RNcxB0r3LobG/+rZqXNwZTAvtDWeg7Jg==",
       "type": "package",
@@ -2359,7 +2336,6 @@
         "microsoft.extensions.identity.stores.nuspec"
       ]
     },
->>>>>>> NewMaster
     "Microsoft.Extensions.Logging/7.0.0": {
       "sha512": "Nw2muoNrOG5U5qa2ZekXwudUn2BJcD41e65zwmDHb1fQegTX66UokLWZkJRpqSSHXDOWZ5V0iqhbxOEky91atA==",
       "type": "package",
@@ -2515,8 +2491,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-<<<<<<< HEAD
-=======
     "Microsoft.IdentityModel.JsonWebTokens/6.10.0": {
       "sha512": "0qjS31rN1MQTc46tAYbzmMTSRfdV5ndZxSjYxIGqKSidd4wpNJfNII/pdhU5Fx8olarQoKL9lqqYw4yNOIwT0Q==",
       "type": "package",
@@ -2612,7 +2586,6 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
->>>>>>> NewMaster
     "Microsoft.NET.Test.Sdk/17.5.0": {
       "sha512": "IJ4eSPcsRbwbAZehh1M9KgejSy0u3d0wAdkJytfCh67zOaCl5U3ltruUEe15MqirdRqGmm/ngbjeaVeGapSZxg==",
       "type": "package",
@@ -3979,8 +3952,6 @@
         "system.globalization.nuspec"
       ]
     },
-<<<<<<< HEAD
-=======
     "System.IdentityModel.Tokens.Jwt/6.10.0": {
       "sha512": "C+Q5ORsFycRkRuvy/Xd0Pv5xVpmWSAvQYZAGs7VQogmkqlLhvfZXTgBIlHqC3cxkstSoLJAYx6xZB7foQ2y5eg==",
       "type": "package",
@@ -4000,7 +3971,6 @@
         "system.identitymodel.tokens.jwt.nuspec"
       ]
     },
->>>>>>> NewMaster
     "System.IO/4.3.0": {
       "sha512": "3qjaHvxQPDpSOYICjUoTsmoq5u6QJAFRUITgeT/4gqkF1bajbSmb1kwSxEA8AHlofqgcKJcM8udgieRNhaJ5Cg==",
       "type": "package",
@@ -4496,8 +4466,6 @@
         "system.runtime.extensions.nuspec"
       ]
     },
-<<<<<<< HEAD
-=======
     "System.Security.Cryptography.Cng/4.5.0": {
       "sha512": "WG3r7EyjUe9CMPFSs6bty5doUqT+q9pbI80hlNzo2SkPkZ4VTuZkGWjpp77JB8+uaL4DFPRdBsAY+DX3dBK92A==",
       "type": "package",
@@ -4561,7 +4529,6 @@
         "version.txt"
       ]
     },
->>>>>>> NewMaster
     "System.Text.Encoding/4.3.0": {
       "sha512": "BiIg+KWaSDOITze6jGQynxg64naAPtqGHBwDrLaCtixsa5bKiR8dpPOHA7ge3C0JJQizJE+sfkz1wV+BAKAYZw==",
       "type": "package",

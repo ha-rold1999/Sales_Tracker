@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 export default function Sales() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { items } = useSelector((state) => state.itemSlice);
+  const { data } = useQuery(["items"], GetItems);
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
@@ -75,7 +75,7 @@ export default function Sales() {
           <DropBox
             handelSelectChange={handelSelectChange}
             selectedItem={selectedItem}
-            items={items}
+            items={data}
           />
           {!isItemSelected && (
             <span className="text-red-600">Please select an item</span>

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../Style/style.css";
-import { useSelector } from "react-redux";
+import { useQuery } from "react-query";
+import { GetItems } from "../../Utility/APICalls";
 
 export default function Items() {
-  const { items } = useSelector((state) => state.itemSlice);
+  const { data } = useQuery(["items"], GetItems);
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
@@ -22,7 +23,7 @@ export default function Items() {
 
       <div className="h-full overflow-y-auto hide-scrollbar">
         <div className="grid gap-2 grid-cols-3 ">
-          {items?.map((item, index) => {
+          {data?.map((item, index) => {
             return (
               <Link
                 to="/inventory/item"
