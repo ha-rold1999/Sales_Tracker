@@ -152,3 +152,15 @@ C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\o
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\obj\Debug\net6.0\SalesTrackerTests3.genruntimeconfig.cache
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\obj\Debug\net6.0\ref\SalesTrackerTests3.dll
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests3\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Models.Model.Items;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
@@ -8,9 +10,11 @@ using SalesTracker.Configuration.Items;
 using SalesTracker.Configuration.Sales;
 using SalesTracker.Controllers;
 using SalesTracker.DatabaseHelpers;
+using SalesTracker.DatabaseHelpers.Account;
 using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.EntityFramework;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,9 +41,31 @@ builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
 builder.Services.AddScoped<IExpenseHelper,  ExpenseHelper>();
 builder.Services.AddScoped<IExpenseDateHelper, ExpenseDateHelper>();
 builder.Services.AddScoped<IExpenseReportHelper,  ExpenseReportHelper>();
+builder.Services.AddScoped(typeof(AccountHelper));
+builder.Services.AddScoped(typeof(TokenHelper));
 //Configuration Binding
 builder.Services.Configure<SalesConfiguration>(builder.Configuration.GetSection("ApiFeatures:SalesConfiguration"));
 builder.Services.Configure<ItemsConfiguration>(builder.Configuration.GetSection("ApiFeatures:ItemConfiguration"));
+//Authentication
+builder.Services.AddAuthentication(o =>
+{
+    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(o =>
+    {
+        o.SaveToken = true;
+        o.RequireHttpsMetadata = false;
+        o.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWT:ValidAudience"],
+            ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+        };
+    });
 
 //Versioning
 builder.Services.AddApiVersioning(config =>
@@ -76,6 +102,9 @@ app.UseSwagger();
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors();

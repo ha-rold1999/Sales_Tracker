@@ -22,6 +22,126 @@ namespace SalesTracker.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Models.Model.Account.Credentials.StoreCredentials", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("user_name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("store_credentials");
+                });
+
+            modelBuilder.Entity("Models.Model.Account.Information.StoreInformation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("OwnerFirstname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("OwnerLastname")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("last_name");
+
+                    b.Property<string>("StoreAddress")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("address");
+
+                    b.Property<int>("StoreCredentialsId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StoreEmail")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("store_name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreCredentialsId");
+
+                    b.ToTable("store_information");
+                });
+
+            modelBuilder.Entity("Models.Model.Account.Status.AccountStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("DataDeleted")
+                        .HasColumnType("date")
+                        .HasColumnName("date_deleted");
+
+                    b.Property<DateOnly>("DateCreated")
+                        .HasColumnType("date")
+                        .HasColumnName("date_created");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<int>("StoreCredentialsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreCredentialsId");
+
+                    b.ToTable("account_status");
+                });
+
+            modelBuilder.Entity("Models.Model.Account.Token", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("token_blacklist");
+                });
+
             modelBuilder.Entity("Models.Model.CashFlowModel.Flow.CashFlow", b =>
                 {
                     b.Property<int>("Id")
@@ -375,6 +495,28 @@ namespace SalesTracker.Migrations
                     b.HasIndex("SaleId");
 
                     b.ToTable("sales");
+                });
+
+            modelBuilder.Entity("Models.Model.Account.Information.StoreInformation", b =>
+                {
+                    b.HasOne("Models.Model.Account.Credentials.StoreCredentials", "StoreCredentials")
+                        .WithMany()
+                        .HasForeignKey("StoreCredentialsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreCredentials");
+                });
+
+            modelBuilder.Entity("Models.Model.Account.Status.AccountStatus", b =>
+                {
+                    b.HasOne("Models.Model.Account.Credentials.StoreCredentials", "StoreCredentials")
+                        .WithMany()
+                        .HasForeignKey("StoreCredentialsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StoreCredentials");
                 });
 
             modelBuilder.Entity("Models.Model.CashFlowModel.Flow.CashFlow", b =>
