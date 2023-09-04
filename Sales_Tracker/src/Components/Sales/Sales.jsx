@@ -13,11 +13,12 @@ import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { HandleSales, HandleSaveAllSales } from "../../Utility/configuration";
+import { useSelector } from "react-redux";
 
 export default function Sales() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data } = useQuery(["items"], GetItems);
+  const { items } = useSelector((state) => state.itemSlice);
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
@@ -74,7 +75,7 @@ export default function Sales() {
           <DropBox
             handelSelectChange={handelSelectChange}
             selectedItem={selectedItem}
-            items={data}
+            items={items}
           />
           {!isItemSelected && (
             <span className="text-red-600">Please select an item</span>

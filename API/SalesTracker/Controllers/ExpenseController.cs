@@ -12,7 +12,6 @@ using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
 using Models.Model.Expense.Expenses;
 using AutoMapper;
-using System.Net;
 
 namespace SalesTracker.Controllers
 {
@@ -54,9 +53,6 @@ namespace SalesTracker.Controllers
                 {
                     var exp = _mapper.Map<Expenses>(expense);
                     exp.Expense = expenseDate;
-
-                    if (exp.Quantity <= 0) throw new SalesQuantityException();
-
                     _expenseHelper.Add(exp);
                     _expenseReportHelper.UpdateExpenseReport(exp, expenseReport);
                 }
@@ -65,11 +61,11 @@ namespace SalesTracker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return NotFound();
+                return BadRequest($"Item does not exist");
             }
             catch (SalesQuantityException)
             {
-                return BadRequest();
+                return BadRequest("");
             }
             catch (Exception ex)
             {
@@ -89,7 +85,7 @@ namespace SalesTracker.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}");
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet]
