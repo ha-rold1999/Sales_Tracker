@@ -5,13 +5,15 @@ import MainPage from "./Components/Menu/MainPage";
 import Expenses from "./Components/Expense/Expenses";
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
+import Login from "./Components/Login/Login";
 
 function App() {
   return (
     <Provider store={Store}>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/menu" element={<MainPage />} />
           <Route path="/sales" element={<Sales />} />
           <Route path="/inventory/*" element={<Inventory />} />
           <Route path="/expenses/*" element={<Expenses />} />
