@@ -53,6 +53,9 @@ namespace SalesTracker.Controllers
                 {
                     var exp = _mapper.Map<Expenses>(expense);
                     exp.Expense = expenseDate;
+
+                    if (exp.Quantity <= 0) throw new SalesQuantityException();
+
                     _expenseHelper.Add(exp);
                     _expenseReportHelper.UpdateExpenseReport(exp, expenseReport);
                 }
@@ -61,11 +64,11 @@ namespace SalesTracker.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest($"Item does not exist");
+                return NotFound();
             }
             catch (SalesQuantityException)
             {
-                return BadRequest("");
+                return BadRequest();
             }
             catch (Exception ex)
             {
