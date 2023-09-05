@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Models.Model.Account.Credentials;
+using Models.Model.Account.Information;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +12,6 @@ namespace Models.Model.Sale
     {
         public DateOnly Date { get; set; }
         public int Id { get; set; }
+        public StoreInformation StoreInformation { get; set; }
     }
 }

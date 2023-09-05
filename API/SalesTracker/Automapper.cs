@@ -26,6 +26,7 @@ namespace SalesTracker
             CreateMap<AccountStatusDTO, AccountStatus>().ReverseMap();
             CreateMap<CreateAccountDTO, StoreCredentials>().ReverseMap();
             CreateMap<CreateAccountDTO, StoreInformation>().ReverseMap();
+            CreateMap<SaleModel, SalesDTO>();
         }
     }
 }

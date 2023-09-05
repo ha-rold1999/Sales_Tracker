@@ -1,54 +1,60 @@
 ﻿using AutoMapper;
 using CustomException;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using Models.Model.Account.Information;
+using Models.Model.CashFlowModel.Report;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
 using Models.Model.Sale.Sales;
 using SalesTracker.Configuration.Sales;
+using SalesTracker.Controllers.Interfaces;
 using SalesTracker.DatabaseHelpers;
-using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
+using SalesTracker.DatabaseHelpers.Interfaces;
 
 namespace SalesTracker.Controllers
 {
-    public class SaleController : Controller, ISaleController<Sales>
+    public class SaleController : Controller, ISaleController
     {
-        private readonly IDBHelper<SalesDTO, Sales> _saleHelper;
-        private readonly IDateHelper<SaleDTO> _saleDateHelper;
-        private readonly ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO> _saleReportHelper;
+        private readonly ISaleHelper _saleHelper;
+        private readonly ISaleDateHelper _saleDateHelper;
+        private readonly ISaleReportHelper _saleReportHelper;
         private readonly IMapper _mapper;
-        private readonly Sale saleDate;
-        private readonly SaleReport saleReport;
         private readonly SalesConfiguration _salesConfiguration;
         private readonly ILogger<SaleController> _logger;
+        private readonly IMemoryCache _cache;
+
+        private Sale SaleReport;
 
         //Running Constructor
-        public SaleController(IDBHelper<SalesDTO, Sales> saleHelper,
-            IDateHelper<SaleDTO> saleDateHelper,
-            ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO> saleReportHelper,
+        public SaleController(ISaleHelper saleHelper,
+            ISaleDateHelper saleDateHelper,
+            ISaleReportHelper saleReportHelper,
             IMapper mapper,
             IOptionsSnapshot<SalesConfiguration> configuration,
-            ILogger<SaleController> logger)
+            ILogger<SaleController> logger,
+            IMemoryCache cache)
         {
             _saleHelper = saleHelper;
             _saleDateHelper = saleDateHelper;
             _saleReportHelper = saleReportHelper;
             _mapper = mapper;
 
-            saleDate = _saleDateHelper.GetLastReport();
-            saleReport = _saleReportHelper.GetLastReport(saleDate);
-
             _salesConfiguration = configuration.Value;
 
             _logger = logger;
+
+            _cache = cache;
         }
 
-
+        [Authorize]
         [HttpPost]
         [Route("api/[controller]/Add")]
-        public IActionResult Add([FromBody] Sales[] sales)
+        public IActionResult Add([FromBody] SaleModel[] sales)
         {
             if (_salesConfiguration.IsAddSalesDisabled)
             { return StatusCode(500, "Adding new feature under construction"); }
@@ -57,12 +63,14 @@ namespace SalesTracker.Controllers
             {
                 foreach (var sale in sales)
                 {
-                    sale.Sale = saleDate;
-
                     var salesDTO = _mapper.Map<SalesDTO>(sale);
+                    salesDTO.Sale = GetCachedSale();
 
-                    _saleHelper.Add(salesDTO);
-                    _saleReportHelper.UpdateSaleReport(saleReport, salesDTO);
+                    if (salesDTO.Sale == null)
+                        throw new Exception("Sale Report Not Recorded");
+
+                    _saleHelper.AddSales(salesDTO);
+                    _saleReportHelper.UpdateSaleReport(GetCachedReport(), salesDTO);
                 }
                 return Ok(sales);
 
@@ -82,47 +90,15 @@ namespace SalesTracker.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetAllSales")]
-        public IActionResult GetAllSales()
-        {
-            try
-            {
-                List<Sales> sales = _saleHelper.GetAll();
-                return Ok(sales);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{ex.Message}");
-                return BadRequest(ex.Message);
-            }
-
-        }
-
-        [HttpGet]
-        [Route("api/[controller]/GetAllDailyReport")]
-        public IActionResult GetAllDailyReport()
-        {
-            try
-            {
-                List<SaleReport> saleReports = _saleReportHelper.GetAllReport();
-                return Ok(saleReports);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{ex.Message}");
-                return BadRequest(ex.Message);
-            }
-
-        }
-
+        [Authorize]
         [HttpGet]
         [Route("api/[controller]/GetCurrentDateSales")]
         public IActionResult GetCurrentDateSales()
         {
             try
             {
-                List<Sales> sales = _saleDateHelper.GetCurrentDateSales(saleDate.Id);
+                var saleDate = GetCachedSale();
+                List<Sales> sales = _saleDateHelper.GetTodaysItemsSales(saleDate.Id);
                 return Ok(sales);
             }
             catch (Exception ex)
@@ -132,12 +108,23 @@ namespace SalesTracker.Controllers
             }
         }
 
-        [HttpGet]
+        [Authorize]
+        [HttpPost]
         [Route("api/[controller]/GetCurrentDateSalesReport")]
-        public IActionResult GetCurrentDateSalesReport()
+        public IActionResult GetCurrentDateSalesReport([FromBody] StoreInformation storeInformation)
         {
+            var saleCache = GetCachedSale();
+            var reportCache = GetCachedReport();
+            if (saleCache != null && reportCache != null) 
+            {
+                return Ok(reportCache);
+            }
             try
             {
+                var saleDate = _saleDateHelper.GetLastReport(storeInformation);
+                var saleReport = _saleReportHelper.GetLastReport(saleDate);
+                _cache.Set("CurrenDateSales", saleDate, TimeSpan.FromMinutes(120));
+                _cache.Set("SaleReport", saleReport, TimeSpan.FromMinutes(120));
                 return Ok(saleReport);
             }
             catch (Exception ex)
@@ -145,6 +132,24 @@ namespace SalesTracker.Controllers
                 _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
+        }
+
+        private Sale? GetCachedSale()
+        {
+            if (_cache.TryGetValue("CurrenDateSales", out Sale saleDate))
+            {
+                return saleDate;
+            }
+            return null;
+        }
+
+        private SaleReport? GetCachedReport()
+        {
+            if (_cache.TryGetValue("SaleReport", out SaleReport saleReport))
+            {
+                return saleReport;
+            }
+            return null;
         }
     }
 }

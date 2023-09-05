@@ -5,11 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Models.Model.Sale;
 using Models.Model.Sale.Sales;
 using SalesTracker.DatabaseHelpers.DateReport;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class SaleHelper : IDBHelper<SalesDTO, Sales>, IDisposable
+    public class SaleHelper : IDisposable, ISaleHelper
     {
         private readonly DatabaseContext _context;
         private readonly IMapper _mapper;
@@ -20,7 +21,13 @@ namespace SalesTracker.DatabaseHelpers
             _context = context;
             _mapper = mapper;
         }
-        public Sales Add(SalesDTO DTO)
+
+        /// <summary>
+        /// Add sales of each item to the database
+        /// </summary>
+        /// <param name="DTO"></param>
+        /// <returns>Sales</returns>
+        public Sales AddSales(SalesDTO DTO)
         {
             if (isValid(DTO))
             {
@@ -31,35 +38,16 @@ namespace SalesTracker.DatabaseHelpers
 
             var sales = _mapper.Map<Sales>(DTO);
             var item = sales.Item;
+            _context.StoreInformation.Attach(sales.Sale.StoreInformation);
+            _context.Sale.Attach(sales.Sale);
 
             _context.Entry(item).State = EntityState.Modified;
             _context.Sales.Add(sales);
-            
-            return sales;
-        }
-        public Sales Delete(int id)
-        {
-            var sales = isExist(id);
-            _context.Sales.Remove(sales);
-            _context.SaveChanges();
-            return sales;
-        }
-        public List<Sales> GetAll()
-        {
-            return _context.Sales.Include(s => s.Item).Include(s => s.Sale).ToList();
-        }
-        public Sales Update(SalesDTO DTO)
-        {
-            var sales = isExist(DTO.Id);
 
-            _mapper.Map(DTO, sales);
-            _context.SaveChanges();
             return sales;
         }
-        private Sales isExist(int id)
-        {
-            return _context.Sales.Find(id) ?? throw new NullReferenceException();
-        }
+
+        //Check if sales model is valid
         private bool isValid(SalesDTO dto)
         {
             bool isValid = dto.Quantity > 0;
@@ -68,10 +56,12 @@ namespace SalesTracker.DatabaseHelpers
 
             isValid = dto.Item.Stock >= dto.Quantity;
 
-            if(!isValid) { throw new SalesQuantityException(); }
+            if (!isValid) { throw new SalesQuantityException(); }
 
             return isValid;
         }
+
+        //Disposing
         public void Dispose()
         {
             Dispose(true);
@@ -81,7 +71,7 @@ namespace SalesTracker.DatabaseHelpers
         {
             if (!_disposed)
             {
-                if(disposing) { _context.Dispose(); }
+                if (disposing) { _context.Dispose(); }
                 _disposed = true;
             }
         }

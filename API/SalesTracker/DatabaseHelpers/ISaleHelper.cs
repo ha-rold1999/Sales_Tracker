@@ -2,7 +2,7 @@
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public interface IDBHelper<T, T_Entity>
+    public interface ISaleHelper<T, T_Entity>
     {
         T_Entity Add(T DTO);
         T_Entity Delete(int id);

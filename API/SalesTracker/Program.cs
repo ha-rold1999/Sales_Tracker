@@ -30,16 +30,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(o=> o.AddDefaultPolicy(builder=> builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
 //Set Connection to the Database
 builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnection")));
+//Caching
+builder.Services.AddMemoryCache();
 //Set Auto mapper
 builder.Services.AddAutoMapper(typeof(Program));
 //Dependency Injection
 builder.Services.AddScoped<ILogHelper, LogHelper>();
 builder.Services.AddScoped<IItemHelper, ItemHelper>();
-builder.Services.AddScoped<IDBHelper<SalesDTO, Sales>, SaleHelper>();
-builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
-builder.Services.AddScoped<ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>, SaleReportHelper>();
+builder.Services.AddScoped<ISaleHelper, SaleHelper>();
+builder.Services.AddScoped<ISaleDateHelper, SaleDateHelper>();
+builder.Services.AddScoped<ISaleReportHelper, SaleReportHelper>();
 builder.Services.AddScoped<IItemController, ItemController>();
-builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
+builder.Services.AddScoped<ISaleController, SaleController>();
 builder.Services.AddScoped<IExpenseHelper,  ExpenseHelper>();
 builder.Services.AddScoped<IExpenseDateHelper, ExpenseDateHelper>();
 builder.Services.AddScoped<IExpenseReportHelper,  ExpenseReportHelper>();
