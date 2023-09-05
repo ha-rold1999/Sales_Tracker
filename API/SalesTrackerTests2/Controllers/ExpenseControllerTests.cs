@@ -62,7 +62,7 @@ namespace SalesTracker.Tests
         [TestMethod]
         public void AddReport_ShouldReturnOk()
         {
-            _itemHelper.Add(new ItemDTO { Id = 1, ItemName = "test", Stock = 1, BuyingPrice = 10, SellingPrice = 11 });
+            //_itemHelper.Add(new ItemDTO { Id = 1, ItemName = "test", Stock = 1, BuyingPrice = 10, SellingPrice = 11 });
             ExpensesDTO[] expenses = {
                 new ExpensesDTO { Item = new Item { Id = 1, ItemName = "test", Stock = 1, BuyingPrice = 10, SellingPrice = 11 }, Quantity = 1 }
             };

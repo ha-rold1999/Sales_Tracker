@@ -14,6 +14,7 @@ namespace Models.Model.Items
         public int Stock { get; set; }
         public decimal BuyingPrice { get; set; }
         public decimal SellingPrice { get; set; }
+        public bool isDeleted { get; set; }
         public StoreInformation StoreInformation{get;set;}
     }
 }

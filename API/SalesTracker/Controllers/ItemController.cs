@@ -4,50 +4,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Models.Model.Items;
 using SalesTracker.Configuration.Items;
+using SalesTracker.Controllers.Interfaces;
 using SalesTracker.DatabaseHelpers;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.Controllers
 {
-    public class ItemController : Controller, IController<ItemDTO>
+    public class ItemController : Controller, IItemController
     {
-        private ItemHelper _itemHelper;
-        private IMapper _mapper;
+        private IItemHelper _itemHelper;
         private ItemsConfiguration _configuration;
         private ILogger<ItemController> _logger;
 
         //Running constructor
-        public ItemController(ItemHelper itemHelper, IMapper mapper, IOptionsSnapshot<ItemsConfiguration> configuration, ILogger<ItemController> logger)
+        public ItemController(IItemHelper itemHelper, IOptionsSnapshot<ItemsConfiguration> configuration, ILogger<ItemController> logger)
         {
             _itemHelper = itemHelper;
-            _mapper = mapper;
             _configuration = configuration.Value;
             _logger = logger;
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("api/v{version}/[controller]/GetAll")]
-        [ApiVersion("1.0")]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                List<Item> items = _itemHelper.GetAll();
-                return Ok(items);
-            }
-            catch(Exception ex) 
-            {
-                _logger.LogError($"{ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-
+        //Get the items of the store
         [Authorize]
         [HttpGet]
         [Route("api/v{version}/[controller]/GetStoreItem/{id}")]
         [ApiVersion("1.0")]
-        public IActionResult GetAll(int id)
+        public IActionResult GetStoreItem(int id)
         {
             try
             {
@@ -61,19 +44,20 @@ namespace SalesTracker.Controllers
             }
         }
 
+        //Add item to the store
         [Authorize]
         [HttpPost]
-        [Route("api/v{version}/[controller]/Add")]
+        [Route("api/v{version}/[controller]/AddItem")]
         [ApiVersion("1.0")]
-        public IActionResult Add([FromBody] ItemDTO item)
+        public IActionResult AddItem([FromBody] ItemDTO item)
         {
-            if(_configuration.IsAddItemDisabled)
+            if (_configuration.IsAddItemDisabled)
             {
                 return StatusCode(500, "Adding new Item Under Construction");
             }
             try
             {
-                _itemHelper.Add(item);
+                _itemHelper.AddItem(item);
                 return Ok(item);
             }
             catch (ValidationException)
@@ -87,15 +71,16 @@ namespace SalesTracker.Controllers
             }
         }
 
+        //Update the item of the store
         [Authorize]
         [HttpPut]
-        [Route("api/v{version}/[controller]/Update")]
+        [Route("api/v{version}/[controller]/UpdateItem")]
         [ApiVersion("1.0")]
-        public IActionResult Update([FromBody] ItemDTO item)
+        public IActionResult UpdateItem([FromBody] ItemDTO item)
         {
             try
             {
-                _itemHelper.Update(item);
+                _itemHelper.UpdateItem(item);
                 return Ok(item);
             }
             catch (ValidationException)
@@ -108,6 +93,28 @@ namespace SalesTracker.Controllers
                 return BadRequest(ex.Message);
             }
         }
-    }
 
+        //Delete the item of the store
+        [Authorize]
+        [HttpDelete]
+        [Route("api/v{version}/[controller]/DeleteItem/{id}")]
+        [ApiVersion("1.0")]
+        public IActionResult DeleteItem(int id)
+        {
+            try
+            {
+                _itemHelper.DeleteItem(id);
+                return Ok();
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest();
+            }
+        }
+    }
 }

@@ -9,10 +9,12 @@ using Models.Model.Sale.Sales;
 using SalesTracker.Configuration.Items;
 using SalesTracker.Configuration.Sales;
 using SalesTracker.Controllers;
+using SalesTracker.Controllers.Interfaces;
 using SalesTracker.DatabaseHelpers;
 using SalesTracker.DatabaseHelpers.Account;
 using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 using System.Text;
 
@@ -32,11 +34,11 @@ builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configur
 builder.Services.AddAutoMapper(typeof(Program));
 //Dependency Injection
 builder.Services.AddScoped<ILogHelper, LogHelper>();
-builder.Services.AddScoped(typeof(ItemHelper));
+builder.Services.AddScoped<IItemHelper, ItemHelper>();
 builder.Services.AddScoped<IDBHelper<SalesDTO, Sales>, SaleHelper>();
 builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
 builder.Services.AddScoped<ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>, SaleReportHelper>();
-builder.Services.AddScoped<IController<ItemDTO>, ItemController>();
+builder.Services.AddScoped<IItemController, ItemController>();
 builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
 builder.Services.AddScoped<IExpenseHelper,  ExpenseHelper>();
 builder.Services.AddScoped<IExpenseDateHelper, ExpenseDateHelper>();

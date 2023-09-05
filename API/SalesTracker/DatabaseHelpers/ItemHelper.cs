@@ -1,45 +1,57 @@
 ﻿using AutoMapper;
 using Models.Model.Items;
 using SalesTracker.DatabaseHelpers.Account;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class ItemHelper : IDisposable
+    public class ItemHelper : IDisposable, IItemHelper
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
-        private readonly AccountHelper _accountHelper;
         private bool _disposed = false;
 
-        public ItemHelper(DatabaseContext databaseContext, IMapper mapper, AccountHelper accountHelper)
+        public ItemHelper(DatabaseContext databaseContext, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
-            _accountHelper = accountHelper;
-        }
-        public List<Item> GetAll()
-        {
-            return _databaseContext.Item.ToList();
-        }
-        public List<Item> GetItems(int id)
-        {
-            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id).ToList();
         }
 
-        public Item Add(ItemDTO itemDTO)
+        /// <summary>
+        /// Get the items of the store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>int</returns>
+        public List<Item> GetItems(int id)
+        {
+            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && x.isDeleted == false).ToList();
+        }
+
+        /// <summary>
+        /// Add Item to the store
+        /// </summary>
+        /// <param name="itemDTO"></param>
+        /// <returns>Item</returns>
+        public Item AddItem(ItemDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
             _databaseContext.StoreInformation.Attach(item.StoreInformation);
- 
+
             isValid(item);
 
             _databaseContext.Item.Add(item);
             _databaseContext.SaveChanges();
             return item;
         }
-        public Item Update(ItemDTO itemDTO)
+
+        /// <summary>
+        /// Update the item of the store
+        /// </summary>
+        /// <param name="itemDTO"></param>
+        /// <returns>Item</returns>
+        public Item UpdateItem(ItemDTO itemDTO)
         {
             var item = isExist(itemDTO.Id);
             _mapper.Map(itemDTO, item);
@@ -49,21 +61,29 @@ namespace SalesTracker.DatabaseHelpers
             _databaseContext.SaveChanges();
             return item;
         }
-        public Item Delete(int id)
+
+        /// <summary>
+        /// Delete the item of the store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Item</returns>
+        public Item DeleteItem(int id)
         {
             var item = isExist(id);
-            _databaseContext.Item.Remove(item);
+            item.isDeleted = true;
             _databaseContext.SaveChanges();
             return item;
         }
+
+        //Log any changes to the item
         private void LogUpdate(Item item)
         {
             var entry = _databaseContext.Entry(item);
             var changes = entry.Properties.Where(p => p.IsModified).ToList();
 
-            foreach(var change in changes)
+            foreach (var change in changes)
             {
-                if(change.Metadata.Name == "Stock")
+                if (change.Metadata.Name == "Stock")
                 {
                     var stockLog = new StockLog
                     {
@@ -74,7 +94,7 @@ namespace SalesTracker.DatabaseHelpers
                     };
                     _databaseContext.StockLog.Add(stockLog);
                 }
-                else if(change.Metadata.Name == "BuyingPrice")
+                else if (change.Metadata.Name == "BuyingPrice")
                 {
                     var buyingPriceLog = new BuyingPriceLog
                     {
@@ -85,7 +105,7 @@ namespace SalesTracker.DatabaseHelpers
                     };
                     _databaseContext.BuyingPriceLogs.Add(buyingPriceLog);
                 }
-                else if( change.Metadata.Name == "SellingPrice")
+                else if (change.Metadata.Name == "SellingPrice")
                 {
                     var sellingPricelog = new SellingPriceLog
                     {
@@ -98,20 +118,26 @@ namespace SalesTracker.DatabaseHelpers
                 }
             }
         }
+
+        //Check if the item exist
         private Item isExist(int id)
         {
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
         }
+
+        //Check if the item model is valid
         private void isValid(Item item)
         {
             var validationResult = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(item, new ValidationContext(item), validationResult, validateAllProperties: true);
 
             if (item.SellingPrice <= item.BuyingPrice)
-            {  isValid = false; }
+            { isValid = false; }
 
             if (!isValid) { throw new ValidationException(); }
         }
+
+        //Disposing the object
         public void Dispose()
         {
             Dispose(true);

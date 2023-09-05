@@ -38,6 +38,10 @@ namespace Models.Model.Items
         [DataType("decimal")]
         public decimal SellingPrice { get; set; }
 
+        [Required]
+        [Column("is_delete")]
+        public bool isDeleted { get; set; }
+
         [Column("store")]
         [Required]
         public StoreInformation StoreInformation { get; set; }
