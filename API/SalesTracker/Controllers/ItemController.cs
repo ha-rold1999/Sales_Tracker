@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Models.Model.Items;
@@ -8,22 +9,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.Controllers
 {
-    public class ItemController : Controller, IController<Item>
+    public class ItemController : Controller, IController<ItemDTO>
     {
-        private IDBHelper<ItemDTO, Item> _database;
+        private ItemHelper _itemHelper;
         private IMapper _mapper;
         private ItemsConfiguration _configuration;
         private ILogger<ItemController> _logger;
 
         //Running constructor
-        public ItemController(IDBHelper<ItemDTO, Item> database, IMapper mapper, IOptionsSnapshot<ItemsConfiguration> configuration, ILogger<ItemController> logger)
+        public ItemController(ItemHelper itemHelper, IMapper mapper, IOptionsSnapshot<ItemsConfiguration> configuration, ILogger<ItemController> logger)
         {
-            _database = database;
+            _itemHelper = itemHelper;
             _mapper = mapper;
             _configuration = configuration.Value;
             _logger = logger;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("api/v{version}/[controller]/GetAll")]
         [ApiVersion("1.0")]
@@ -31,7 +33,7 @@ namespace SalesTracker.Controllers
         {
             try
             {
-                List<Item> items = _database.GetAll();
+                List<Item> items = _itemHelper.GetAll();
                 return Ok(items);
             }
             catch(Exception ex) 
@@ -41,10 +43,29 @@ namespace SalesTracker.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("api/v{version}/[controller]/GetStoreItem/{id}")]
+        [ApiVersion("1.0")]
+        public IActionResult GetAll(int id)
+        {
+            try
+            {
+                List<Item> items = _itemHelper.GetItems(id);
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         [Route("api/v{version}/[controller]/Add")]
         [ApiVersion("1.0")]
-        public IActionResult Add([FromBody] Item item)
+        public IActionResult Add([FromBody] ItemDTO item)
         {
             if(_configuration.IsAddItemDisabled)
             {
@@ -52,8 +73,7 @@ namespace SalesTracker.Controllers
             }
             try
             {
-                var itemDTO = _mapper.Map<ItemDTO>(item);
-                _database.Add(itemDTO);
+                _itemHelper.Add(item);
                 return Ok(item);
             }
             catch (ValidationException)
@@ -67,15 +87,15 @@ namespace SalesTracker.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         [Route("api/v{version}/[controller]/Update")]
         [ApiVersion("1.0")]
-        public IActionResult Update([FromBody] Item item)
+        public IActionResult Update([FromBody] ItemDTO item)
         {
             try
             {
-                var itemDTO = _mapper.Map<ItemDTO>(item);
-                _database.Update(itemDTO);
+                _itemHelper.Update(item);
                 return Ok(item);
             }
             catch (ValidationException)

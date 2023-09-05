@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Model.Account.Information;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,5 +37,9 @@ namespace Models.Model.Items
         [Range(1, int.MaxValue)]
         [DataType("decimal")]
         public decimal SellingPrice { get; set; }
+
+        [Column("store")]
+        [Required]
+        public StoreInformation StoreInformation { get; set; }
     }
 }

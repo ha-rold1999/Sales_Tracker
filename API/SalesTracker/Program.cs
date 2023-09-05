@@ -32,11 +32,11 @@ builder.Services.AddDbContext<DatabaseContext>(o => o.UseNpgsql(builder.Configur
 builder.Services.AddAutoMapper(typeof(Program));
 //Dependency Injection
 builder.Services.AddScoped<ILogHelper, LogHelper>();
-builder.Services.AddScoped<IDBHelper<ItemDTO, Item>, ItemHelper>();
+builder.Services.AddScoped(typeof(ItemHelper));
 builder.Services.AddScoped<IDBHelper<SalesDTO, Sales>, SaleHelper>();
 builder.Services.AddScoped<IDateHelper<SaleDTO>, SaleDateHelper>();
 builder.Services.AddScoped<ISaleReportHelper<SaleReportDTO, Sale, SaleReport, SalesDTO>, SaleReportHelper>();
-builder.Services.AddScoped<IController<Item>, ItemController>();
+builder.Services.AddScoped<IController<ItemDTO>, ItemController>();
 builder.Services.AddScoped<ISaleController<Sales>, SaleController>();
 builder.Services.AddScoped<IExpenseHelper,  ExpenseHelper>();
 builder.Services.AddScoped<IExpenseDateHelper, ExpenseDateHelper>();

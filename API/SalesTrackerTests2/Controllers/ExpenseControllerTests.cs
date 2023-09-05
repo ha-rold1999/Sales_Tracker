@@ -55,7 +55,7 @@ namespace SalesTracker.Tests
             _controller = new ExpenseController(_expenseHelper, _expenseDateHelper, _expenseReportHelper, _logger, config);
 
 
-            _itemHelper = new ItemHelper(new DatabaseContext(option), config);
+            //_itemHelper = new ItemHelper(new DatabaseContext(option), config);
 
         }
 

@@ -1,32 +1,38 @@
 ﻿using AutoMapper;
 using Models.Model.Items;
+using SalesTracker.DatabaseHelpers.Account;
 using SalesTracker.EntityFramework;
 using System.ComponentModel.DataAnnotations;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class ItemHelper : IDBHelper<ItemDTO, Item>, IDisposable
+    public class ItemHelper : IDisposable
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private readonly AccountHelper _accountHelper;
         private bool _disposed = false;
 
-        public ItemHelper(DatabaseContext databaseContext, IMapper mapper)
+        public ItemHelper(DatabaseContext databaseContext, IMapper mapper, AccountHelper accountHelper)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
+            _accountHelper = accountHelper;
         }
         public List<Item> GetAll()
         {
             return _databaseContext.Item.ToList();
         }
-        public Item Get(int id)
+        public List<Item> GetItems(int id)
         {
-            return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
+            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id).ToList();
         }
+
         public Item Add(ItemDTO itemDTO)
         {
             var item = _mapper.Map<Item>(itemDTO);
+            _databaseContext.StoreInformation.Attach(item.StoreInformation);
+ 
             isValid(item);
 
             _databaseContext.Item.Add(item);

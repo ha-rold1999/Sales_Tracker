@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models.Model.Account.Information;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace Models.Model.Items
         public int Stock { get; set; }
         public decimal BuyingPrice { get; set; }
         public decimal SellingPrice { get; set; }
+        public StoreInformation StoreInformation{get;set;}
     }
 }
