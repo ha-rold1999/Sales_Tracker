@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const SOURCE = "https://localhost:7114";
 
 export function GetItems() {
@@ -138,4 +140,34 @@ export function GetCurrentDateExpenseReport() {
   return fetch(`${SOURCE}/api/Expense/GetCurrentDateExpenseReport`, {
     method: "GET",
   }).then((res) => res.json());
+}
+
+export async function LoginAPI({ username, password, navigate }) {
+  console.log(username);
+  try {
+    const response = await fetch(`${SOURCE}/api/Account/Login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
+
+    if (!response.ok) {
+      // Handle error responses here
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
+    const res = await response.json();
+    const expirationTime = new Date();
+    console.log(res);
+    expirationTime.setHours(expirationTime.getHours() + 2);
+    Cookies.set("auth_token", res.token, { expires: expirationTime });
+    navigate("/menu");
+  } catch (error) {
+    // Handle any other errors that may occur during the fetch or navigation
+    console.log(error);
+  }
 }
