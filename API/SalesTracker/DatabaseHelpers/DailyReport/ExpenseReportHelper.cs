@@ -1,6 +1,7 @@
 ﻿using Models.Model.Expense;
 using Models.Model.Expense.Expenses;
 using Models.Model.Expense.Reports;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers.DailyReport

@@ -26,7 +26,7 @@ namespace SalesTracker.DatabaseHelpers
         /// <returns>int</returns>
         public List<Item> GetItems(int id)
         {
-            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && x.isDeleted == false).ToList();
+            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && x.isDeleted == false).OrderBy(x=>x.ItemName).ToList();
         }
 
         /// <summary>

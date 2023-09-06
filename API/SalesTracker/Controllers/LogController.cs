@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models.Model.Items;
 using Models.Model.Sale.Sales;
-using SalesTracker.DatabaseHelpers;
+using SalesTracker.Controllers.Interfaces;
+using SalesTracker.DatabaseHelpers.Interfaces;
 
 namespace SalesTracker.Controllers
 {

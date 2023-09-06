@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Models.Model.Expense.Expenses;
 using Models.Model.Expense.Reports;
 using Models.Model.Items;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers

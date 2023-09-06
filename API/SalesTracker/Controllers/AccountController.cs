@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Models.Model.Account;
 using SalesTracker.DatabaseHelpers.Account;
+using System.Data.SqlTypes;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -33,6 +34,10 @@ namespace SalesTracker.Controllers
             try
             {
                 return Ok(_accountHelper.CreateAccount(createAccount).Id);
+            }
+            catch(SqlAlreadyFilledException)
+            {
+                return Conflict();
             }
             catch(Exception ex)
             {
@@ -72,19 +77,6 @@ namespace SalesTracker.Controllers
                     });
             }
             return Unauthorized();
-        }
-
-        [Authorize]
-        [HttpGet]
-        [Route("GetStoreInfo/{id}")]
-        public IActionResult GetStoreInfo(int id)
-        {
-            string header = Request.Headers["Authorization"].FirstOrDefault()!;
-            if(_tokenHelper.CheckTokenInBlackList(header))
-            {
-                return Unauthorized();
-            }
-            return Ok(_accountHelper.GetStoreInfo(id));
         }
 
         [Authorize]

@@ -7,18 +7,17 @@ using Models.Model.Items;
 using Models.Model.Sale.Reports;
 using Models.Model.Sale.Sales;
 using Models.Model.Sale;
-using SalesTracker.DatabaseHelpers;
-using SalesTracker.DatabaseHelpers.DailyReport;
-using SalesTracker.DatabaseHelpers.DateReport;
 using Models.Model.Expense.Expenses;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Models.Model.Account.Information;
 using Microsoft.Extensions.Caching.Memory;
+using SalesTracker.Controllers.Interfaces;
+using SalesTracker.DatabaseHelpers.Interfaces;
 
 namespace SalesTracker.Controllers
 {
-    public class ExpenseController : Controller
+    public class ExpenseController : Controller, IExpenseController
     {
         private IExpenseHelper _expenseHelper;
         private IExpenseDateHelper _expenseDateHelper;
@@ -46,7 +45,7 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/AddExpense")]
-        public IActionResult AddExpense([FromBody]ExpensesDTO[] expenses)
+        public IActionResult AddExpense([FromBody] IExpensesDTO[] expenses)
         {
             try
             {
@@ -101,16 +100,16 @@ namespace SalesTracker.Controllers
 
         private Expense? GetCachedExpense()
         {
-            if(_cache.TryGetValue("CurrentDateExpense", out Expense expenseDate))
+            if (_cache.TryGetValue("CurrentDateExpense", out Expense expenseDate))
             {
                 return expenseDate;
             }
             return null;
         }
 
-        private ExpenseReport GetCachedExpenseReport()
+        private ExpenseReport? GetCachedExpenseReport()
         {
-            if(_cache.TryGetValue("ExpenseReport", out ExpenseReport expenseReport))
+            if (_cache.TryGetValue("ExpenseReport", out ExpenseReport expenseReport))
             {
                 return expenseReport;
             }

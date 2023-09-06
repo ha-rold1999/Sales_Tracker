@@ -4,6 +4,7 @@ using Models.Model.Account.Credentials;
 using Models.Model.Account.Information;
 using Models.Model.Account.Status;
 using SalesTracker.EntityFramework;
+using System.Data.SqlTypes;
 
 namespace SalesTracker.DatabaseHelpers.Account
 {
@@ -19,6 +20,11 @@ namespace SalesTracker.DatabaseHelpers.Account
         }
         public CreateAccountDTO CreateAccount(CreateAccountDTO createAccountDTO)
         {
+            if (IsUsernamesAvailable(createAccountDTO.StoreCredentials.Username))
+            {
+                throw new SqlAlreadyFilledException();
+            }
+
             var credential = new StoreCredentials { Password = createAccountDTO.StoreCredentials.Password, Username = createAccountDTO.StoreCredentials.Username };
             var information = _mapper.Map<StoreInformation>(createAccountDTO);
             information.StoreCredentials = credential;
@@ -48,6 +54,10 @@ namespace SalesTracker.DatabaseHelpers.Account
             return _databaseContext.StoreInformation.FirstOrDefault(x => x.StoreCredentials.Id == id);
         }
 
+        private bool IsUsernamesAvailable(string username)
+        {
+            return _databaseContext.StoreCredentials.Any(x => x.Username == username);
+        }
 
     }
 }

@@ -40,13 +40,15 @@ builder.Services.AddScoped<IItemHelper, ItemHelper>();
 builder.Services.AddScoped<ISaleHelper, SaleHelper>();
 builder.Services.AddScoped<ISaleDateHelper, SaleDateHelper>();
 builder.Services.AddScoped<ISaleReportHelper, SaleReportHelper>();
-builder.Services.AddScoped<IItemController, ItemController>();
-builder.Services.AddScoped<ISaleController, SaleController>();
 builder.Services.AddScoped<IExpenseHelper,  ExpenseHelper>();
 builder.Services.AddScoped<IExpenseDateHelper, ExpenseDateHelper>();
 builder.Services.AddScoped<IExpenseReportHelper,  ExpenseReportHelper>();
 builder.Services.AddScoped(typeof(AccountHelper));
 builder.Services.AddScoped(typeof(TokenHelper));
+//controller dependency injection
+builder.Services.AddScoped<IItemController, ItemController>();
+builder.Services.AddScoped<ISaleController, SaleController>();
+builder.Services.AddScoped<IExpenseController, ExpenseController>();
 //Configuration Binding
 builder.Services.Configure<SalesConfiguration>(builder.Configuration.GetSection("ApiFeatures:SalesConfiguration"));
 builder.Services.Configure<ItemsConfiguration>(builder.Configuration.GetSection("ApiFeatures:ItemConfiguration"));

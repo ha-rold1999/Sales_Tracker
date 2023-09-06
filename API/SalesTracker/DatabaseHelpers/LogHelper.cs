@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models.Model.Items;
 using Models.Model.Sale.Sales;
+using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers
