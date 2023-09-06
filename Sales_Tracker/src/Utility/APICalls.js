@@ -2,9 +2,13 @@ import Cookies from "js-cookie";
 
 const SOURCE = "https://localhost:7114";
 
-export function GetItems() {
-  return fetch(`${SOURCE}/api/v1/Item/GetAll`, {
+export function GetItems({ store }) {
+  return fetch(`${SOURCE}/api/v1/Item/GetStoreItem/${store.id}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
   }).then((res) => res.json());
 }
 

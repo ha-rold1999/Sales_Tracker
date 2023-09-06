@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import "../../Style/style.css";
 import { useQuery } from "react-query";
 import { GetItems } from "../../Utility/APICalls";
+import { useSelector } from "react-redux";
 
 export default function Items() {
-  const { data } = useQuery(["items"], GetItems);
+  const { store } = useSelector((state) => state.storeSlice);
+
+  const { data } = useQuery(["items"], () => GetItems({ store }));
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
-      <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/">
+      <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/menu">
         back to menu
       </Link>
       <div className="flex flex-row items-center space-x-5  p-3">

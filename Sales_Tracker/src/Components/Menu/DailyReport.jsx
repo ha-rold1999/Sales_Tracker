@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   GetCurrentDateExpenseReport,
   GetCurrentDateSalesReport,
@@ -6,8 +6,12 @@ import {
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function DailyReport() {
+  const navigate = useNavigate();
+
   const currenDate = new Date();
   const year = currenDate.getFullYear();
   const month = currenDate.getMonth() + 1;
@@ -39,6 +43,14 @@ export default function DailyReport() {
   if (isProfitSuccess && isExpenseSuccess) {
     Swal.close();
   }
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      navigate("/");
+      Swal.close();
+      return;
+    }
+  }, []);
 
   return (
     <div className="w-2/5 h-screen bg-white flex flex-1 item-center justify-center flex-col space-y-5">
