@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   return (
@@ -19,7 +20,9 @@ export default function Login() {
             />
           </div>
         </form>
-        <div className="flex justify-center">Create Account</div>
+        <div className="flex justify-center">
+          <Link to="/register">Create Account</Link>
+        </div>
       </div>
     </div>
   );

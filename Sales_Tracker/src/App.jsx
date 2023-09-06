@@ -6,6 +6,7 @@ import Expenses from "./Components/Expense/Expenses";
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
 import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/sales" element={<Sales />} />
           <Route path="/inventory/*" element={<Inventory />} />
           <Route path="/expenses/*" element={<Expenses />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </Provider>
