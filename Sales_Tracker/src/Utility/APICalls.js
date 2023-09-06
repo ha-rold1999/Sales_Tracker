@@ -145,9 +145,12 @@ export function GetItemSaleLog({ id, setSales }) {
 
 export async function AddExpenses({ expenses }) {
   try {
-    const response = await fetch(`${SOURCE}/api/Expense/AddReport`, {
+    const response = await fetch(`${SOURCE}/api/Expense/AddExpense`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
       body: JSON.stringify(expenses), // Send the entire array as the body
     });
 
@@ -170,9 +173,14 @@ export function GetItemExpenseReport({ id, setExpenses }) {
     .then((err) => console.log(err));
 }
 
-export function GetCurrentDateExpenseReport() {
+export function GetCurrentDateExpenseReport({ store }) {
   return fetch(`${SOURCE}/api/Expense/GetCurrentDateExpenseReport`, {
-    method: "GET",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+    body: store,
   }).then((res) => res.json());
 }
 

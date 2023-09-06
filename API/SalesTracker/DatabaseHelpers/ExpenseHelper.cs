@@ -18,8 +18,10 @@ namespace SalesTracker.DatabaseHelpers
 
         public Expenses Add(Expenses expenses)
         {
+            _databaseContext.StoreInformation.Attach(expenses.Expense.StoreInformation);
+            _databaseContext.Expense.Attach(expenses.Expense);
             expenses.Cost = expenses.Quantity * expenses.Item.BuyingPrice;
-
+            
             var item = expenses.Item;
             _databaseContext.Entry(item).State = EntityState.Modified;
             item.Stock += expenses.Quantity;

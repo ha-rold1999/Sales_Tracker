@@ -1,18 +1,21 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import {
-  GetItemBuyingPriceLog,
-  GetItemSellingPriceLog,
-  GetItemStockLog,
-} from "../../Utility/APICalls";
+import { useEffect } from "react";
 import StockLog from "./Report/StockLog";
 import BuyingPriceLog from "./Report/BuyingPriceLog";
 import SellingPriceLog from "./Report/SellingPriceLog";
+import Cookies from "js-cookie";
 
 export default function ItemReport() {
   const location = useLocation();
   const data = location.state;
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      window.location.href = "/";
+      return;
+    }
+  }, []);
   return (
     <div className="w-full h-full">
       <div className="flex flex-1 justify-center text-white text-4xl font-bold">

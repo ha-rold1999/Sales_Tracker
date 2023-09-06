@@ -113,12 +113,6 @@ namespace SalesTracker.Controllers
         [Route("api/[controller]/GetCurrentDateSalesReport")]
         public IActionResult GetCurrentDateSalesReport([FromBody] StoreInformation storeInformation)
         {
-            var saleCache = GetCachedSale();
-            var reportCache = GetCachedReport();
-            if (saleCache != null && reportCache != null) 
-            {
-                return Ok(reportCache);
-            }
             try
             {
                 var saleDate = _saleDateHelper.GetLastReport(storeInformation);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ItemValidation } from "../../Utility/YupSchema";
 import { HandleUpdateItem } from "../../Utility/configuration";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function Item() {
   const queryClient = useQueryClient();
@@ -49,6 +50,13 @@ export default function Item() {
     DeleteItemCall({ id });
     window.location.href = "/inventory";
   }
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      window.location.href = "/";
+      return;
+    }
+  }, []);
 
   return (
     <div className="flex flex-1 w-full h-full justify-center items-center">

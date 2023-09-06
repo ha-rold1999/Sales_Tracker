@@ -8,6 +8,10 @@ export default function () {
   const location = useLocation();
   const data = location.state;
   useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      window.location.href = "/";
+      return;
+    }
     const id = data.id;
     GetItemSaleLog({ id, setSales });
   }, []);

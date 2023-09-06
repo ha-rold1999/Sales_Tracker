@@ -12,6 +12,9 @@ using SalesTracker.DatabaseHelpers.DailyReport;
 using SalesTracker.DatabaseHelpers.DateReport;
 using Models.Model.Expense.Expenses;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Models.Model.Account.Information;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace SalesTracker.Controllers
 {
@@ -22,42 +25,40 @@ namespace SalesTracker.Controllers
         private IExpenseReportHelper _expenseReportHelper;
         private ILogger<ExpenseController> _logger;
         private IMapper _mapper;
-        private Expense expenseDate;
-        private ExpenseReport expenseReport;
+        private IMemoryCache _cache;
 
         public ExpenseController(
             IExpenseHelper expenseHelper,
             IExpenseDateHelper expenseDateHelper,
             IExpenseReportHelper expenseReportHelper,
             ILogger<ExpenseController> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IMemoryCache cache)
         {
             _expenseHelper = expenseHelper;
             _expenseDateHelper = expenseDateHelper;
             _expenseReportHelper = expenseReportHelper;
             _logger = logger;
             _mapper = mapper;
-
-            expenseDate = _expenseDateHelper.GetLastReport();
-            expenseReport = _expenseReportHelper.GetLastReport(expenseDate);
-
+            _cache = cache;
         }
 
+        [Authorize]
         [HttpPost]
-        [Route("api/[controller]/AddReport")]
-        public IActionResult AddReport([FromBody]ExpensesDTO[] expenses)
+        [Route("api/[controller]/AddExpense")]
+        public IActionResult AddExpense([FromBody]ExpensesDTO[] expenses)
         {
             try
             {
                 foreach (var expense in expenses)
                 {
                     var exp = _mapper.Map<Expenses>(expense);
-                    exp.Expense = expenseDate;
+                    exp.Expense = GetCachedExpense();
 
                     if (exp.Quantity <= 0) throw new SalesQuantityException();
 
                     _expenseHelper.Add(exp);
-                    _expenseReportHelper.UpdateExpenseReport(exp, expenseReport);
+                    _expenseReportHelper.UpdateExpenseReport(exp, GetCachedExpenseReport());
                 }
                 return Ok(expenses);
 
@@ -77,40 +78,18 @@ namespace SalesTracker.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetItemExpenseReport/{id}")]
-        public IActionResult GetItemExpenseReport(int id)
-        {
-            try
-            {
-                return Ok(_expenseHelper.GetItemExpense(id));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpGet]
-        [Route("api/[controller]/GetDailyExpenseReport")]
-        public IActionResult GetDailyExpenseReport()
-        {
-            try
-            {
-                return Ok(_expenseHelper.GetDailyExpense());
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpGet]
+        [Authorize]
+        [HttpPost]
         [Route("api/[controller]/GetCurrentDateExpenseReport")]
-        public IActionResult GetCurrentDateExpenseReport()
+        public IActionResult GetCurrentDateExpenseReport([FromBody] StoreInformation storeInformation)
         {
             try
             {
+                var expenseDate = _expenseDateHelper.GetLastReport(storeInformation);
+                var expenseReport = _expenseReportHelper.GetLastReport(expenseDate);
+                _cache.Set("CurrentDateExpense", expenseDate, TimeSpan.FromMinutes(120));
+                _cache.Set("ExpenseReport", expenseReport, TimeSpan.FromSeconds(120));
+
                 return Ok(expenseReport);
             }
             catch (Exception ex)
@@ -118,6 +97,24 @@ namespace SalesTracker.Controllers
                 _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
+        }
+
+        private Expense? GetCachedExpense()
+        {
+            if(_cache.TryGetValue("CurrentDateExpense", out Expense expenseDate))
+            {
+                return expenseDate;
+            }
+            return null;
+        }
+
+        private ExpenseReport GetCachedExpenseReport()
+        {
+            if(_cache.TryGetValue("ExpenseReport", out ExpenseReport expenseReport))
+            {
+                return expenseReport;
+            }
+            return null;
         }
     }
 }

@@ -183,7 +183,7 @@ export async function HandleSaveAllExpenses({
         timer: 1500,
       });
 
-      navigate("/");
+      navigate("/menu");
     } catch (error) {
       Swal.fire({
         icon: "error",

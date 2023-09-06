@@ -5,13 +5,9 @@ import {
 } from "../../Utility/APICalls";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
-import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
 
 export default function DailyReport() {
-  const navigate = useNavigate();
-
   const currenDate = new Date();
   const year = currenDate.getFullYear();
   const month = currenDate.getMonth() + 1;
@@ -32,7 +28,9 @@ export default function DailyReport() {
     isLoading: isExpenseLoading,
     isError: isExpenseError,
     isSuccess: isExpenseSuccess,
-  } = useQuery(["expenses", year, month, day], GetCurrentDateExpenseReport);
+  } = useQuery(["expenses", year, month, day], () =>
+    GetCurrentDateExpenseReport({ store })
+  );
 
   if (isProfitLoading || isExpenseLoading) {
     Swal.showLoading();
@@ -46,7 +44,7 @@ export default function DailyReport() {
 
   useEffect(() => {
     if (!Cookies.get("auth_token")) {
-      navigate("/");
+      window.location.href = "/";
       Swal.close();
       return;
     }
@@ -68,11 +66,11 @@ export default function DailyReport() {
         </div>
       </div>
       <div className="flex justify-center text-2xl font-semibold">Expense</div>
-      {/* <div className="flex justify-center">
+      <div className="flex justify-center">
         <div className="bg-blue-500 px-5 rounded-lg text-2xl">
           ₱ {parseFloat(expense?.totalExpense).toFixed(2)}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

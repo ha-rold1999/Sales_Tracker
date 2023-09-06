@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
@@ -10,6 +10,7 @@ import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { AddItemValidation } from "../../Utility/YupSchema";
 import { HandleAddItem } from "../../Utility/configuration";
+import Cookies from "js-cookie";
 
 export default function AddItem() {
   const queryClient = useQueryClient();
@@ -47,6 +48,13 @@ export default function AddItem() {
       navigate,
     });
   };
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      window.location.href = "/";
+      return;
+    }
+  }, []);
 
   return (
     <div className="flex w-full h-full justify-center items-center">

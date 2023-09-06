@@ -77,7 +77,7 @@ export default function Sales() {
     <div className="flex flex-col-2 h-full">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
         <div className="flex flex-1 items-start">
-          <Link className="bg-white px-3 py-1 rounded-lg" to="/">
+          <Link className="bg-white px-3 py-1 rounded-lg" to="/menu">
             back to menu
           </Link>
         </div>

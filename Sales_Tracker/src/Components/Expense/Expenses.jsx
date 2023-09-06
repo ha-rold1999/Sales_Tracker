@@ -19,7 +19,9 @@ import { useQuery } from "react-query";
 export default function Expenses() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data } = useQuery(["items"], GetItems);
+
+  const store = localStorage.getItem("store");
+  const { data } = useQuery(["items"], () => GetItems({ store }));
 
   const [selectedItem, setSelectedItem] = useState();
   const [isItemSelected, setIsItemSelected] = useState(true);
@@ -63,7 +65,7 @@ export default function Expenses() {
     <div className="flex flex-col-2 h-full">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
         <div className="flex flex-1 items-start">
-          <Link className="bg-white px-3 py-1 rounded-lg" to="/">
+          <Link className="bg-white px-3 py-1 rounded-lg" to="/menu">
             back to menu
           </Link>
         </div>

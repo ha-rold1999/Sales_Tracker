@@ -43,7 +43,7 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
         /// <returns>SaleReport</returns>
         public SaleReport GetLastReport(Sale sale)
         {
-            return _context.SaleReport.FirstOrDefault(x => x.Sale.Date == DateOnly.FromDateTime(DateTime.Now))
+            return _context.SaleReport.FirstOrDefault(x => x.Sale.Date == DateOnly.FromDateTime(DateTime.Now) && x.Sale.Id == sale.Id)
                 ?? AddReport(new SaleReportDTO() { Sale = sale, TotalIncome = 0, TotalProfit = 0 });
         }
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { GetItemExpenseReport } from "../../../Utility/APICalls";
+import Cookies from "js-cookie";
 
 export default function ExpenseLog() {
   const [expenses, setExpenses] = useState([]);
@@ -10,6 +11,13 @@ export default function ExpenseLog() {
   useEffect(() => {
     const id = data.id;
     GetItemExpenseReport({ id, setExpenses });
+  }, []);
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      window.location.href = "/";
+      return;
+    }
   }, []);
   return (
     <div className="w-full h-full flex flex-1 justify-center overflow-hidden">
