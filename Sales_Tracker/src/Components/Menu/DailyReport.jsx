@@ -5,6 +5,7 @@ import {
 } from "../../Utility/APICalls";
 import { useQuery } from "react-query";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 export default function DailyReport() {
   const currenDate = new Date();
@@ -12,12 +13,16 @@ export default function DailyReport() {
   const month = currenDate.getMonth() + 1;
   const day = currenDate.getDate();
 
+  const { store } = useSelector((state) => state.storeSlice);
+
   const {
     data: profit,
     isLoading: isProfitLoading,
     isError: isProfitError,
     isSuccess: isProfitSuccess,
-  } = useQuery(["sales", year, month, day], GetCurrentDateSalesReport);
+  } = useQuery(["sales", year, month, day], () =>
+    GetCurrentDateSalesReport({ store })
+  );
   const {
     data: expense,
     isLoading: isExpenseLoading,
@@ -29,7 +34,7 @@ export default function DailyReport() {
     Swal.showLoading();
   }
   if (isProfitError || isExpenseError) {
-    console.log(error);
+    console.log("error");
   }
   if (isProfitSuccess && isExpenseSuccess) {
     Swal.close();
@@ -51,11 +56,11 @@ export default function DailyReport() {
         </div>
       </div>
       <div className="flex justify-center text-2xl font-semibold">Expense</div>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <div className="bg-blue-500 px-5 rounded-lg text-2xl">
           ₱ {parseFloat(expense?.totalExpense).toFixed(2)}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -47,9 +47,14 @@ export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {
     });
 }
 
-export function GetCurrentDateSalesReport() {
+export function GetCurrentDateSalesReport({ store }) {
   return fetch(`${SOURCE}/api/Sale/GetCurrentDateSalesReport`, {
-    method: "GET",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+    body: JSON.stringify(store),
   }).then((res) => res.json());
 }
 
@@ -142,7 +147,13 @@ export function GetCurrentDateExpenseReport() {
   }).then((res) => res.json());
 }
 
-export async function LoginAPI({ username, password, navigate }) {
+export async function LoginAPI({
+  username,
+  password,
+  navigate,
+  dispatch,
+  setStore,
+}) {
   console.log(username);
   try {
     const response = await fetch(`${SOURCE}/api/Account/Login`, {
@@ -165,6 +176,7 @@ export async function LoginAPI({ username, password, navigate }) {
     console.log(res);
     expirationTime.setHours(expirationTime.getHours() + 2);
     Cookies.set("auth_token", res.token, { expires: expirationTime });
+    dispatch(setStore(res.storeInformation));
     navigate("/menu");
   } catch (error) {
     // Handle any other errors that may occur during the fetch or navigation

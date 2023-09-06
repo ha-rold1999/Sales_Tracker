@@ -2,18 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { LoginAPI } from "../../Utility/APICalls";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setStore } from "../../Redux/StoreRedux";
 
 export default function Login() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const login = async () => {
     try {
-      LoginAPI({ username, password, navigate });
+      LoginAPI({ username, password, navigate, dispatch, setStore });
     } catch (error) {
       // Handle any other errors that may occur during the fetch or navigation
       console.log(error);

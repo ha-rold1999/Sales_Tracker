@@ -46,12 +46,13 @@ namespace SalesTracker.Controllers
         [Route("Login")]
         public IActionResult Login([FromBody] Login login)
         {
-            var store = _accountHelper.GetStoreCredentials(login);
-            if(store>-1)
+            var storeCredential = _accountHelper.GetStoreCredentials(login);
+            if(storeCredential != null)
             {
+                var store = _accountHelper.GetStoreInfo(storeCredential.Id);
                 var authClaims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.PrimarySid, store.ToString()),
+                    new Claim(ClaimTypes.PrimarySid, storeCredential.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
@@ -65,7 +66,7 @@ namespace SalesTracker.Controllers
                 return Ok(
                     new
                     {
-                        Id = store,
+                        storeInformation = store,
                         token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = DateTime.Now.AddHours(1)
                     });

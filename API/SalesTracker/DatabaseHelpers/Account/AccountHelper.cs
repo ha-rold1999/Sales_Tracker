@@ -37,14 +37,10 @@ namespace SalesTracker.DatabaseHelpers.Account
             createAccountDTO.Id = credential.Id;
             return createAccountDTO;
         }
-        public int GetStoreCredentials(Login login)
+        public StoreCredentials GetStoreCredentials(Login login)
         {
-            var result = _databaseContext.StoreCredentials.FirstOrDefault(x => x.Username == login.Username && x.Password == login.Password);
-            if(result == null)
-            {
-                return -1;
-            }
-            return result.Id;
+            return _databaseContext.StoreCredentials.FirstOrDefault(x => x.Username == login.Username && x.Password == login.Password);
+
         }
 
         public StoreInformation GetStoreInfo(int id)
