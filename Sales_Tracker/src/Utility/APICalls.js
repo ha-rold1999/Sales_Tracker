@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 const SOURCE = "https://localhost:7114";
 
 export function GetItems({ store }) {
-  return fetch(`${SOURCE}/api/v1/Item/GetStoreItem/${store.id}`, {
+  return fetch(`${SOURCE}/api/v1/Item/GetStoreItem/${JSON.parse(store).id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -13,28 +13,50 @@ export function GetItems({ store }) {
 }
 
 export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {
-  return fetch(`${SOURCE}/api/v1/Item/Add`, {
+  const store = localStorage.getItem("store");
+  return fetch(`${SOURCE}/api/v1/Item/AddItem`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
     body: JSON.stringify({
       itemName: itemName,
       stock: stock,
       buyingPrice: buyingPrice,
       sellingPrice: sellingPrice,
+      storeInformation: JSON.parse(store),
+      isDeleted: false,
     }),
   }).then((res) => res.json());
 }
 
+export function DeleteItemCall({ id }) {
+  fetch(`${SOURCE}/api/v1/Item/DeleteItem/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+  });
+}
+
 export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {
-  fetch(`${SOURCE}/api/v1/Item/Update`, {
+  const store = localStorage.getItem("store");
+  fetch(`${SOURCE}/api/v1/Item/UpdateItem`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
     body: JSON.stringify({
       id: data.id,
       itemName: data.itemName,
       stock: stock,
       buyingPrice: buyingPrice,
       sellingPrice: sellingPrice,
+      storeInformation: JSON.parse(store),
+      isDeleted: false,
     }),
   })
     .then((res) => res.json())
@@ -58,7 +80,7 @@ export function GetCurrentDateSalesReport({ store }) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${Cookies.get("auth_token")}`,
     },
-    body: JSON.stringify(store),
+    body: store,
   }).then((res) => res.json());
 }
 
@@ -154,13 +176,7 @@ export function GetCurrentDateExpenseReport() {
   }).then((res) => res.json());
 }
 
-export async function LoginAPI({
-  username,
-  password,
-  navigate,
-  dispatch,
-  setStore,
-}) {
+export async function LoginAPI({ username, password, navigate }) {
   console.log(username);
   try {
     const response = await fetch(`${SOURCE}/api/Account/Login`, {
@@ -183,7 +199,7 @@ export async function LoginAPI({
     console.log(res);
     expirationTime.setHours(expirationTime.getHours() + 2);
     Cookies.set("auth_token", res.token, { expires: expirationTime });
-    dispatch(setStore(res.storeInformation));
+    localStorage.setItem("store", JSON.stringify(res.storeInformation));
     navigate("/menu");
   } catch (error) {
     // Handle any other errors that may occur during the fetch or navigation

@@ -19,7 +19,7 @@ import Cookies from "js-cookie";
 export default function Sales() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { store } = useSelector((state) => state.storeSlice);
+  const store = localStorage.getItem("store");
 
   const { data } = useQuery(["items"], () => GetItems({ store }));
 

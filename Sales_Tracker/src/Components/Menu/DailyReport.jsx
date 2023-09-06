@@ -17,7 +17,7 @@ export default function DailyReport() {
   const month = currenDate.getMonth() + 1;
   const day = currenDate.getDate();
 
-  const { store } = useSelector((state) => state.storeSlice);
+  const store = localStorage.getItem("store");
 
   const {
     data: profit,

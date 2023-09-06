@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
-import { UpdateItemAPI } from "../../Utility/APICalls";
+import { DeleteItemCall, UpdateItemAPI } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "react-query";
@@ -45,6 +45,11 @@ export default function Item() {
     });
   };
 
+  function handleDelete(id) {
+    DeleteItemCall({ id });
+    window.location.href = "/inventory";
+  }
+
   return (
     <div className="flex flex-1 w-full h-full justify-center items-center">
       <form
@@ -52,6 +57,11 @@ export default function Item() {
         className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg">
         <div className="flex justify-center text-3xl font-bold">
           {data.itemName}
+        </div>
+        <div
+          className="flex justify-center cursor-pointer"
+          onClick={() => handleDelete(data.id)}>
+          delete
         </div>
 
         <div className="text-lg font-semibold">Stock</div>
