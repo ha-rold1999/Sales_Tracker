@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../Style/style.css";
 import { useState } from "react";
 import DropBox from "./Form/DropBox";
@@ -14,11 +14,14 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { HandleSales, HandleSaveAllSales } from "../../Utility/configuration";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 export default function Sales() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data } = useQuery(["items"], GetItems);
+  const { store } = useSelector((state) => state.storeSlice);
+
+  const { data } = useQuery(["items"], () => GetItems({ store }));
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
@@ -62,6 +65,13 @@ export default function Sales() {
       setIsSalesExist,
     });
   };
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      navigate("/");
+      return;
+    }
+  }, []);
 
   return (
     <div className="flex flex-col-2 h-full">

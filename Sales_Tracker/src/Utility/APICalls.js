@@ -66,7 +66,10 @@ export async function AddSales({ sales }) {
   try {
     const response = await fetch(`${SOURCE}/api/Sale/Add`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
       body: JSON.stringify(sales), // Send the entire array as the body
     });
 

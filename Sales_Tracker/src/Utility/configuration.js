@@ -57,7 +57,7 @@ export async function HandleSaveAllSales({
         timer: 1500,
       });
 
-      navigate("/");
+      navigate("/menu");
     } catch (error) {
       Swal.fire({
         icon: "error",

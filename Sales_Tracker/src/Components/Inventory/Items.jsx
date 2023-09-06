@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../Style/style.css";
 import { useQuery } from "react-query";
 import { GetItems } from "../../Utility/APICalls";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function Items() {
+  const navigate = useNavigate();
+
   const { store } = useSelector((state) => state.storeSlice);
 
   const { data } = useQuery(["items"], () => GetItems({ store }));
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      navigate("/");
+      return;
+    }
+  }, []);
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
