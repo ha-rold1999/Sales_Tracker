@@ -50,7 +50,9 @@ export async function HandleSaveAllSales({
 }) {
   if (sales.length > 0) {
     try {
+      Swal.showLoading();
       await queryClient.fetchQuery("save sales", () => AddSales({ sales }));
+      Swal.close();
 
       await Swal.fire({
         icon: "success",
@@ -61,6 +63,7 @@ export async function HandleSaveAllSales({
 
       navigate("/menu");
     } catch (error) {
+      Swal.close();
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -179,9 +182,11 @@ export async function HandleSaveAllExpenses({
 }) {
   if (expenses.length > 0) {
     try {
+      Swal.showLoading();
       await queryClient.fetchQuery("save sales", () =>
         AddExpenses({ expenses })
       );
+      Swal.close();
 
       await Swal.fire({
         icon: "success",
@@ -192,6 +197,7 @@ export async function HandleSaveAllExpenses({
 
       navigate("/menu");
     } catch (error) {
+      Swal.close();
       Swal.fire({
         icon: "error",
         title: "Oops...",
