@@ -77,10 +77,15 @@ namespace SalesTracker.Controllers
             }
         }
 
-        public IActionResult AddExpense([FromBody] IExpensesDTO[] expenses)
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetItemExpenseReport/{id}")]
+        public IActionResult GetItemExpenseReport(int id)
         {
-            throw new NotImplementedException();
+            var expenses = _expenseHelper.GetItemExpense(id);
+            return Ok(expenses);
         }
+
 
         [Authorize]
         [HttpPost]

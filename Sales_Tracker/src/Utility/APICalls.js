@@ -166,11 +166,14 @@ export async function AddExpenses({ expenses }) {
 export function GetItemExpenseReport({ id, setExpenses }) {
   fetch(`${SOURCE}/api/Expense/GetItemExpenseReport/${id}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
   })
     .then((res) => res.json())
     .then((res) => {
       setExpenses(res);
-      console.log(res);
     })
     .then((err) => console.log(err));
 }

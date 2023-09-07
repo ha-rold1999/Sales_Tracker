@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Models.Model.Expense;
 using Models.Model.Expense.Expenses;
 using Models.Model.Expense.Reports;
 using Models.Model.Items;
@@ -35,7 +36,7 @@ namespace SalesTracker.DatabaseHelpers
 
         public List<Expenses> GetItemExpense(int id)
         {
-            return _databaseContext.Expenses.Where(o => o.Item.Id == id).ToList();
+            return _databaseContext.Expenses.Where(o => o.Item.Id == id).Include(e => e.Expense).ToList();
         }
         public List<ExpenseReport> GetDailyExpense()
         {
