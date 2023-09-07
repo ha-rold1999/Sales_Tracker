@@ -49,7 +49,6 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
         /// <returns>ExpenseReport</returns>
         public ExpenseReport UpdateExpenseReport(Expenses expenses, ExpenseReport expenseReport)
         {
-            _databaseContext.ExpensesReport.Attach(expenseReport);
             expenseReport.TotalExpense += expenses.Cost;
 
             _databaseContext.SaveChanges();

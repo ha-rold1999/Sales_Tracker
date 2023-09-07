@@ -21,7 +21,7 @@ export default function Expenses() {
   const navigate = useNavigate();
 
   const store = localStorage.getItem("store");
-  const { data } = useQuery(["items"], () => GetItems({ store }));
+  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }));
 
   const [selectedItem, setSelectedItem] = useState();
   const [isItemSelected, setIsItemSelected] = useState(true);
@@ -71,11 +71,12 @@ export default function Expenses() {
         </div>
         <div className="w-full">
           <DropBox
-            handelSelectChange={handelSelectChange}
+            setSelectedItem={setSelectedItem}
             selectedItem={selectedItem}
             items={data}
+            isLoading={isLoading}
           />
-          {!isItemSelected && (
+          {!selectedItem && (
             <span className="text-red-600">Please select an item</span>
           )}
           <Stock

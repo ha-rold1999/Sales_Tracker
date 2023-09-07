@@ -14,12 +14,13 @@ export function HandleSales({
   setSales,
   sales,
 }) {
+  console.log(selectedItem);
   if (typeof selectedItem === "undefined") {
     setIsItemSelected(false);
   } else if (quantity <= 0) {
     setIsSoldGreaterThanZero(false);
     setIsSoldLessThanStock(true);
-  } else if (quantity > JSON.parse(selectedItem).stock) {
+  } else if (quantity > selectedItem.value.stock) {
     setIsSoldLessThanStock(false);
     setIsSoldGreaterThanZero(true);
   } else {

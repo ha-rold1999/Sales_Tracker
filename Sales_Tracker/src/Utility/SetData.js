@@ -8,14 +8,15 @@ export function SetSales({
   setSales,
   sales,
 }) {
-  console.log(JSON.parse(selectedItem));
-  const profit = JSON.parse(selectedItem).sellingPrice * quantity;
-  const income = profit - JSON.parse(selectedItem).buyingPrice * quantity;
+  console.log("set Data");
+  console.log(selectedItem.value);
+  const profit = selectedItem.value.sellingPrice * quantity;
+  const income = profit - selectedItem.value.buyingPrice * quantity;
 
   setTootalProfit(totalProfit + profit);
   setTotalIncome(totalIncome + income);
 
-  const bought = { item: JSON.parse(selectedItem), quantity: quantity };
+  const bought = { item: selectedItem.value, quantity: quantity };
   setSales([...sales, bought]);
 }
 
@@ -27,11 +28,10 @@ export function SetExpense({
   expenses,
   setExpenses,
 }) {
-  console.log(JSON.parse(selectedItem));
-  const expense = JSON.parse(selectedItem).buyingPrice * quantity;
+  const expense = selectedItem.value.buyingPrice * quantity;
 
   setTotalExpense(totalExpense + expense);
 
-  const bought = { item: JSON.parse(selectedItem), quantity: quantity };
+  const bought = { item: selectedItem.value, quantity: quantity };
   setExpenses([...expenses, bought]);
 }

@@ -7,7 +7,7 @@ export default function Stock({ selectedItem, setIsItemSelected }) {
       <div className="font-bold">
         {(() => {
           try {
-            const parsedItem = JSON.parse(selectedItem);
+            const parsedItem = selectedItem.value;
             return parsedItem.stock;
           } catch (error) {
             setIsItemSelected(false);

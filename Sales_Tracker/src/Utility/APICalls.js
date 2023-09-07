@@ -144,6 +144,7 @@ export function GetItemSaleLog({ id, setSales }) {
 }
 
 export async function AddExpenses({ expenses }) {
+  console.log(expenses);
   try {
     const response = await fetch(`${SOURCE}/api/Expense/AddExpense`, {
       method: "POST",
@@ -154,6 +155,7 @@ export async function AddExpenses({ expenses }) {
       body: JSON.stringify(expenses), // Send the entire array as the body
     });
 
+    console.log(response);
     const data = await response.json();
     console.log(data); // Handle the response data as needed
   } catch (error) {

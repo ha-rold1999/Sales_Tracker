@@ -15,13 +15,14 @@ import { Link } from "react-router-dom";
 import { HandleSales, HandleSaveAllSales } from "../../Utility/configuration";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export default function Sales() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const store = localStorage.getItem("store");
 
-  const { data } = useQuery(["items"], () => GetItems({ store }));
+  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }));
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
@@ -32,11 +33,6 @@ export default function Sales() {
   const [isSoldGreaterThanZero, setIsSoldGreaterThanZero] = useState(true);
   const [isSoldLessThanStock, setIsSoldLessThanStock] = useState(true);
   const [isSalesExist, setIsSalesExist] = useState(true);
-
-  const handelSelectChange = (e) => {
-    setSelectedItem(e.target.value);
-    setIsItemSelected(true);
-  };
 
   const handleSales = () => {
     setQuantity(0);
@@ -83,11 +79,13 @@ export default function Sales() {
         </div>
         <div className="w-full">
           <DropBox
-            handelSelectChange={handelSelectChange}
+            setSelectedItem={setSelectedItem}
+            setIsItemSelected={setIsItemSelected}
             selectedItem={selectedItem}
             items={data}
+            isLoading={isLoading}
           />
-          {!isItemSelected && (
+          {!selectedItem && (
             <span className="text-red-600">Please select an item</span>
           )}
           <Stock

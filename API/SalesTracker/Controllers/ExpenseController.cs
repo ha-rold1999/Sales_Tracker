@@ -45,7 +45,7 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/AddExpense")]
-        public IActionResult AddExpense([FromBody] IExpensesDTO[] expenses)
+        public IActionResult AddExpense([FromBody] ExpensesDTO[] expenses)
         {
             try
             {
@@ -75,6 +75,11 @@ namespace SalesTracker.Controllers
                 _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
+        }
+
+        public IActionResult AddExpense([FromBody] IExpensesDTO[] expenses)
+        {
+            throw new NotImplementedException();
         }
 
         [Authorize]

@@ -27,6 +27,7 @@ export default function SoldItems({
       </div>
 
       {sales?.map((item, index) => {
+        console.log(item);
         const profit = parseFloat(item.item.sellingPrice * item.quantity);
         const income = parseFloat(
           profit - item.item.buyingPrice * item.quantity
