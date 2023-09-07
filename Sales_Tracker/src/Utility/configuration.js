@@ -15,7 +15,6 @@ export function HandleSales({
   setSales,
   sales,
 }) {
-  console.log(selectedItem);
   if (typeof selectedItem === "undefined") {
     setIsItemSelected(false);
   } else if (quantity <= 0) {
@@ -89,9 +88,11 @@ export async function HandleUpdateItem({
   const sellingPrice = watch("sellingPrice");
 
   try {
+    Swal.showLoading();
     await queryClient.fetchQuery("update item", () =>
       UpdateItemAPI({ data, stock, buyingPrice, sellingPrice })
     );
+    Swal.close();
 
     await Swal.fire({
       icon: "success",
@@ -102,6 +103,7 @@ export async function HandleUpdateItem({
 
     navigate("/inventory");
   } catch (error) {
+    Swal.close();
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -120,6 +122,7 @@ export async function HandleAddItem({
   navigate,
 }) {
   try {
+    Swal.showLoading();
     const item = await queryClient.fetchQuery("add item", () =>
       AddItemCall({ itemName, stock, buyingPrice, sellingPrice })
     );
@@ -128,6 +131,7 @@ export async function HandleAddItem({
     await queryClient.fetchQuery("add expese", () =>
       AddItemExpenses({ expenses })
     );
+    Swal.close();
 
     await Swal.fire({
       icon: "success",
@@ -138,6 +142,7 @@ export async function HandleAddItem({
 
     navigate("/inventory");
   } catch (error) {
+    Swal.close();
     Swal.fire({
       icon: "error",
       title: "Oops...",
