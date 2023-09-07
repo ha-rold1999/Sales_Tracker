@@ -6,7 +6,6 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
     public interface IExpenseHelper
     {
         Expenses Add(Expenses expenses);
-        List<ExpenseReport> GetDailyExpense();
         List<Expenses> GetItemExpense(int id);
     }
 }

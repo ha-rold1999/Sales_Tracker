@@ -86,7 +86,6 @@ namespace SalesTracker.Controllers
             return Ok(expenses);
         }
 
-
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/GetCurrentDateExpenseReport")]

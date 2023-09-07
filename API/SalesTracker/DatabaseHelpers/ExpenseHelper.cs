@@ -9,15 +9,21 @@ using SalesTracker.EntityFramework;
 
 namespace SalesTracker.DatabaseHelpers
 {
-    public class ExpenseHelper : IExpenseHelper
+    public class ExpenseHelper : IExpenseHelper, IDisposable
     {
         private DatabaseContext _databaseContext;
+        private bool _disposed = false;
 
         public ExpenseHelper(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
         }
 
+        /// <summary>
+        /// Add expenses of each item in the database
+        /// </summary>
+        /// <param name="expenses"></param>
+        /// <returns>Expenses</returns>
         public Expenses Add(Expenses expenses)
         {
             _databaseContext.StoreInformation.Attach(expenses.Expense.StoreInformation);
@@ -34,14 +40,17 @@ namespace SalesTracker.DatabaseHelpers
             return expenses;
         }
 
+        /// <summary>
+        /// Get the expense report of each item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<Expenses></returns>
         public List<Expenses> GetItemExpense(int id)
         {
             return _databaseContext.Expenses.Where(o => o.Item.Id == id).Include(e => e.Expense).ToList();
         }
-        public List<ExpenseReport> GetDailyExpense()
-        {
-            return _databaseContext.ExpensesReport.ToList();
-        }
+
+        //Add log to stock update to the database
         private void LogStockUpdate(Item item)
         {
             var entry = _databaseContext.Entry(item);
@@ -55,5 +64,22 @@ namespace SalesTracker.DatabaseHelpers
             };
             _databaseContext.StockLog.Add(stockLog);
         }
+
+        //Disposing
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!_disposed)
+            {
+                if(disposing) { _databaseContext.Dispose(); }
+                _disposed = true;
+            }
+        }
+        ~ExpenseHelper()
+        { Dispose(false); }
     }
 }
