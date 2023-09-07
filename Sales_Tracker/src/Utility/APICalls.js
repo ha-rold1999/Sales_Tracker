@@ -163,6 +163,26 @@ export async function AddExpenses({ expenses }) {
   }
 }
 
+export async function AddItemExpenses({ expenses }) {
+  console.log(expenses);
+  try {
+    const response = await fetch(`${SOURCE}/api/Expense/AddItemExpense`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+      body: JSON.stringify(expenses), // Send the entire array as the body
+    });
+
+    console.log(response);
+    const data = await response.json();
+    console.log(data); // Handle the response data as needed
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function GetItemExpenseReport({ id, setExpenses }) {
   fetch(`${SOURCE}/api/Expense/GetItemExpenseReport/${id}`, {
     method: "GET",

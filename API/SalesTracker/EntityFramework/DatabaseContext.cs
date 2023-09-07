@@ -20,6 +20,12 @@ namespace SalesTracker.EntityFramework
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Item>().Property(e => e.Id).ValueGeneratedOnAdd();
+        }
+
         public DbSet<Item> Item { get; set; }
         public DbSet<Sale> Sale { get; set; }
         public DbSet<Sales> Sales { get; set; }

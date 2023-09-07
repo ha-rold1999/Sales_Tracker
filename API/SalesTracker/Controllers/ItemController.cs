@@ -57,8 +57,8 @@ namespace SalesTracker.Controllers
             }
             try
             {
-                _itemHelper.AddItem(item);
-                return Ok(item);
+                var newItem = _itemHelper.AddItem(item);
+                return Ok(newItem);
             }
             catch (ValidationException)
             {

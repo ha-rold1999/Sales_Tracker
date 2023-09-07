@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Models.Model.Expense;
+using Models.Model.Expense.Expenses;
 using Models.Model.Items;
 using SalesTracker.DatabaseHelpers.Account;
 using SalesTracker.DatabaseHelpers.Interfaces;
@@ -11,12 +15,14 @@ namespace SalesTracker.DatabaseHelpers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _cache;
         private bool _disposed = false;
 
-        public ItemHelper(DatabaseContext databaseContext, IMapper mapper)
+        public ItemHelper(DatabaseContext databaseContext, IMapper mapper, IMemoryCache cache)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
+            _cache = cache;
         }
 
         /// <summary>
@@ -38,11 +44,15 @@ namespace SalesTracker.DatabaseHelpers
         {
             var item = _mapper.Map<Item>(itemDTO);
             _databaseContext.StoreInformation.Attach(item.StoreInformation);
+            //_databaseContext.StoreCredentials.Attach(item.StoreInformation.StoreCredentials);
 
             isValid(item);
-
+            
             _databaseContext.Item.Add(item);
             _databaseContext.SaveChanges();
+
+            _databaseContext.Entry(item).GetDatabaseValues();
+
             return item;
         }
 
@@ -125,6 +135,16 @@ namespace SalesTracker.DatabaseHelpers
             return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
         }
 
+        //Log the item to the expense report
+        private void LogAdd(Item item)
+        {
+            var cachedExpense = GetCachedExpense();
+            _databaseContext.Attach(cachedExpense);
+            var expense = new Expenses { Expense = cachedExpense, Item = item, Cost = item.BuyingPrice * item.Stock, Quantity = item.Stock };
+            _databaseContext.Expenses.Add(expense);
+            _databaseContext.SaveChanges();
+        }
+
         //Check if the item model is valid
         private void isValid(Item item)
         {
@@ -135,6 +155,15 @@ namespace SalesTracker.DatabaseHelpers
             { isValid = false; }
 
             if (!isValid) { throw new ValidationException(); }
+        }
+
+        private Expense? GetCachedExpense()
+        {
+            if (_cache.TryGetValue("CurrentDateExpense", out Expense expenseDate))
+            {
+                return expenseDate;
+            }
+            return null;
         }
 
         //Disposing the object

@@ -1,17 +1,13 @@
-﻿using CustomException;
+﻿using AutoMapper;
+using CustomException;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Models.Model.Expense;
-using Models.Model.Expense.Reports;
-using Models.Model.Items;
-using Models.Model.Sale.Reports;
-using Models.Model.Sale.Sales;
-using Models.Model.Sale;
-using Models.Model.Expense.Expenses;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Models.Model.Account.Information;
 using Microsoft.Extensions.Caching.Memory;
+using Models.Model.Account.Information;
+using Models.Model.Expense;
+using Models.Model.Expense.Expenses;
+using Models.Model.Expense.Reports;
 using SalesTracker.Controllers.Interfaces;
 using SalesTracker.DatabaseHelpers.Interfaces;
 
@@ -60,6 +56,38 @@ namespace SalesTracker.Controllers
                     _expenseReportHelper.UpdateExpenseReport(exp, GetCachedExpenseReport());
                 }
                 return Ok(expenses);
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+            catch (SalesQuantityException)
+            {
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("api/[controller]/AddItemExpense")]
+        public IActionResult AddItemExpense([FromBody] ExpensesDTO expense)
+        {
+            try
+            {
+                var exp = _mapper.Map<Expenses>(expense);
+                exp.Expense = GetCachedExpense();
+
+                if (exp.Quantity <= 0) throw new SalesQuantityException();
+
+                _expenseHelper.AddItemExpense(exp);
+                _expenseReportHelper.UpdateExpenseReport(exp, GetCachedExpenseReport());
+                return Ok(expense);
 
             }
             catch (DbUpdateConcurrencyException)

@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { AddItemExpenses } from "./APICalls";
 
 export function HandleSales({
   selectedItem,
@@ -116,8 +117,13 @@ export async function HandleAddItem({
   navigate,
 }) {
   try {
-    await queryClient.fetchQuery("add item", () =>
+    const item = await queryClient.fetchQuery("add item", () =>
       AddItemCall({ itemName, stock, buyingPrice, sellingPrice })
+    );
+
+    const expenses = { item: item, quantity: stock };
+    await queryClient.fetchQuery("add expese", () =>
+      AddItemExpenses({ expenses })
     );
 
     await Swal.fire({

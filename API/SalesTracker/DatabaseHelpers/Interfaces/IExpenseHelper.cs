@@ -7,5 +7,6 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
     {
         Expenses Add(Expenses expenses);
         List<Expenses> GetItemExpense(int id);
+        Expenses AddItemExpense(Expenses expense);
     }
 }

@@ -40,6 +40,18 @@ namespace SalesTracker.DatabaseHelpers
             return expenses;
         }
 
+        public Expenses AddItemExpense(Expenses expense)
+        {
+            _databaseContext.StoreInformation.Attach(expense.Expense.StoreInformation);
+            _databaseContext.Expense.Attach(expense.Expense);
+            expense.Cost = expense.Quantity * expense.Item.BuyingPrice;
+
+            var item = expense.Item;
+            _databaseContext.Entry(item).State = EntityState.Modified;
+            _databaseContext.Expenses.Add(expense);
+            return expense;
+        }
+
         /// <summary>
         /// Get the expense report of each item
         /// </summary>

@@ -49,9 +49,17 @@ namespace SalesTracker.DatabaseHelpers.Account
 
         }
 
-        public StoreInformation GetStoreInfo(int id)
+        public StoreInformation? GetStoreInfo(int id)
         {
-            return _databaseContext.StoreInformation.FirstOrDefault(x => x.StoreCredentials.Id == id);
+            return _databaseContext.StoreInformation
+                .Where(x => x.StoreCredentials.Id == id).Select(x=> new StoreInformation { 
+                    Id = x.Id, 
+                    StoreName = x.StoreName,
+                    StoreAddress = x.StoreAddress, 
+                    OwnerFirstname = x.OwnerFirstname,
+                    OwnerLastname = x.OwnerLastname,
+                    StoreEmail = x.StoreEmail })
+                .FirstOrDefault();
         }
 
         private bool IsUsernamesAvailable(string username)
