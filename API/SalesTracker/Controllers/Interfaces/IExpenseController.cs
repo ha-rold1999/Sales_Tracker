@@ -6,9 +6,9 @@ namespace SalesTracker.Controllers.Interfaces
 {
     public interface IExpenseController
     {
-        IActionResult AddExpense([FromBody] ExpensesDTO[] expenses);
+        IActionResult AddExpense([FromBody] ExpenseBody expenseBody);
         IActionResult GetCurrentDateExpenseReport([FromBody] StoreInformation storeInformation);
-        IActionResult AddItemExpense([FromBody] ExpensesDTO expense);
+        IActionResult AddItemExpense([FromBody] ExpenseBodyItem expenseBody);
         IActionResult GetItemExpenseReport(int id);
     }
 }

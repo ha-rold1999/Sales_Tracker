@@ -86,13 +86,17 @@ export function GetCurrentDateSalesReport({ store }) {
 
 export async function AddSales({ sales }) {
   try {
+    const requestBody = {
+      sales: sales,
+      sale: JSON.parse(localStorage.getItem("storeReport")),
+    };
     const response = await fetch(`${SOURCE}/api/Sale/Add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("auth_token")}`,
       },
-      body: JSON.stringify(sales), // Send the entire array as the body
+      body: JSON.stringify(requestBody), // Send the entire array as the body
     });
 
     const data = await response.json();
@@ -144,7 +148,10 @@ export function GetItemSaleLog({ id, setSales }) {
 }
 
 export async function AddExpenses({ expenses }) {
-  console.log(expenses);
+  const requestBody = {
+    expenses: expenses,
+    expenseReport: JSON.parse(localStorage.getItem("expenseReport")),
+  };
   try {
     const response = await fetch(`${SOURCE}/api/Expense/AddExpense`, {
       method: "POST",
@@ -152,7 +159,7 @@ export async function AddExpenses({ expenses }) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("auth_token")}`,
       },
-      body: JSON.stringify(expenses), // Send the entire array as the body
+      body: JSON.stringify(requestBody), // Send the entire array as the body
     });
 
     console.log(response);
@@ -164,7 +171,10 @@ export async function AddExpenses({ expenses }) {
 }
 
 export async function AddItemExpenses({ expenses }) {
-  console.log(expenses);
+  const requestBody = {
+    expense: expenses,
+    expenseReport: JSON.parse(localStorage.getItem("expenseReport")),
+  };
   try {
     const response = await fetch(`${SOURCE}/api/Expense/AddItemExpense`, {
       method: "POST",
@@ -172,7 +182,7 @@ export async function AddItemExpenses({ expenses }) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("auth_token")}`,
       },
-      body: JSON.stringify(expenses), // Send the entire array as the body
+      body: JSON.stringify(requestBody), // Send the entire array as the body
     });
 
     console.log(response);

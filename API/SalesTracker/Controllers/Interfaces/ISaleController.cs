@@ -6,7 +6,7 @@ namespace SalesTracker.Controllers.Interfaces
 {
     public interface ISaleController
     {
-        IActionResult Add([FromBody] SaleModel[] sales);
+        IActionResult Add([FromBody] SaleBody saleBody);
         IActionResult GetCurrentDateSales();
         IActionResult GetCurrentDateSalesReport([FromBody] StoreInformation storeInformation);
     }

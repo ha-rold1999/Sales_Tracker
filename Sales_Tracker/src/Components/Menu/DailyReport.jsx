@@ -39,6 +39,8 @@ export default function DailyReport() {
     console.log("error");
   }
   if (isProfitSuccess && isExpenseSuccess) {
+    localStorage.setItem("storeReport", JSON.stringify(profit));
+    localStorage.setItem("expenseReport", JSON.stringify(expense));
     Swal.close();
   }
 

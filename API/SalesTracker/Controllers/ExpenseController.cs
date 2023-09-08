@@ -41,21 +41,21 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/AddExpense")]
-        public IActionResult AddExpense([FromBody] ExpensesDTO[] expenses)
+        public IActionResult AddExpense([FromBody] ExpenseBody expenseBody)
         {
             try
             {
-                foreach (var expense in expenses)
+                foreach (var expense in expenseBody.expenses)
                 {
                     var exp = _mapper.Map<Expenses>(expense);
-                    exp.Expense = GetCachedExpense();
+                    exp.Expense = expenseBody.expenseReport.Expense;
 
                     if (exp.Quantity <= 0) throw new SalesQuantityException();
 
                     _expenseHelper.Add(exp);
-                    _expenseReportHelper.UpdateExpenseReport(exp, GetCachedExpenseReport());
+                    _expenseReportHelper.UpdateExpenseReport(exp, expenseBody.expenseReport);
                 }
-                return Ok(expenses);
+                return Ok();
 
             }
             catch (DbUpdateConcurrencyException)
@@ -76,18 +76,18 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/AddItemExpense")]
-        public IActionResult AddItemExpense([FromBody] ExpensesDTO expense)
+        public IActionResult AddItemExpense([FromBody] ExpenseBodyItem expenseBody)
         {
             try
             {
-                var exp = _mapper.Map<Expenses>(expense);
-                exp.Expense = GetCachedExpense();
+                var exp = _mapper.Map<Expenses>(expenseBody.expense);
+                exp.Expense = expenseBody.expenseReport.Expense;
 
                 if (exp.Quantity <= 0) throw new SalesQuantityException();
 
                 _expenseHelper.AddItemExpense(exp);
-                _expenseReportHelper.UpdateExpenseReport(exp, GetCachedExpenseReport());
-                return Ok(expense);
+                _expenseReportHelper.UpdateExpenseReport(exp, expenseBody.expenseReport);
+                return Ok();
 
             }
             catch (DbUpdateConcurrencyException)

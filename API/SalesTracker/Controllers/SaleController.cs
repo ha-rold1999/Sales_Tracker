@@ -51,25 +51,25 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/Add")]
-        public IActionResult Add([FromBody] SaleModel[] sales)
+        public IActionResult Add([FromBody] SaleBody saleBody)
         {
             if (_salesConfiguration.IsAddSalesDisabled)
             { return StatusCode(500, "Adding new feature under construction"); }
 
             try
             {
-                foreach (var sale in sales)
+                foreach (var sale in saleBody.sales)
                 {
                     var salesDTO = _mapper.Map<SalesDTO>(sale);
-                    salesDTO.Sale = GetCachedSale();
+                    salesDTO.Sale = saleBody.sale.Sale;
 
                     if (salesDTO.Sale == null)
                         throw new Exception("Sale Report Not Recorded");
 
                     _saleHelper.AddSales(salesDTO);
-                    _saleReportHelper.UpdateSaleReport(GetCachedReport(), salesDTO);
+                    _saleReportHelper.UpdateSaleReport(saleBody.sale, salesDTO);
                 }
-                return Ok(sales);
+                return Ok();
 
             }
             catch (DbUpdateConcurrencyException)
