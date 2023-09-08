@@ -222,6 +222,7 @@ export function GetCurrentDateExpenseReport({ store }) {
 
 export async function LoginAPI({ username, password, navigate }) {
   try {
+    Swal.showLoading();
     const response = await fetch(`${SOURCE}/api/Account/Login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -231,11 +232,36 @@ export async function LoginAPI({ username, password, navigate }) {
       }),
     });
 
-    if (!response.ok) {
+    if (response.status === 400) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
       // Handle error responses here
       console.error("Login failed:", response.statusText);
       return;
     }
+
+    if (response.status === 401) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Username or Password does not exist",
+      });
+      // Handle error responses here
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
+    await Swal.fire({
+      icon: "success",
+      title: "Login Success",
+      showConfirmButton: false,
+      timer: 1500,
+    });
 
     const res = await response.json();
     const expirationTime = new Date();
@@ -245,7 +271,6 @@ export async function LoginAPI({ username, password, navigate }) {
     localStorage.setItem("store", JSON.stringify(res.storeInformation));
     navigate("/menu");
   } catch (error) {
-    // Handle any other errors that may occur during the fetch or navigation
     console.error(error);
   }
 }
@@ -258,6 +283,17 @@ export async function CreateAccountAPI({ account }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(account),
     });
+
+    if (response.status === 409) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Signup Failed",
+        text: "Username already exist",
+      });
+      console.error("Login failed:", response.statusText);
+      return;
+    }
 
     if (!response.ok) {
       Swal.close();
@@ -272,12 +308,12 @@ export async function CreateAccountAPI({ account }) {
 
     await Swal.fire({
       icon: "success",
-      title: "Item added",
+      title: "Signup Success",
       showConfirmButton: false,
       timer: 1500,
     });
 
-    navigate("/");
+    window.location.href = "/";
   } catch (error) {
     console.error(error);
   }

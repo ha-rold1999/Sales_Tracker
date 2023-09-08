@@ -92,3 +92,22 @@ export function CreateAccountValidation() {
       .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 }
+
+export function LoginValidation() {
+  return yup.object().shape({
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(6, "Username must be at least 6 characters"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        {
+          message:
+            "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)",
+        }
+      ),
+  });
+}

@@ -11,7 +11,7 @@ export default function Register() {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -27,18 +27,20 @@ export default function Register() {
   });
 
   const handleCreateAccount = () => {
-    const account = {
-      ownerFirstname: watch("ownerFirstname"),
-      ownerLastname: watch("ownerLastname"),
-      storeAddress: watch("storeAddress"),
-      phoneNumber: watch("phoneNumber"),
-      storeName: watch("storeName"),
-      storeCredentials: {
-        username: watch("username"),
-        password: watch("password"),
-      },
-    };
-    CreateAccountAPI({ account });
+    if (isValid) {
+      const account = {
+        ownerFirstname: watch("ownerFirstname"),
+        ownerLastname: watch("ownerLastname"),
+        storeAddress: watch("storeAddress"),
+        phoneNumber: watch("phoneNumber"),
+        storeName: watch("storeName"),
+        storeCredentials: {
+          username: watch("username"),
+          password: watch("password"),
+        },
+      };
+      CreateAccountAPI({ account });
+    }
   };
 
   return (
@@ -52,37 +54,43 @@ export default function Register() {
         <div className="w-full h-full flex-col flex overflow-y-auto">
           <label className="text-sm font-medium">Store Name</label>
           <input
-            className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+            className="bg-yellow-500 p-1 rounded-lg text-sm"
             placeholder="Store Name"
             {...register("storeName")}
           />
-          <span className="text-red-600">{errors.storeName?.message}</span>
+          <span className="text-red-600 text-xs">
+            {errors.storeName?.message}
+          </span>
 
-          <label className="text-sm font-medium">Store Address</label>
+          <label className="text-sm font-medium mt-1">Store Address</label>
           <input
-            className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+            className="bg-yellow-500 p-1 rounded-lg text-sm"
             placeholder="Store Address"
             {...register("storeAddress")}
           />
-          <span className="text-red-600">{errors.storeAddress?.message}</span>
+          <span className="text-red-600 text-xs">
+            {errors.storeAddress?.message}
+          </span>
 
-          <label className="text-sm font-medium">Store Phone Number</label>
+          <label className="text-sm font-medium mt-1">Store Phone Number</label>
           <input
-            className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+            className="bg-yellow-500 p-1 rounded-lg text-sm"
             placeholder="09XXXXXXXXX"
             {...register("phoneNumber")}
           />
-          <span className="text-red-600">{errors.phoneNumber?.message}</span>
+          <span className="text-red-600 text-xs">
+            {errors.phoneNumber?.message}
+          </span>
 
-          <div className="flex flex-col-1">
+          <div className="flex flex-col-1 mt-1">
             <div className="flex flex-col w-1/2 mr-1">
               <label className="text-sm font-medium">First Name</label>
               <input
-                className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+                className="bg-yellow-500 p-1 rounded-lg text-sm"
                 placeholder="Owner First Name"
                 {...register("ownerFirstname")}
               />{" "}
-              <span className="text-red-600">
+              <span className="text-red-600 text-xs">
                 {errors.ownerFirstname?.message}
               </span>
             </div>
@@ -90,39 +98,47 @@ export default function Register() {
             <div className="flex flex-col w-1/2">
               <label className="text-sm font-medium">Last Name</label>
               <input
-                className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+                className="bg-yellow-500 p-1 rounded-lg text-sm"
                 placeholder="Owner Last Name"
                 {...register("ownerLastname")}
               />
-              <span className="text-red-600">
+              <span className="text-red-600 text-xs">
                 {errors.ownerLastname?.message}
               </span>
             </div>
           </div>
 
-          <label className="text-sm font-medium">Username</label>
+          <label className="text-sm font-medium mt-1">Username</label>
           <input
-            className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+            className="bg-yellow-500  p-1 rounded-lg text-sm"
             placeholder="Username"
             {...register("username")}
           />
-          <span className="text-red-600">{errors.username?.message}</span>
+          <span className="text-red-600 text-xs">
+            {errors.username?.message}
+          </span>
 
-          <label className="text-sm font-medium">Password</label>
+          <label className="text-sm font-medium mt-1">Password</label>
           <input
-            className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+            className="bg-yellow-500  p-1 rounded-lg text-sm"
             {...register("password")}
+            type="password"
           />
-          <span className="text-red-600">{errors.password?.message}</span>
+          <span className="text-red-600 text-xs">
+            {errors.password?.message}
+          </span>
 
-          <label className="text-sm font-medium">Retype-Password</label>
+          <label className="text-sm font-medium mt-1">Retype-Password</label>
           <input
-            className="bg-yellow-500 mb-2 p-1 rounded-lg text-sm"
+            className="bg-yellow-500 rounded-lg p-1 text-sm"
             {...register("retypePassword")}
+            type="password"
           />
-          <span className="text-red-600">{errors.retypePassword?.message}</span>
+          <span className="text-red-600 text-xs">
+            {errors.retypePassword?.message}
+          </span>
 
-          <div className="flex justify-center mt-1">
+          <div className="flex justify-center mt-2">
             <input
               type="submit"
               className="bg-green-500 px-2 py-1 rounded-lg border-2 border-black font-bold cursor-pointer"
