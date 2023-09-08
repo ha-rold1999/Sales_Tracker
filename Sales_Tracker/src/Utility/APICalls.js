@@ -318,3 +318,23 @@ export async function CreateAccountAPI({ account }) {
     console.error(error);
   }
 }
+
+export async function LogoutAPI() {
+  try {
+    Swal.showLoading();
+    await fetch(`${SOURCE}/api/Account/Logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    });
+
+    Cookies.remove("auth_token");
+    localStorage.clear();
+
+    window.location.href = "/";
+  } catch (error) {
+    console.error(error);
+  }
+}
