@@ -40,6 +40,11 @@ namespace SalesTracker.DatabaseHelpers
             return expenses;
         }
 
+        /// <summary>
+        /// Add expense report when adding new item
+        /// </summary>
+        /// <param name="expense"></param>
+        /// <returns>Expenses</returns>
         public Expenses AddItemExpense(Expenses expense)
         {
             _databaseContext.StoreInformation.Attach(expense.Expense.StoreInformation);

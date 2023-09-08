@@ -41,7 +41,7 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/AddExpense")]
-        public IActionResult AddExpense([FromBody] ExpenseBody expenseBody)
+        public IActionResult AddExpense([FromBody] ExpenseAPIBody expenseBody)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/AddItemExpense")]
-        public IActionResult AddItemExpense([FromBody] ExpenseBodyItem expenseBody)
+        public IActionResult AddItemExpense([FromBody] ExpenseAPIBodyItem expenseBody)
         {
             try
             {
@@ -133,24 +133,6 @@ namespace SalesTracker.Controllers
                 _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
-        }
-
-        private Expense? GetCachedExpense()
-        {
-            if (_cache.TryGetValue("CurrentDateExpense", out Expense expenseDate))
-            {
-                return expenseDate;
-            }
-            return null;
-        }
-
-        private ExpenseReport? GetCachedExpenseReport()
-        {
-            if (_cache.TryGetValue("ExpenseReport", out ExpenseReport expenseReport))
-            {
-                return expenseReport;
-            }
-            return null;
         }
     }
 }

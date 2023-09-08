@@ -25,8 +25,6 @@ namespace SalesTracker.Controllers
         private readonly ILogger<SaleController> _logger;
         private readonly IMemoryCache _cache;
 
-        private Sale SaleReport;
-
         //Running Constructor
         public SaleController(ISaleHelper saleHelper,
             ISaleDateHelper saleDateHelper,
@@ -51,7 +49,7 @@ namespace SalesTracker.Controllers
         [Authorize]
         [HttpPost]
         [Route("api/[controller]/Add")]
-        public IActionResult Add([FromBody] SaleBody saleBody)
+        public IActionResult Add([FromBody] SaleAPIBody saleBody)
         {
             if (_salesConfiguration.IsAddSalesDisabled)
             { return StatusCode(500, "Adding new feature under construction"); }
@@ -88,24 +86,6 @@ namespace SalesTracker.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        [Route("api/[controller]/GetCurrentDateSales")]
-        public IActionResult GetCurrentDateSales()
-        {
-            try
-            {
-                var saleDate = GetCachedSale();
-                List<Sales> sales = _saleDateHelper.GetTodaysItemsSales(saleDate.Id);
-                return Ok(sales);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{ex.Message}");
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize]
         [HttpPost]
         [Route("api/[controller]/GetCurrentDateSalesReport")]
         public IActionResult GetCurrentDateSalesReport([FromBody] StoreInformation storeInformation)
@@ -123,24 +103,6 @@ namespace SalesTracker.Controllers
                 _logger.LogError($"{ex.Message}");
                 return BadRequest(ex.Message);
             }
-        }
-
-        private Sale? GetCachedSale()
-        {
-            if (_cache.TryGetValue("CurrenDateSales", out Sale saleDate))
-            {
-                return saleDate;
-            }
-            return null;
-        }
-
-        private SaleReport? GetCachedReport()
-        {
-            if (_cache.TryGetValue("SaleReport", out SaleReport saleReport))
-            {
-                return saleReport;
-            }
-            return null;
         }
     }
 }

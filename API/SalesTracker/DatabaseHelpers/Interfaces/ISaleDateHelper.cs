@@ -8,6 +8,5 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
     {
         Sale AddSale(SaleDTO saleDTO);
         Sale GetLastReport(StoreInformation storeInformation);
-        List<Sales> GetTodaysItemsSales(int id);
     }
 }

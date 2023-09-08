@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Models.Model.Expense.Expenses
 {
-    public class ExpenseBody
+    public class ExpenseAPIBodyItem
     {
-        public ExpensesDTO[] expenses { get; set; }
+        public ExpensesDTO expense { get; set; }
         public ExpenseReport expenseReport { get; set; }
     }
 }

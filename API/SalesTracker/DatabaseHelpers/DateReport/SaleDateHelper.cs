@@ -49,16 +49,6 @@ namespace SalesTracker.DatabaseHelpers.DateReport
             return todayReport;
         }
 
-        /// <summary>
-        /// Get the sales of each item on the current date
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>List of Sales</returns>
-        public List<Sales> GetTodaysItemsSales(int id)
-        {
-            return _context.Sales.Where(sale => sale.Sale.Id == id).Include(sale => sale.Item).ToList();
-        }
-
         //Disposable
         public void Dispose()
         {
