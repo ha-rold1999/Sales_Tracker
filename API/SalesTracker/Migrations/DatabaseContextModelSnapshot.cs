@@ -68,6 +68,11 @@ namespace SalesTracker.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("last_name");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
+
                     b.Property<string>("StoreAddress")
                         .IsRequired()
                         .HasColumnType("text")
@@ -75,11 +80,6 @@ namespace SalesTracker.Migrations
 
                     b.Property<int>("StoreCredentialsId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("StoreEmail")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("email");
 
                     b.Property<string>("StoreName")
                         .IsRequired()

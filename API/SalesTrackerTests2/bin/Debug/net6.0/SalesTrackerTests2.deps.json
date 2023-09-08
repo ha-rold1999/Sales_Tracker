@@ -1068,10 +1068,16 @@
           "Serilog.Settings.Configuration": "7.0.0",
           "Serilog.Sinks.File": "5.0.0",
           "Serilog.Sinks.Seq": "5.2.2",
-          "Swashbuckle.AspNetCore": "6.2.3"
+          "Swashbuckle.AspNetCore": "6.2.3",
+          "Utility": "1.0.0"
         },
         "runtime": {
           "SalesTracker.dll": {}
+        }
+      },
+      "Utility/1.0.0": {
+        "runtime": {
+          "Utility.dll": {}
         }
       },
       "Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions/14.0.0.0": {
@@ -1701,6 +1707,11 @@
       "sha512": ""
     },
     "SalesTracker/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Utility/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

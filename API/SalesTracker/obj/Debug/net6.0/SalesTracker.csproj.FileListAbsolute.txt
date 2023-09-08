@@ -145,3 +145,5 @@ C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Deb
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\Utility.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTracker\bin\Debug\net6.0\Utility.pdb

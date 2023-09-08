@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 const SOURCE = "https://localhost:7114";
 
@@ -220,7 +221,6 @@ export function GetCurrentDateExpenseReport({ store }) {
 }
 
 export async function LoginAPI({ username, password, navigate }) {
-  console.log(username);
   try {
     const response = await fetch(`${SOURCE}/api/Account/Login`, {
       method: "POST",
@@ -246,6 +246,39 @@ export async function LoginAPI({ username, password, navigate }) {
     navigate("/menu");
   } catch (error) {
     // Handle any other errors that may occur during the fetch or navigation
-    console.log(error);
+    console.error(error);
+  }
+}
+
+export async function CreateAccountAPI({ account }) {
+  try {
+    Swal.showLoading();
+    const response = await fetch(`${SOURCE}/api/Account/CreateAccount`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(account),
+    });
+
+    if (!response.ok) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
+    await Swal.fire({
+      icon: "success",
+      title: "Item added",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    navigate("/");
+  } catch (error) {
+    console.error(error);
   }
 }

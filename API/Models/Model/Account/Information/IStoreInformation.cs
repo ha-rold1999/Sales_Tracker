@@ -8,7 +8,7 @@ namespace Models.Model.Account.Information
         string OwnerFirstname { get; set; }
         string OwnerLastname { get; set; }
         string StoreAddress { get; set; }
-        string StoreEmail { get; set; }
+        string PhoneNumber { get; set; }
         string StoreName { get; set; }
         StoreCredentials StoreCredentials { get; set; }
     }

@@ -164,3 +164,5 @@ C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests2\o
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests2\obj\Debug\net6.0\SalesTrackerTests2.pdb
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests2\obj\Debug\net6.0\SalesTrackerTests2.genruntimeconfig.cache
 C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests2\obj\Debug\net6.0\ref\SalesTrackerTests2.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests2\bin\Debug\net6.0\Utility.dll
+C:\Users\Full Scale\Desktop\Personal Proj\Sales Tracker\API\SalesTrackerTests2\bin\Debug\net6.0\Utility.pdb

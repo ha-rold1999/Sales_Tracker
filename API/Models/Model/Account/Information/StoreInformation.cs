@@ -24,9 +24,8 @@ namespace Models.Model.Account.Information
         [Column("address")]
         public string StoreAddress { get; set; }
         [Required]
-        [EmailAddress]
-        [Column("email")]
-        public string StoreEmail { get; set; }
+        [Column("phone_number")]
+        public string PhoneNumber { get; set; }
         [Required]
         [StringLength(50)]
         [Column("first_name")]

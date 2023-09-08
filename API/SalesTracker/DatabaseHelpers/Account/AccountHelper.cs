@@ -5,6 +5,7 @@ using Models.Model.Account.Information;
 using Models.Model.Account.Status;
 using SalesTracker.EntityFramework;
 using System.Data.SqlTypes;
+using Utility;
 
 namespace SalesTracker.DatabaseHelpers.Account
 {
@@ -25,7 +26,11 @@ namespace SalesTracker.DatabaseHelpers.Account
                 throw new SqlAlreadyFilledException();
             }
 
-            var credential = new StoreCredentials { Password = createAccountDTO.StoreCredentials.Password, Username = createAccountDTO.StoreCredentials.Username };
+            var credential = new StoreCredentials 
+            { 
+                Password = HashingPassword.HashPasswordFactory(createAccountDTO.StoreCredentials.Password),
+                Username = createAccountDTO.StoreCredentials.Username 
+            };
             var information = _mapper.Map<StoreInformation>(createAccountDTO);
             information.StoreCredentials = credential;
             var status = new AccountStatus 
@@ -43,9 +48,10 @@ namespace SalesTracker.DatabaseHelpers.Account
             createAccountDTO.Id = credential.Id;
             return createAccountDTO;
         }
-        public StoreCredentials GetStoreCredentials(Login login)
+        public StoreCredentials? GetStoreCredentials(Login login)
         {
-            return _databaseContext.StoreCredentials.FirstOrDefault(x => x.Username == login.Username && x.Password == login.Password);
+            var password = HashingPassword.HashPasswordFactory(login.Password);
+            return _databaseContext.StoreCredentials.FirstOrDefault(x => x.Username == login.Username && x.Password == password);
 
         }
 
@@ -58,7 +64,7 @@ namespace SalesTracker.DatabaseHelpers.Account
                     StoreAddress = x.StoreAddress, 
                     OwnerFirstname = x.OwnerFirstname,
                     OwnerLastname = x.OwnerLastname,
-                    StoreEmail = x.StoreEmail })
+                    PhoneNumber = x.PhoneNumber })
                 .FirstOrDefault();
         }
 

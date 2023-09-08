@@ -14,7 +14,7 @@ namespace Models.Model.Account
         public string OwnerFirstname { get; set; }
         public string OwnerLastname { get; set; }
         public string StoreAddress { get; set; }
-        public string StoreEmail { get; set; }
+        public string PhoneNumber { get; set; }
         public string StoreName { get; set; }
         public StoreCredentials StoreCredentials { get; set; }
     }

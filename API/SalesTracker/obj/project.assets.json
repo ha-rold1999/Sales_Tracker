@@ -1070,6 +1070,16 @@
         "runtime": {
           "bin/placeholder/Models.dll": {}
         }
+      },
+      "Utility/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Utility.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Utility.dll": {}
+        }
       }
     }
   },
@@ -2670,6 +2680,11 @@
       "type": "project",
       "path": "../Models/Models.csproj",
       "msbuildProject": "../Models/Models.csproj"
+    },
+    "Utility/1.0.0": {
+      "type": "project",
+      "path": "../Utility/Utility.csproj",
+      "msbuildProject": "../Utility/Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2689,7 +2704,8 @@
       "Serilog.Settings.Configuration >= 7.0.0",
       "Serilog.Sinks.File >= 5.0.0",
       "Serilog.Sinks.Seq >= 5.2.2",
-      "Swashbuckle.AspNetCore >= 6.2.3"
+      "Swashbuckle.AspNetCore >= 6.2.3",
+      "Utility >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -2732,6 +2748,9 @@
             },
             "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Models\\Models.csproj": {
               "projectPath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Models\\Models.csproj"
+            },
+            "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Utility\\Utility.csproj": {
+              "projectPath": "C:\\Users\\Full Scale\\Desktop\\Personal Proj\\Sales Tracker\\API\\Utility\\Utility.csproj"
             }
           }
         }
