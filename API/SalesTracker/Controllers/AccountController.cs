@@ -55,27 +55,32 @@ namespace SalesTracker.Controllers
             var storeCredential = _accountHelper.GetStoreCredentials(login);
             if(storeCredential != null)
             {
-                var store = _accountHelper.GetStoreInfo(storeCredential.Id);
-                var authClaims = new List<Claim>
+                if(_accountHelper.GetAccountStatus(storeCredential.Id))
+                {
+                    var store = _accountHelper.GetStoreInfo(storeCredential.Id);
+                    var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.PrimarySid, storeCredential.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-                var token = new JwtSecurityToken(
-                        issuer: _configuration["JWT:ValidIssuer"],
-                        audience: _configuration["JWT:ValidAudience"],
-                        expires: DateTime.Now.AddDays(1),
-                        claims: authClaims,
-                        signingCredentials: new SigningCredentials(authSigningKey,SecurityAlgorithms.HmacSha256));
-                return Ok(
-                    new
-                    {
-                        storeInformation = store,
-                        token = new JwtSecurityTokenHandler().WriteToken(token),
-                        expiration = DateTime.Now.AddHours(1)
-                    });
+                    var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+                    var token = new JwtSecurityToken(
+                            issuer: _configuration["JWT:ValidIssuer"],
+                            audience: _configuration["JWT:ValidAudience"],
+                            expires: DateTime.Now.AddDays(1),
+                            claims: authClaims,
+                            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
+                    return Ok(
+                        new
+                        {
+                            storeInformation = store,
+                            token = new JwtSecurityTokenHandler().WriteToken(token),
+                            expiration = DateTime.Now.AddHours(1)
+                        });
+                }
+                return NotFound();
+                
             }
             return Unauthorized();
         }
@@ -105,6 +110,27 @@ namespace SalesTracker.Controllers
                 return NotFound();
             }
             catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteAccount/{id}")]
+        public IActionResult DeleteAccount(int id)
+        {
+            try
+            {
+                _accountHelper.DeleteStore(id);
+                return Ok();
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return BadRequest();

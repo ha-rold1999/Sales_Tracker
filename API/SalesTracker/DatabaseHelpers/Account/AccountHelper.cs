@@ -58,6 +58,11 @@ namespace SalesTracker.DatabaseHelpers.Account
 
         }
 
+        public bool GetAccountStatus(int id)
+        {
+            return _databaseContext.AccountStatus.Any(x => x.StoreCredentials.Id == id && !x.IsDeleted);
+        }
+
         public StoreInformation? GetStoreInfo(int id)
         {
             return _databaseContext.StoreInformation
@@ -88,6 +93,23 @@ namespace SalesTracker.DatabaseHelpers.Account
 
         }
 
+        public void DeleteStore(int id)
+        {
+            int? accountId = GetStoreCredentialId(id);
+            if(accountId != null)
+            {
+                var storeStatus = GetAccountStatus(accountId);
+                storeStatus.IsDeleted = true;
+                storeStatus.DataDeleted = DateOnly.FromDateTime(DateTime.Now);
+                _databaseContext.SaveChanges();
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+            
+        }
+
         private bool IsUsernamesAvailable(string username)
         {
             return _databaseContext.StoreCredentials.Any(x => x.Username == username);
@@ -96,6 +118,16 @@ namespace SalesTracker.DatabaseHelpers.Account
         private StoreInformation? IsStoreExist(StoreInformationDTO storeInformation)
         {
             return _databaseContext.StoreInformation.Include(x=>x.StoreCredentials).FirstOrDefault(x => x.Id == storeInformation.Id);
+        }
+
+        private int? GetStoreCredentialId(int Id)
+        {
+            return _databaseContext.StoreInformation.Include(x => x.StoreCredentials).First(x => x.Id == Id).StoreCredentials.Id;
+        }
+
+        private AccountStatus GetAccountStatus(int? id)
+        {
+            return _databaseContext.AccountStatus.Include(x=> x.StoreCredentials).First(x => x.StoreCredentials.Id ==  id);
         }
 
     }

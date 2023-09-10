@@ -256,6 +256,18 @@ export async function LoginAPI({ username, password, navigate }) {
       return;
     }
 
+    if (response.status === 404) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Account Unavailable",
+        text: "Account Deleted",
+      });
+      // Handle error responses here
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
     await Swal.fire({
       icon: "success",
       title: "Login Success",
@@ -383,6 +395,48 @@ export async function UpdateAccountAPI({ account }) {
     const res = await response.json();
     localStorage.setItem("store", JSON.stringify(res));
     window.location.href = "/menu";
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function DeleteAccountAPI() {
+  try {
+    Swal.showLoading();
+    const response = await fetch(
+      `${SOURCE}/api/Account/DeleteAccount/${
+        JSON.parse(localStorage.getItem("store")).id
+      }`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Cookies.get("auth_token")}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
+    await Swal.fire({
+      icon: "success",
+      title: "Delete Success",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    localStorage.clear();
+    Cookies.remove("auth_token");
+    window.location.href = "/";
   } catch (error) {
     console.error(error);
   }

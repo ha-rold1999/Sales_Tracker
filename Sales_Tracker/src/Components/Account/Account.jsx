@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UpdateAccountAPI } from "../../Utility/APICalls";
+import { DeleteAccountAPI, UpdateAccountAPI } from "../../Utility/APICalls";
 import { UpdateAccountValidation } from "../../Utility/YupSchema";
 
 export default function Account() {
@@ -40,6 +40,10 @@ export default function Account() {
       UpdateAccountAPI({ account });
     }
   };
+
+  const handleDeleteAccount = () => {
+    DeleteAccountAPI();
+  };
   return (
     <div className="flex justify-center  h-full w-full py-1">
       <form
@@ -62,7 +66,7 @@ export default function Account() {
             Cancel Edit
           </div>
         )}
-        <div>Delete</div>
+        <div onClick={handleDeleteAccount}>Delete</div>
         <div className="w-full h-full flex-col flex overflow-y-auto">
           <label className="text-sm font-medium">Store Name</label>
           <input
