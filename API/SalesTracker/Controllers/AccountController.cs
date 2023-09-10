@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Models.Model.Account;
+using Models.Model.Account.Information;
 using SalesTracker.DatabaseHelpers.Account;
 using System.Data.SqlTypes;
 using System.IdentityModel.Tokens.Jwt;
@@ -89,5 +90,25 @@ namespace SalesTracker.Controllers
             return Ok();
         }
 
+        [Authorize]
+        [HttpPut]
+        [Route("UpdateAccount")]
+        public IActionResult UpdateAccount([FromBody] StoreInformationDTO storeInformationDTO)
+        {
+            try
+            {
+                var newStoreInformation = _accountHelper.UpdateStoreInformation(storeInformationDTO);
+                return Ok(newStoreInformation);
+            }
+            catch(NullReferenceException)
+            {
+                return NotFound();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Models.Model.Account;
 using Models.Model.Account.Credentials;
 using Models.Model.Account.Information;
@@ -19,6 +20,7 @@ namespace SalesTracker.DatabaseHelpers.Account
             _databaseContext = databaseContext;
             _mapper = mapper;
         }
+
         public CreateAccountDTO CreateAccount(CreateAccountDTO createAccountDTO)
         {
             if (IsUsernamesAvailable(createAccountDTO.StoreCredentials.Username))
@@ -48,6 +50,7 @@ namespace SalesTracker.DatabaseHelpers.Account
             createAccountDTO.Id = credential.Id;
             return createAccountDTO;
         }
+
         public StoreCredentials? GetStoreCredentials(Login login)
         {
             var password = HashingPassword.HashPasswordFactory(login.Password);
@@ -68,9 +71,31 @@ namespace SalesTracker.DatabaseHelpers.Account
                 .FirstOrDefault();
         }
 
+        public StoreInformation UpdateStoreInformation(StoreInformationDTO storeInformation)
+        {
+            var getStoreInfo = IsStoreExist(storeInformation);
+            if(getStoreInfo != null)
+            {
+
+               var result = _mapper.Map(storeInformation, getStoreInfo);
+                _databaseContext.SaveChanges();
+                return getStoreInfo;
+            }
+            else
+            {
+                throw new NullReferenceException();
+            }
+
+        }
+
         private bool IsUsernamesAvailable(string username)
         {
             return _databaseContext.StoreCredentials.Any(x => x.Username == username);
+        }
+
+        private StoreInformation? IsStoreExist(StoreInformationDTO storeInformation)
+        {
+            return _databaseContext.StoreInformation.Include(x=>x.StoreCredentials).FirstOrDefault(x => x.Id == storeInformation.Id);
         }
 
     }

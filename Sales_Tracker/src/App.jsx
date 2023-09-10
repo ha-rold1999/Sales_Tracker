@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import Store from "./Redux/Store";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
+import Account from "./Components/Account/Account";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/inventory/*" element={<Inventory />} />
           <Route path="/expenses/*" element={<Expenses />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </Router>
     </Provider>

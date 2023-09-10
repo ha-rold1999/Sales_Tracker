@@ -111,3 +111,28 @@ export function LoginValidation() {
       ),
   });
 }
+
+export function UpdateAccountValidation() {
+  return yup.object().shape({
+    storeName: yup
+      .string()
+      .required("Store name is required")
+      .min(2, "Must be atleast 2 character"),
+    storeAddress: yup.string().required("Store address is required"),
+    phoneNumber: yup
+      .string()
+      .required("Phone number is required")
+      .matches(/^09\d{9}$/, {
+        message: "Phone number must start with 09 and be 11 digits long",
+        excludeEmptyString: true,
+      }),
+    ownerFirstname: yup
+      .string()
+      .required("Owner firstname is required")
+      .min(2, "Name must be at least 2 character"),
+    ownerLastname: yup
+      .string()
+      .required("Owner lastname is required")
+      .min(2, "Name must be at least 2 character"),
+  });
+}

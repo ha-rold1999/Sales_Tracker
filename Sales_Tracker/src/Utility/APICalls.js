@@ -338,3 +338,52 @@ export async function LogoutAPI() {
     console.error(error);
   }
 }
+
+export async function UpdateAccountAPI({ account }) {
+  try {
+    Swal.showLoading();
+    const response = await fetch(`${SOURCE}/api/Account/UpdateAccount`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+      body: JSON.stringify(account),
+    });
+
+    if (response.status === 409) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Signup Failed",
+        text: "Username already exist",
+      });
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
+    if (!response.ok) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This is on us we are working on it",
+      });
+      console.error("Login failed:", response.statusText);
+      return;
+    }
+
+    await Swal.fire({
+      icon: "success",
+      title: "Signup Success",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    const res = await response.json();
+    localStorage.setItem("store", JSON.stringify(res));
+    window.location.href = "/menu";
+  } catch (error) {
+    console.error(error);
+  }
+}

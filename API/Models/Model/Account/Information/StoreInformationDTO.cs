@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models.Model.Account.Information
 {
-    public class StoreInformationDTO : IStoreInformation
+    public class StoreInformationDTO
     {
         public int Id { get; set; }
         public string OwnerFirstname { get; set; }
@@ -15,6 +15,5 @@ namespace Models.Model.Account.Information
         public string StoreAddress { get; set; }
         public string PhoneNumber { get; set; }
         public string StoreName { get; set; }
-        public StoreCredentials StoreCredentials { get; set; }
     }
 }
