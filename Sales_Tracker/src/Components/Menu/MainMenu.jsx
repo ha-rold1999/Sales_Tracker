@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link, json } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { faDoorOpen, faX } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { LogoutAPI } from "../../Utility/APICalls";
 
@@ -37,18 +37,28 @@ export default function MainMenu() {
             duration: 0.5,
             damping: 20,
           }}>
-          <div
-            className="bg-white cursor-pointer flex "
-            onClick={() => setIsShowMenu(false)}>
-            Close
+          <div className=" flex justify-end mb-2">
+            <FontAwesomeIcon
+              icon={faX}
+              className="bg-white cursor-pointer p-2 rounded-lg"
+              onClick={() => setIsShowMenu(false)}
+            />
           </div>
-          <div className="bg-white cursor-pointer ">Profile</div>
-          <Link to="/account" className="bg-white cursor-pointer ">
-            Account
-          </Link>
-          <div>
-            <Link to="/archive" className="bg-white cursor-pointer ">
+          <div className="flex flex-col space-y-3">
+            <Link
+              to="/archive"
+              className="bg-white cursor-pointer text-center py-4 text-xl font-semibold rounded-lg border-blue-600 border-2 hover:border-black">
               Archive
+            </Link>
+            <Link
+              to="/account"
+              className="bg-white cursor-pointer text-center py-4 text-xl font-semibold rounded-lg border-blue-600 border-2 hover:border-black">
+              Profile
+            </Link>
+            <Link
+              to="/danger"
+              className="bg-white cursor-pointer text-center py-4 text-xl font-semibold rounded-lg border-blue-600 border-2 hover:border-black">
+              Account
             </Link>
           </div>
 

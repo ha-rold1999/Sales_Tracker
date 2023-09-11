@@ -2,12 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CheckAuthorization, UpdateAccountAPI } from "../../Utility/APICalls";
+import { UpdateAccountAPI } from "../../Utility/APICalls";
 import { UpdateAccountValidation } from "../../Utility/YupSchema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faCancel } from "@fortawesome/free-solid-svg-icons";
-import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 
 export default function Account() {
@@ -46,39 +45,6 @@ export default function Account() {
     }
   };
 
-  const handleDeleteAccount = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title:
-            "To confirm delete account please enter your username and password",
-          html:
-            '<input type="text" id="text" class="swal2-input" placeholder="Enter Usernamne">' +
-            '<input type="password" id="password" class="swal2-input" autocapitalize="off" placeholder="Enter your password">',
-          showCancelButton: true,
-          confirmButtonText: "Look up",
-          showLoaderOnConfirm: true,
-          preConfirm: () => {
-            const login = {
-              username: document.getElementById("text").value,
-              password: document.getElementById("password").value,
-            };
-            CheckAuthorization({ login });
-          },
-          allowOutsideClick: () => !Swal.isLoading(),
-        });
-      }
-    });
-  };
-
   useEffect(() => {
     if (!Cookies.get("auth_token")) {
       window.location.href = "/";
@@ -87,11 +53,6 @@ export default function Account() {
   }, []);
   return (
     <div className="flex justify-center item-center h-full w-full py-10">
-      <FontAwesomeIcon
-        icon={faTrash}
-        className="bg-red-600 p-3 rounded-lg mr-2"
-        onClick={handleDeleteAccount}
-      />
       <form
         className="h-3/4 w-1/2 bg-white border-black border-2 rounded-lg flex justify-center flex-col px-5 py-5"
         onSubmit={handleSubmit(handleUpdateAccount)}>

@@ -9,6 +9,7 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Account from "./Components/Account/Account";
 import Archive from "./Components/Archive/Archive";
+import Danger from "./Components/Danger/Danger";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
           <Route path="/archive" element={<Archive />} />
+          <Route path="/danger" element={<Danger />} />
         </Routes>
       </Router>
     </Provider>
