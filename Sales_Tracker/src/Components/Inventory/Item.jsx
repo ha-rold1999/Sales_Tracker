@@ -12,6 +12,9 @@ import { ItemValidation } from "../../Utility/YupSchema";
 import { HandleUpdateItem } from "../../Utility/configuration";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDeleteLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 export default function Item() {
   const queryClient = useQueryClient();
@@ -47,8 +50,25 @@ export default function Item() {
   };
 
   function handleDelete(id) {
-    DeleteItemCall({ id });
-    window.location.href = "/inventory";
+    Swal.fire({
+      title: "Do you want to DELETE this item?",
+      showDenyButton: true,
+      confirmButtonText: "Delete",
+      denyButtonText: `Cancel`,
+      confirmButtonColor: "Red",
+      denyButtonColor: "Gray",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+
+        DeleteItemCall({ id });
+
+        setTimeout(() => {
+          window.location.href = "/inventory";
+        }, 1000);
+      }
+    });
   }
 
   useEffect(() => {
@@ -59,17 +79,19 @@ export default function Item() {
   }, []);
 
   return (
-    <div className="flex flex-1 w-full h-full justify-center items-center">
+    <div className="flex flex-1 w-full h-full justify-center items-center flex-col">
+      <div className="flex justify-end w-2/5 mb-1">
+        <FontAwesomeIcon
+          icon={faTrash}
+          className="bg-red-600 p-3 rounded-lg cursor-pointer border-blue-500 border-2 hover:border-black"
+          onClick={() => handleDelete(data.id)}
+        />
+      </div>
       <form
         onSubmit={handleSubmit(handleUpdateItem)}
         className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg">
         <div className="flex justify-center text-3xl font-bold">
           {data.itemName}
-        </div>
-        <div
-          className="flex justify-center cursor-pointer"
-          onClick={() => handleDelete(data.id)}>
-          delete
         </div>
 
         <div className="text-lg font-semibold">Stock</div>

@@ -8,6 +8,7 @@ import Store from "./Redux/Store";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import Account from "./Components/Account/Account";
+import Archive from "./Components/Archive/Archive";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/expenses/*" element={<Expenses />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/archive" element={<Archive />} />
         </Routes>
       </Router>
     </Provider>

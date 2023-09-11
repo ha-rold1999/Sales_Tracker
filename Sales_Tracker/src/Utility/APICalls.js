@@ -13,6 +13,30 @@ export function GetItems({ store }) {
   }).then((res) => res.json());
 }
 
+export function GetDeletedItems({ store }) {
+  return fetch(
+    `${SOURCE}/api/v1/Item/GetStoreItemArchive/${JSON.parse(store).id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  ).then((res) => res.json());
+}
+
+export function RetriveItem(item) {
+  return fetch(`${SOURCE}/api/v1/Item/RetriveItem`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+    body: JSON.stringify(item),
+  }).then((res) => res.json());
+}
+
 export function AddItemCall({ itemName, stock, buyingPrice, sellingPrice }) {
   const store = localStorage.getItem("store");
   return fetch(`${SOURCE}/api/v1/Item/AddItem`, {

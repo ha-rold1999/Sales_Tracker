@@ -32,8 +32,23 @@ namespace SalesTracker.DatabaseHelpers
         /// <returns>int</returns>
         public List<Item> GetItems(int id)
         {
-            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && x.isDeleted == false).OrderBy(x=>x.ItemName).ToList();
+            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && !x.isDeleted).OrderBy(x=>x.ItemName).ToList();
         }
+
+        public List<Item> GetArchiveItems(int id)
+        {
+            return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && x.isDeleted).OrderBy(x => x.ItemName).ToList();
+        }
+
+        public Item RetrieveItem(ItemDTO itemDTO)
+        {
+            var item = isExist(itemDTO.Id);
+            item.isDeleted = false;
+
+            _databaseContext.SaveChanges();
+            return item;
+        }
+
 
         /// <summary>
         /// Add Item to the store
@@ -132,17 +147,7 @@ namespace SalesTracker.DatabaseHelpers
         //Check if the item exist
         private Item isExist(int id)
         {
-            return _databaseContext.Item.Find(id) ?? throw new NullReferenceException();
-        }
-
-        //Log the item to the expense report
-        private void LogAdd(Item item)
-        {
-            var cachedExpense = GetCachedExpense();
-            _databaseContext.Attach(cachedExpense);
-            var expense = new Expenses { Expense = cachedExpense, Item = item, Cost = item.BuyingPrice * item.Stock, Quantity = item.Stock };
-            _databaseContext.Expenses.Add(expense);
-            _databaseContext.SaveChanges();
+            return _databaseContext.Item.Include(x=> x.StoreInformation).FirstOrDefault(x => x.Id == id) ?? throw new NullReferenceException();
         }
 
         //Check if the item model is valid
@@ -155,15 +160,6 @@ namespace SalesTracker.DatabaseHelpers
             { isValid = false; }
 
             if (!isValid) { throw new ValidationException(); }
-        }
-
-        private Expense? GetCachedExpense()
-        {
-            if (_cache.TryGetValue("CurrentDateExpense", out Expense expenseDate))
-            {
-                return expenseDate;
-            }
-            return null;
         }
 
         //Disposing the object

@@ -46,6 +46,12 @@ export default function MainMenu() {
           <Link to="/account" className="bg-white cursor-pointer ">
             Account
           </Link>
+          <div>
+            <Link to="/archive" className="bg-white cursor-pointer ">
+              Archive
+            </Link>
+          </div>
+
           <div
             className="fixed bottom-0 bg-red-600 mb-3 cursor-pointer"
             onClick={handleLogout}>

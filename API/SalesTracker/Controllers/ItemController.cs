@@ -44,6 +44,48 @@ namespace SalesTracker.Controllers
             }
         }
 
+        //Get the deleted items of the store
+        [Authorize]
+        [HttpGet]
+        [Route("api/v{version}/[controller]/GetStoreItemArchive/{id}")]
+        [ApiVersion("1.0")]
+        public IActionResult GetStoreItemArchive(int id)
+        {
+            try
+            {
+                List<Item> items = _itemHelper.GetArchiveItems(id);
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //Retrieve the deleted item to make them available back to the store
+        [Authorize]
+        [HttpPut]
+        [Route("api/v{version}/[controller]/RetriveItem")]
+        [ApiVersion("1.0")]
+        public IActionResult RetrieveItem([FromBody] ItemDTO item) 
+        {
+            try
+            {
+                var result =  _itemHelper.RetrieveItem(item);
+                return Ok(result);
+            }
+            catch (ValidationException)
+            {
+                return BadRequest("Invalid item update");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{ex.Message}");
+                return BadRequest(ex.Message);
+            }
+        }
+
         //Add item to the store
         [Authorize]
         [HttpPost]
