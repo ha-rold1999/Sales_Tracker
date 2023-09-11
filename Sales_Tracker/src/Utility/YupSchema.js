@@ -62,7 +62,7 @@ export function CreateAccountValidation() {
       .string()
       .required("Phone number is required")
       .matches(/^09\d{9}$/, {
-        message: "Phone number must start with 09 and be 11 digits long",
+        message: "Invalid phone number",
         excludeEmptyString: true,
       }),
     ownerFirstname: yup
@@ -123,7 +123,7 @@ export function UpdateAccountValidation() {
       .string()
       .required("Phone number is required")
       .matches(/^09\d{9}$/, {
-        message: "Phone number must start with 09 and be 11 digits long",
+        message: "Invalid phone number",
         excludeEmptyString: true,
       }),
     ownerFirstname: yup

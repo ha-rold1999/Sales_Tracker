@@ -465,3 +465,29 @@ export async function DeleteAccountAPI() {
     console.error(error);
   }
 }
+
+export async function CheckAuthorization({ login }) {
+  try {
+    Swal.showLoading();
+    const response = await fetch(`${SOURCE}/api/Account/Login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(login),
+    });
+
+    if (!response.ok) {
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Invalid Credentials",
+      });
+
+      return;
+    }
+
+    DeleteAccountAPI();
+  } catch (error) {
+    console.error(error);
+  }
+}
