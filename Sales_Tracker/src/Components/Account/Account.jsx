@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faCancel } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export default function Account() {
   const [isEdit, setIsEdit] = useState(false);

@@ -142,7 +142,6 @@ export default function Register() {
             <input
               type="submit"
               className="bg-green-500 px-2 py-1 rounded-lg border-2 border-black font-bold cursor-pointer"
-              onClick={handleCreateAccount}
             />
           </div>
         </div>
