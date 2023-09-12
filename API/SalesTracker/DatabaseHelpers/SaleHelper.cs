@@ -105,6 +105,20 @@ namespace SalesTracker.DatabaseHelpers
             return Statistics.ToList();
         }
 
+        public List<DailyStoreSaleStatistics> GetItemReport(int storeId, int itemID)
+        {
+            var Statistics = from sale in _context.Sale
+                             where sale.StoreInformation.Id == storeId
+                             join report in _context.Sales on sale.Id equals report.Sale.Id
+                             where report.Item.Id == itemID
+                             select new DailyStoreSaleStatistics
+                             {
+                                 Date = sale.Date,
+                                 Sale = report.Profit
+                             };
+            return Statistics.ToList();
+        }
+
         //Check if sales model is valid
         private bool isValid(SalesDTO dto)
         {

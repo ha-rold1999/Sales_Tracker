@@ -576,3 +576,19 @@ export async function GetItemSoldReport() {
 
   return response.json();
 }
+
+export async function GetItemReport({ itemId }) {
+  const storeId = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(
+    `${SOURCE}/api/Sale/GetItemReport/${storeId}/${itemId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  );
+
+  return response.json();
+}

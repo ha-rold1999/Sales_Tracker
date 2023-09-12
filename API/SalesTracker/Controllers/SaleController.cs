@@ -141,5 +141,14 @@ namespace SalesTracker.Controllers
             return Ok(statistics);
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetItemReport/{storeId}/{itemId}")]
+        public IActionResult GetItemReport(int storeId, int itemId)
+        {
+            var statistics = _saleHelper.GetItemReport(storeId, itemId);
+            return Ok(statistics);
+        }
+
     }
 }
