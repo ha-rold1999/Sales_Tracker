@@ -147,7 +147,7 @@ namespace SalesTracker.DatabaseHelpers
         //Check if the item exist
         private Item isExist(int id)
         {
-            return _databaseContext.Item.Include(x=> x.StoreInformation).FirstOrDefault(x => x.Id == id) ?? throw new NullReferenceException();
+            return _databaseContext.Item.FirstOrDefault(x => x.Id == id) ?? throw new NullReferenceException();
         }
 
         //Check if the item model is valid

@@ -550,3 +550,29 @@ export async function GetIncomeReport() {
 
   return response.json();
 }
+
+export async function GetItemProfitReport() {
+  const id = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(`${SOURCE}/api/Sale/GetItemsProfit/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function GetItemSoldReport() {
+  const id = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(`${SOURCE}/api/Sale/GetItemSold/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+  });
+
+  return response.json();
+}

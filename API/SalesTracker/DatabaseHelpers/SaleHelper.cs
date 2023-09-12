@@ -73,6 +73,38 @@ namespace SalesTracker.DatabaseHelpers
             return Statistics.ToList();
         }
 
+        public List<ItemStatistics> GetItemTotalProfit(int id)
+        {
+            var Statistics = from sale in _context.Sale
+                             where sale.StoreInformation.Id == id
+                             join sales in _context.Sales on sale.Id equals sales.Sale.Id
+                             group new { sales.Item, sales.Profit } by sales.Item.Id into groupSales
+                             orderby groupSales.Sum(s => s.Profit) descending
+                             select new ItemStatistics
+                             {
+                                 name = groupSales.First().Item.ItemName,
+                                 total = groupSales.Sum(s => s.Profit)
+                             };
+
+            return Statistics.ToList();
+        }
+
+        public List<ItemStatistics> GetItemTotalSold(int id)
+        {
+            var Statistics = from sale in _context.Sale
+                             where sale.StoreInformation.Id == id
+                             join sales in _context.Sales on sale.Id equals sales.Sale.Id
+                             group new { sales.Item, sales.Quantity } by sales.Item.Id into groupSales
+                             orderby groupSales.Sum(s => s.Quantity) descending
+                             select new ItemStatistics
+                             {
+                                 name = groupSales.First().Item.ItemName,
+                                 total = groupSales.Sum(s => s.Quantity)
+                             };
+
+            return Statistics.ToList();
+        }
+
         //Check if sales model is valid
         private bool isValid(SalesDTO dto)
         {

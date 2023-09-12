@@ -122,5 +122,24 @@ namespace SalesTracker.Controllers
             var statistics = _saleHelper.GetStoreIncomeStatistics(id);
             return Ok(statistics);
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetItemsProfit/{id}")]
+        public IActionResult GetItemsProfit(int id)
+        {
+            var statistics = _saleHelper.GetItemTotalProfit(id);
+            return Ok(statistics);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetItemSold/{id}")]
+        public IActionResult GetItemSold(int id)
+        {
+            var statistics = _saleHelper.GetItemTotalSold(id);
+            return Ok(statistics);
+        }
+
     }
 }
