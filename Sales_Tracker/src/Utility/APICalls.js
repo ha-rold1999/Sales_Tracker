@@ -444,10 +444,9 @@ export async function DeleteAccountAPI() {
       Swal.close();
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "This is on us we are working on it",
+        title: "Invalid Credentials",
+        text: "Username or Password does not match",
       });
-      console.error("Login failed:", response.statusText);
       return;
     }
 
@@ -490,4 +489,38 @@ export async function CheckAuthorization({ login }) {
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function UpdatePassword({ account }) {
+  Swal.showLoading();
+  const response = await fetch(`${SOURCE}/api/Account/UpdatePassword`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+    body: JSON.stringify(account),
+  });
+
+  if (!response.ok) {
+    Swal.close();
+    Swal.fire({
+      icon: "error",
+      title: "Invalid Credentials",
+      text: "Username or Password does not match",
+    });
+    console.error("Login failed:", response.statusText);
+    return;
+  }
+
+  await Swal.fire({
+    icon: "success",
+    title: "Password Updated",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+
+  localStorage.clear();
+  Cookies.remove("auth_token");
+  window.location.href = "/";
 }

@@ -117,6 +117,27 @@ namespace SalesTracker.Controllers
         }
 
         [Authorize]
+        [HttpPut]
+        [Route("UpdatePassword")]
+        public IActionResult UpdatePassword([FromBody] UpdatePassword updatePassword)
+        {
+            try
+            {
+                _accountHelper.UpdatePassword(updatePassword);
+                return Ok();
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
         [HttpDelete]
         [Route("DeleteAccount/{id}")]
         public IActionResult DeleteAccount(int id)

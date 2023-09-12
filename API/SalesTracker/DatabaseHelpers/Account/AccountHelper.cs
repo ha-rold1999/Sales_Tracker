@@ -93,6 +93,18 @@ namespace SalesTracker.DatabaseHelpers.Account
 
         }
 
+        public void UpdatePassword(UpdatePassword updatePassword)
+        {
+            var storeCredential = GetStoreCredentials(new Login { Username = updatePassword.Username, Password=updatePassword.Password});
+            if(storeCredential != null) 
+            {
+                var newPassword = HashingPassword.HashPasswordFactory(updatePassword.NewPassword);
+                storeCredential.Password = newPassword;
+
+                _databaseContext.SaveChanges();
+            }
+        }
+
         public void DeleteStore(int id)
         {
             int? accountId = GetStoreCredentialId(id);

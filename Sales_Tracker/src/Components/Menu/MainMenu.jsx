@@ -57,13 +57,13 @@ export default function MainMenu() {
             </Link>
             <Link
               to="/danger"
-              className="bg-white cursor-pointer text-center py-4 text-xl font-semibold rounded-lg border-blue-600 border-2 hover:border-black">
+              className="cursor-pointer text-center py-4 text-xl font-semibold rounded-lg border-blue-600 border-2 hover:border-black bg-red-600">
               Account
             </Link>
           </div>
 
           <div
-            className="fixed bottom-0 bg-red-600 mb-3 cursor-pointer"
+            className="fixed bottom-0 bg-orange-600 mb-3 cursor-pointer"
             onClick={handleLogout}>
             <div className="px-10">
               Logout

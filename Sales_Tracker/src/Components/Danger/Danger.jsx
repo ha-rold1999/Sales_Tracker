@@ -1,6 +1,7 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { CheckAuthorization } from "../../Utility/APICalls";
+import { Link } from "react-router-dom";
 
 export default function Danger() {
   const handleDeleteAccount = () => {
@@ -37,9 +38,11 @@ export default function Danger() {
   };
   return (
     <div className="flex justify-center items-center flex-col h-full flex-1 space-y-10">
-      <div className="w-1/2 py-5 bg-orange-600 flex justify-center rounded-lg">
+      <Link
+        className="w-1/2 py-5 bg-orange-600 flex justify-center rounded-lg"
+        to="/change-password">
         <div className="text-2xl font-bold">Change Password</div>
-      </div>
+      </Link>
       <div
         className="w-1/2 py-5  flex justify-center rounded-lg border-red-600 border-2 hover:bg-red-600 cursor-pointer"
         onClick={handleDeleteAccount}>

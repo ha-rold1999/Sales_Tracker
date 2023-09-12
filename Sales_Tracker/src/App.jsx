@@ -10,6 +10,7 @@ import Register from "./Components/Register/Register";
 import Account from "./Components/Account/Account";
 import Archive from "./Components/Archive/Archive";
 import Danger from "./Components/Danger/Danger";
+import ChangePassword from "./Components/Danger/ChangePassword";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/archive" element={<Archive />} />
           <Route path="/danger" element={<Danger />} />
+          <Route path="/change-password" element={<ChangePassword />} />
         </Routes>
       </Router>
     </Provider>

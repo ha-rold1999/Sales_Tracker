@@ -136,3 +136,41 @@ export function UpdateAccountValidation() {
       .min(2, "Name must be at least 2 character"),
   });
 }
+
+export function UpdatePasswordValidation() {
+  return yup.object().shape({
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(6, "Username must be at least 6 characters"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        {
+          message:
+            "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)",
+        }
+      ),
+    username: yup.string().required("Username is required"),
+    password: yup.string().required("Password is required"),
+    newPassword: yup
+      .string()
+      .required("New password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        {
+          message:
+            "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)",
+        }
+      )
+      .notOneOf(
+        [yup.ref("password")],
+        "New password must not match to the current password"
+      ),
+    retypePassword: yup
+      .string()
+      .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+  });
+}
