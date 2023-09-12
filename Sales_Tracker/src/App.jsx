@@ -11,6 +11,7 @@ import Account from "./Components/Account/Account";
 import Archive from "./Components/Archive/Archive";
 import Danger from "./Components/Danger/Danger";
 import ChangePassword from "./Components/Danger/ChangePassword";
+import Statistics from "./Components/Statistics/Statistics";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/archive" element={<Archive />} />
           <Route path="/danger" element={<Danger />} />
           <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Routes>
       </Router>
     </Provider>

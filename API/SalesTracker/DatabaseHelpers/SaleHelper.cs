@@ -2,8 +2,10 @@
 using BusinessLogic.Sales;
 using CustomException;
 using Microsoft.EntityFrameworkCore;
+using Models.Model.Account.Information;
 using Models.Model.Sale;
 using Models.Model.Sale.Sales;
+using Models.Model.Sale.Statistics;
 using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
@@ -45,6 +47,30 @@ namespace SalesTracker.DatabaseHelpers
             _context.Sales.Add(sales);
 
             return sales;
+        }
+
+        public List<DailyStoreSaleStatistics> GetStoreProfitStatistics(int id)
+        {
+            var Statistics = from sale in _context.Sale where sale.StoreInformation.Id == id
+                             join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                             select new DailyStoreSaleStatistics
+                             {
+                                 Date = sale.Date,
+                                 Sale = report.TotalProfit
+                             };
+            return Statistics.ToList();
+        }
+        public List<DailyStoreSaleStatistics> GetStoreIncomeStatistics(int id)
+        {
+            var Statistics = from sale in _context.Sale
+                             where sale.StoreInformation.Id == id
+                             join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                             select new DailyStoreSaleStatistics
+                             {
+                                 Date = sale.Date,
+                                 Sale = report.TotalIncome
+                             };
+            return Statistics.ToList();
         }
 
         //Check if sales model is valid

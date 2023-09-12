@@ -104,5 +104,23 @@ namespace SalesTracker.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetStoreProfits/{id}")]
+        public IActionResult GetStoreProfits(int id)
+        {
+           var statistics =  _saleHelper.GetStoreProfitStatistics(id);
+            return Ok(statistics);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetStoreIncome/{id}")]
+        public IActionResult GetStoreIncome(int id)
+        {
+            var statistics = _saleHelper.GetStoreIncomeStatistics(id);
+            return Ok(statistics);
+        }
     }
 }

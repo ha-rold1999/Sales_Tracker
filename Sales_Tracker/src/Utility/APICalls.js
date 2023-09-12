@@ -524,3 +524,29 @@ export async function UpdatePassword({ account }) {
   Cookies.remove("auth_token");
   window.location.href = "/";
 }
+
+export async function GetProfitReport() {
+  const id = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(`${SOURCE}/api/Sale/GetStoreProfits/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function GetIncomeReport() {
+  const id = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(`${SOURCE}/api/Sale/GetStoreIncome/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+  });
+
+  return response.json();
+}

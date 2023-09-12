@@ -91,14 +91,9 @@ export default function MainMenu() {
             Expenses
           </Link>
           <Link
-            to="/expenses"
-            className="bg-red-900 w-4/5 justify-center items-center flex py-2 text-2xl font-bold rounded-lg cursor-pointer">
-            Expenses
-          </Link>
-          <Link
-            to="/expenses"
-            className="bg-red-900 w-4/5 justify-center items-center flex py-2 text-2xl font-bold rounded-lg cursor-pointer">
-            Expenses
+            to="/statistics"
+            className="bg-orange-500 w-4/5 justify-center items-center flex py-2 text-2xl font-bold rounded-lg cursor-pointer">
+            Statistics
           </Link>
         </div>
       </div>
