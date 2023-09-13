@@ -83,6 +83,7 @@ export async function HandleUpdateItem({
   data,
   navigate,
 }) {
+  const itemName = watch("itemName");
   const stock = watch("stock");
   const buyingPrice = watch("buyingPrice");
   const sellingPrice = watch("sellingPrice");
@@ -90,7 +91,7 @@ export async function HandleUpdateItem({
   try {
     Swal.showLoading();
     await queryClient.fetchQuery("update item", () =>
-      UpdateItemAPI({ data, stock, buyingPrice, sellingPrice })
+      UpdateItemAPI({ data, itemName, stock, buyingPrice, sellingPrice })
     );
     Swal.close();
 

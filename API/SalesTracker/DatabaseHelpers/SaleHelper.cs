@@ -111,10 +111,11 @@ namespace SalesTracker.DatabaseHelpers
                              where sale.StoreInformation.Id == storeId
                              join report in _context.Sales on sale.Id equals report.Sale.Id
                              where report.Item.Id == itemID
+                             group report by report.Sale.Id into groupedReport
                              select new DailyStoreSaleStatistics
                              {
-                                 Date = sale.Date,
-                                 Sale = report.Profit
+                                 Date = groupedReport.First().Sale.Date,
+                                 Sale = groupedReport.Sum(r => r.Profit)
                              };
             return Statistics.ToList();
         }

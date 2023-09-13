@@ -66,7 +66,13 @@ export function DeleteItemCall({ id }) {
   });
 }
 
-export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {
+export function UpdateItemAPI({
+  data,
+  itemName,
+  stock,
+  buyingPrice,
+  sellingPrice,
+}) {
   const store = localStorage.getItem("store");
   fetch(`${SOURCE}/api/v1/Item/UpdateItem`, {
     method: "PUT",
@@ -76,7 +82,7 @@ export function UpdateItemAPI({ data, stock, buyingPrice, sellingPrice }) {
     },
     body: JSON.stringify({
       id: data.id,
-      itemName: data.itemName,
+      itemName: itemName,
       stock: stock,
       buyingPrice: buyingPrice,
       sellingPrice: sellingPrice,

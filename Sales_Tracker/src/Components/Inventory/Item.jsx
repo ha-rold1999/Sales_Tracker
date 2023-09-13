@@ -33,6 +33,7 @@ export default function Item() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
+      itemName: data.itemName,
       stock: data.stock,
       buyingPrice: data.buyingPrice,
       sellingPrice: data.sellingPrice,
@@ -89,11 +90,13 @@ export default function Item() {
       </div>
       <form
         onSubmit={handleSubmit(handleUpdateItem)}
-        className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg">
-        <div className="flex justify-center text-3xl font-bold">
-          {data.itemName}
-        </div>
-
+        className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg ">
+        <input
+          className="flex justify-center text-3xl font-bold bg-yellow-500 py-2 px-1 rounded-lg"
+          placeholder="Item Name"
+          {...register("itemName")}
+        />
+        <span className="text-red-600">{errors.itemName?.message}</span>
         <div className="text-lg font-semibold">Stock</div>
         <StockInput setValue={setValue} watch={watch} schema={schema} />
         <span className="text-red-600">{errors.stock?.message}</span>

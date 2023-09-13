@@ -2,6 +2,7 @@ import * as yup from "yup";
 
 export function ItemValidation() {
   return yup.object().shape({
+    itemName: yup.string().required("Item name is required"),
     stock: yup
       .number()
       .typeError("Invalid number")
