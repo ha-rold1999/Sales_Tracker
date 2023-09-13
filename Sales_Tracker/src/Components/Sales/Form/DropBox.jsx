@@ -26,7 +26,7 @@ export default function DropBox({
         value={selectedItem}
         onChange={handelSelectChange}
         isSearchable={true}
-        className="w-full p-2 text-2xl rounded-lg"
+        className="w-full rounded-lg"
       />
     );
   }

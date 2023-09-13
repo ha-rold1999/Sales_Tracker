@@ -20,6 +20,7 @@ import {
 } from "../../Utility/APICalls";
 import DropBox from "../Sales/Form/DropBox";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 
 export default function Statistics() {
   const [profit, setProfit] = useState([]);
@@ -53,9 +54,20 @@ export default function Statistics() {
 
   if (profit.length > 0) {
     return (
-      <>
-        <div className="w-full h-1/2 flex justify-center p-2  space-x-2">
-          <div className="bg-white w-1/2 h-full flex flex-col p-5 border-2 border-black rounded-lg">
+      <div className="flex bg-blue-600 h-full w-full flex-col p-5 space-y-2">
+        <div className="flex flex-1 items-start w-full space-x-1">
+          <Link
+            className="w-fit h-fit bg-white px-3 py-1 rounded-lg"
+            to="/menu">
+            Menu
+          </Link>
+          <div className="text-xl text-white">/</div>
+          <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
+            Statistics
+          </Link>
+        </div>
+        <div className="w-full h-1/2 flex justify-center space-x-1">
+          <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
             <div className="font-bold text-lg">Profit</div>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart width={300} height={100} data={profit}>
@@ -79,7 +91,7 @@ export default function Statistics() {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white w-1/2 h-full flex flex-col p-5 border-2 border-black rounded-lg">
+          <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
             <div className="font-bold text-lg">Income</div>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart width={300} height={100} data={income}>
@@ -102,9 +114,9 @@ export default function Statistics() {
             </ResponsiveContainer>
           </div>
         </div>
-        <div className="w-full h-1/2 flex justify-center p-2  space-x-2">
-          <div className=" w-1/2 h-full flex flex-row space-x-1">
-            <div className="bg-white w-1/2 h-full p-5 border-2 border-black rounded-lg flex flex-col">
+        <div className="w-full h-1/2 flex justify-center space-x-1">
+          <div className=" w-1/2 h-full flex flex-row">
+            <div className="bg-white w-4/5 h-full p-1 border-2 border-black rounded-lg flex flex-col mr-1">
               <div className="font-bold text-lg">Item's Profit</div>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={300} height={100}>
@@ -118,7 +130,7 @@ export default function Statistics() {
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="bg-white w-1/2 h-full p-5 border-2 border-black rounded-lg flex flex-col">
+            <div className="bg-white w-4/5 h-full p-1 border-2 border-black rounded-lg flex flex-col">
               <div className="font-bold text-lg">Item's Sold</div>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={300} height={100}>
@@ -134,8 +146,8 @@ export default function Statistics() {
             </div>
           </div>
 
-          <div className="bg-white w-1/2 h-full flex flex-col px-5 pt-2 border-2 border-black rounded-lg">
-            <div className="w-4/5 flex flex-row">
+          <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
+            <div className="w-4/5 flex flex-row space-x-1">
               <DropBox
                 setSelectedItem={setSelectedItem}
                 setIsItemSelected={setIsItemSelected}
@@ -145,7 +157,7 @@ export default function Statistics() {
               />
               <div className="flex flex-row justify-center items-center ">
                 <div
-                  className="bg-blue-400 p-2 rounded-lg border-2 border-black cursor-pointer"
+                  className="bg-blue-400 p-1 rounded-lg border-2 border-black cursor-pointer"
                   onClick={handleSetSearch}>
                   Data
                 </div>
@@ -176,7 +188,7 @@ export default function Statistics() {
             </ResponsiveContainer>
           </div>
         </div>
-      </>
+      </div>
     );
   } else {
     return (

@@ -24,9 +24,15 @@ export default function Items() {
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
-      <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-        back to menu
-      </Link>
+      <div className="space-x-1 flex">
+        <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/menu">
+          Menu
+        </Link>
+        <div className="text-xl text-white">/</div>
+        <Link className="w-fit bg-yellow-500 px-3 py-1 rounded-lg">
+          Inventory
+        </Link>
+      </div>
       <div className="flex flex-row items-center space-x-5  p-3">
         <div className="text-5xl font-bold text-yellow-300">Items</div>
         <Link
@@ -36,7 +42,7 @@ export default function Items() {
         </Link>
         <div className="flex  flex-grow  justify-end">
           <input
-            className="text-lg px-3 py-1 w-1/2 rounded-lg"
+            className="text-lg px-3 py-1 w-1/2 rounded-lg border-2 border-black"
             placeholder="Search Item"
             onChange={(e) => setSearch(e.target.value)}
           />

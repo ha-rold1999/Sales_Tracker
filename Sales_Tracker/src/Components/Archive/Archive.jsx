@@ -39,9 +39,15 @@ export default function Archive() {
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
-      <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-        back to menu
-      </Link>
+      <div className="flex flex-1 items-start w-full space-x-1">
+        <Link className="w-fit h-fit bg-white px-3 py-1 rounded-lg" to="/menu">
+          Menu
+        </Link>
+        <div className="text-xl text-white">/</div>
+        <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
+          Archive
+        </Link>
+      </div>
       <div className="flex flex-row items-center space-x-5  p-3">
         <div className="text-5xl font-bold text-yellow-300">Deleted Items</div>
       </div>

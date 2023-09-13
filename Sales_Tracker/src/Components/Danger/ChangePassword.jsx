@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { UpdatePassword } from "../../Utility/APICalls";
 import { UpdatePasswordValidation } from "../../Utility/YupSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Link } from "react-router-dom";
 
 export default function ChangePassword() {
   const schema = UpdatePasswordValidation();
@@ -32,54 +33,79 @@ export default function ChangePassword() {
     }
   };
   return (
-    <div className="flex flex-1 justify-center items-center h-full ">
-      <form
-        className="bg-white w-2/5 h-3/5 rounded-lg border-black border-2 flex flex-col px-5 "
-        onSubmit={handleSubmit(handleUpdatePassword)}>
-        <div className="text-3xl font-bold justify-center flex">
+    <div className="flex w-full h-full flex-col p-5">
+      <div className="flex h-fit items-start w-full space-x-1">
+        <Link className="w-fit h-fit bg-white px-3 py-1 rounded-lg" to="/menu">
+          Menu
+        </Link>
+        <div className="text-xl text-white">/</div>
+        <Link
+          className="w-fit h-fit bg-white px-3 py-1 rounded-lg"
+          to="/danger">
+          Account
+        </Link>
+        <div className="text-xl text-white">/</div>
+        <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
           Change Password
-        </div>
-        <label className="text-sm font-medium mt-1">Username</label>
-        <input
-          className="bg-yellow-500  p-1 rounded-lg text-sm"
-          placeholder="Username"
-          {...register("username")}
-        />
-        <span className="text-red-600 text-xs">{errors.username?.message}</span>
-
-        <label className="text-sm font-medium mt-1">Old Password</label>
-        <input
-          className="bg-yellow-500  p-1 rounded-lg text-sm"
-          {...register("password")}
-          type="password"
-        />
-        <span className="text-red-600 text-xs">{errors.password?.message}</span>
-        <label className="text-sm font-medium mt-1">New Password</label>
-        <input
-          className="bg-yellow-500  p-1 rounded-lg text-sm"
-          {...register("newPassword")}
-          type="password"
-        />
-        <span className="text-red-600 text-xs">{errors.password?.message}</span>
-
-        <label className="text-sm font-medium mt-1">Retype New Password</label>
-        <input
-          className="bg-yellow-500 rounded-lg p-1 text-sm"
-          {...register("retypePassword")}
-          type="password"
-        />
-        <span className="text-red-600 text-xs">
-          {errors.retypePassword?.message}
-        </span>
-
-        <div className="flex justify-center mt-2">
+        </Link>
+      </div>
+      <div className="flex flex-1 justify-center items-center h-full ">
+        <form
+          className="bg-white w-2/5 h-3/5 rounded-lg border-black border-2 flex flex-col px-5 "
+          onSubmit={handleSubmit(handleUpdatePassword)}>
+          <div className="text-3xl font-bold justify-center flex">
+            Change Password
+          </div>
+          <label className="text-sm font-medium mt-1">Username</label>
           <input
-            type="submit"
-            className="bg-green-500 px-2 py-1 rounded-lg border-2 border-black font-bold cursor-pointer"
-            value="Save Changes"
+            className="bg-yellow-500  p-1 rounded-lg text-sm"
+            placeholder="Username"
+            {...register("username")}
           />
-        </div>
-      </form>
+          <span className="text-red-600 text-xs">
+            {errors.username?.message}
+          </span>
+
+          <label className="text-sm font-medium mt-1">Old Password</label>
+          <input
+            className="bg-yellow-500  p-1 rounded-lg text-sm"
+            {...register("password")}
+            type="password"
+          />
+          <span className="text-red-600 text-xs">
+            {errors.password?.message}
+          </span>
+          <label className="text-sm font-medium mt-1">New Password</label>
+          <input
+            className="bg-yellow-500  p-1 rounded-lg text-sm"
+            {...register("newPassword")}
+            type="password"
+          />
+          <span className="text-red-600 text-xs">
+            {errors.password?.message}
+          </span>
+
+          <label className="text-sm font-medium mt-1">
+            Retype New Password
+          </label>
+          <input
+            className="bg-yellow-500 rounded-lg p-1 text-sm"
+            {...register("retypePassword")}
+            type="password"
+          />
+          <span className="text-red-600 text-xs">
+            {errors.retypePassword?.message}
+          </span>
+
+          <div className="flex justify-center mt-2">
+            <input
+              type="submit"
+              className="bg-green-500 px-2 py-1 rounded-lg border-2 border-black font-bold cursor-pointer"
+              value="Save Changes"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

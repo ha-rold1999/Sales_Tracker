@@ -37,16 +37,27 @@ export default function Danger() {
     });
   };
   return (
-    <div className="flex justify-center items-center flex-col h-full flex-1 space-y-10">
-      <Link
-        className="w-1/2 py-5 bg-orange-600 flex justify-center rounded-lg"
-        to="/change-password">
-        <div className="text-2xl font-bold">Change Password</div>
-      </Link>
-      <div
-        className="w-1/2 py-5  flex justify-center rounded-lg border-red-600 border-2 hover:bg-red-600 cursor-pointer"
-        onClick={handleDeleteAccount}>
-        <div className="text-2xl font-bold">Delete Account</div>
+    <div className="flex w-full h-full flex-col p-5">
+      <div className="flex items-start w-full space-x-1 h-fit">
+        <Link className="w-fit h-fit bg-white px-3 py-1 rounded-lg" to="/menu">
+          Menu
+        </Link>
+        <div className="text-xl text-white">/</div>
+        <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
+          Account
+        </Link>
+      </div>
+      <div className="flex justify-center items-center flex-col h-full flex-1 space-y-10">
+        <Link
+          className="w-1/2 py-5 bg-orange-600 flex justify-center rounded-lg"
+          to="/change-password">
+          <div className="text-2xl font-bold">Change Password</div>
+        </Link>
+        <div
+          className="w-1/2 py-5  flex justify-center rounded-lg border-red-600 border-2 hover:bg-red-600 cursor-pointer"
+          onClick={handleDeleteAccount}>
+          <div className="text-2xl font-bold">Delete Account</div>
+        </div>
       </div>
     </div>
   );
