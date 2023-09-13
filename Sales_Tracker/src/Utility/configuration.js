@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { AddItemExpenses } from "./APICalls";
+import { AddItemExpenses, DeleteItemCall } from "./APICalls";
 
 export function HandleSales({
   selectedItem,
@@ -215,4 +215,26 @@ export async function HandleSaveAllExpenses({
   } else {
     setIsExpensesExist(false);
   }
+}
+
+export function HandleDeleteItem({ id }) {
+  Swal.fire({
+    title: "Do you want to DELETE this item?",
+    showDenyButton: true,
+    confirmButtonText: "Delete",
+    denyButtonText: `Cancel`,
+    confirmButtonColor: "Red",
+    denyButtonColor: "Gray",
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      Swal.fire("Saved!", "", "success");
+
+      DeleteItemCall({ id });
+
+      setTimeout(() => {
+        window.location.href = "/inventory";
+      }, 1000);
+    }
+  });
 }

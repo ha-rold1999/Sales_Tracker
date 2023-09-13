@@ -5,6 +5,7 @@ import StockLog from "./Report/StockLog";
 import BuyingPriceLog from "./Report/BuyingPriceLog";
 import SellingPriceLog from "./Report/SellingPriceLog";
 import Cookies from "js-cookie";
+import ItemReportCrumbs from "../BreadCrumbs/ItemReportCrumbs";
 
 export default function ItemReport() {
   const location = useLocation();
@@ -17,7 +18,8 @@ export default function ItemReport() {
     }
   }, []);
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full p-5">
+      <ItemReportCrumbs itemName={data.itemName} />
       <div className="flex flex-1 justify-center text-white text-4xl font-bold">
         {data.itemName}
       </div>

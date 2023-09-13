@@ -3,18 +3,21 @@ import { useLocation } from "react-router-dom";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
-import { DeleteItemCall, UpdateItemAPI } from "../../Utility/APICalls";
+import { UpdateItemAPI } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ItemValidation } from "../../Utility/YupSchema";
-import { HandleUpdateItem } from "../../Utility/configuration";
-import { Link } from "react-router-dom";
+import {
+  HandleDeleteItem,
+  HandleUpdateItem,
+} from "../../Utility/configuration";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Swal from "sweetalert2";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import InventoryCrumbs from "../BreadCrumbs/InventoryCrumbs";
+import ItemStatistics from "../Statistics/ItemStatistics";
 
 export default function Item() {
   const queryClient = useQueryClient();
@@ -51,25 +54,7 @@ export default function Item() {
   };
 
   function handleDelete(id) {
-    Swal.fire({
-      title: "Do you want to DELETE this item?",
-      showDenyButton: true,
-      confirmButtonText: "Delete",
-      denyButtonText: `Cancel`,
-      confirmButtonColor: "Red",
-      denyButtonColor: "Gray",
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
-
-        DeleteItemCall({ id });
-
-        setTimeout(() => {
-          window.location.href = "/inventory";
-        }, 1000);
-      }
-    });
+    HandleDeleteItem({ id });
   }
 
   useEffect(() => {
@@ -81,20 +66,7 @@ export default function Item() {
 
   return (
     <div className="p-5">
-      <div className="space-x-1 flex">
-        <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-          Menu
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/inventory">
-          Inventory
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link className="w-fit bg-yellow-500 px-3 py-1 rounded-lg">
-          {data.itemName}
-        </Link>
-      </div>
-
+      <InventoryCrumbs itemName={data.itemName} />
       <div className="flex flex-1 w-full h-full justify-center items-center flex-col">
         <div className="flex justify-end w-2/5 mb-1">
           <FontAwesomeIcon
@@ -128,26 +100,7 @@ export default function Item() {
               Save Changes
             </button>
           </div>
-          <div className="flex justify-center mt-5">
-            <Link
-              to="/inventory/item-report"
-              state={data}
-              className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
-              Item Report
-            </Link>
-            <Link
-              to="/inventory/item-sales"
-              state={data}
-              className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
-              Sale Report
-            </Link>
-            <Link
-              to="/inventory/item-expenses"
-              state={data}
-              className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
-              Expense Report
-            </Link>
-          </div>
+          <ItemStatistics data={data} />
         </form>
       </div>
     </div>
