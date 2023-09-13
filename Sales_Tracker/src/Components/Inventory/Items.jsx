@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../Style/style.css";
 import { useQuery } from "react-query";
@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 
 export default function Items() {
   const store = localStorage.getItem("store");
+  const [search, setSearch] = useState("");
 
   const { data } = useQuery(["items"], () => GetItems({ store }));
 
@@ -16,6 +17,10 @@ export default function Items() {
       return;
     }
   }, []);
+
+  const filterData = data?.filter((item) => {
+    return item.itemName.toLowerCase().includes(search.toLowerCase());
+  });
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
@@ -29,11 +34,18 @@ export default function Items() {
           className="bg-green-500 py-3 px-5 text-xl font-bold border-2 border-black rounded-lg">
           Add item
         </Link>
+        <div className="flex  flex-grow  justify-end">
+          <input
+            className="text-lg px-3 py-1 w-1/2 rounded-lg"
+            placeholder="Search Item"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="h-full overflow-y-auto hide-scrollbar">
         <div className="grid gap-2 grid-cols-3 ">
-          {data?.map((item, index) => {
+          {filterData?.map((item, index) => {
             return (
               <Link
                 to="/inventory/item"
