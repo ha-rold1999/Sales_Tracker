@@ -11,11 +11,9 @@ import { SetSales } from "../../Utility/SetData";
 import { useQuery } from "react-query";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { HandleSales, HandleSaveAllSales } from "../../Utility/configuration";
-import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import Swal from "sweetalert2";
+import SalesCrumbs from "../BreadCrumbs/SalesCrumbs";
 
 export default function Sales() {
   const queryClient = useQueryClient();
@@ -72,21 +70,10 @@ export default function Sales() {
   return (
     <div className="flex flex-col-2 h-full">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
-        <div className="flex flex-1 items-start w-full space-x-1">
-          <Link
-            className="w-fit h-fit bg-white px-3 py-1 rounded-lg"
-            to="/menu">
-            Menu
-          </Link>
-          <div className="text-xl text-white">/</div>
-          <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
-            Sales
-          </Link>
-        </div>
+        <SalesCrumbs />
         <div className="w-full">
           <DropBox
             setSelectedItem={setSelectedItem}
-            setIsItemSelected={setIsItemSelected}
             selectedItem={selectedItem}
             items={data}
             isLoading={isLoading}
@@ -94,10 +81,7 @@ export default function Sales() {
           {!selectedItem && (
             <span className="text-red-600">Please select an item</span>
           )}
-          <Stock
-            selectedItem={selectedItem}
-            setIsItemSelected={setIsItemSelected}
-          />
+          <Stock selectedItem={selectedItem} />
           <div className="flex justify-center space-x-2">
             <div className="text-3xl font-semibold">Sold</div>
             <Sold setQuantity={setQuantity} quantity={quantity} />

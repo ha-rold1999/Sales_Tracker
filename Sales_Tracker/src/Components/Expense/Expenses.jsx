@@ -15,6 +15,7 @@ import {
 import { SetExpense } from "../../Utility/SetData";
 import { AddExpenses, GetItems } from "../../Utility/APICalls";
 import { useQuery } from "react-query";
+import ExpenseCrumbs from "../BreadCrumbs/ExpenseCrumbs";
 
 export default function Expenses() {
   const queryClient = useQueryClient();
@@ -64,17 +65,7 @@ export default function Expenses() {
   return (
     <div className="flex flex-col-2 h-full">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
-        <div className="flex flex-1 items-start w-full space-x-1">
-          <Link
-            className="w-fit h-fit bg-white px-3 py-1 rounded-lg"
-            to="/menu">
-            Menu
-          </Link>
-          <div className="text-xl text-white">/</div>
-          <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
-            Expenses
-          </Link>
-        </div>
+        <ExpenseCrumbs />
         <div className="w-full">
           <DropBox
             setSelectedItem={setSelectedItem}

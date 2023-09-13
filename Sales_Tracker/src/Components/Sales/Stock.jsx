@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Stock({ selectedItem, setIsItemSelected }) {
+export default function Stock({ selectedItem }) {
   return (
     <div className="text-lg font-semibold flex col">
       Stock:
@@ -10,7 +10,6 @@ export default function Stock({ selectedItem, setIsItemSelected }) {
             const parsedItem = selectedItem.value;
             return parsedItem.stock;
           } catch (error) {
-            setIsItemSelected(false);
             return 0; // Default value if parsing fails
           }
         })()}

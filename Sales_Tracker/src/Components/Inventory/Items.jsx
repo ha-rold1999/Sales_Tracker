@@ -4,6 +4,7 @@ import "../../Style/style.css";
 import { useQuery } from "react-query";
 import { GetItems } from "../../Utility/APICalls";
 import Cookies from "js-cookie";
+import ItemsCrumbs from "../BreadCrumbs/ItemsCrumbs";
 
 export default function Items() {
   const store = localStorage.getItem("store");
@@ -24,15 +25,7 @@ export default function Items() {
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
-      <div className="space-x-1 flex">
-        <Link className="w-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-          Menu
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link className="w-fit bg-yellow-500 px-3 py-1 rounded-lg">
-          Inventory
-        </Link>
-      </div>
+      <ItemsCrumbs />
       <div className="flex flex-row items-center space-x-5  p-3">
         <div className="text-5xl font-bold text-yellow-300">Items</div>
         <Link

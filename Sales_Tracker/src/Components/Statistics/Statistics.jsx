@@ -1,191 +1,53 @@
-import React, { useEffect, useState } from "react";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-} from "recharts";
-import {
-  GetIncomeReport,
-  GetItemProfitReport,
-  GetItemSoldReport,
-  GetProfitReport,
-  GetItems,
-  GetItemReport,
-} from "../../Utility/APICalls";
-import DropBox from "../Sales/Form/DropBox";
+import React from "react";
+import { GetProfitReport } from "../../Utility/APICalls";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import StatisticsCrumbs from "../BreadCrumbs/StatisticsCrumbs";
+import ProfitStatistics from "./ProfitStatistics";
+import IncomeStatistics from "./IncomeStatistics";
+import ItemProfitStatistics from "./ItemProfitStatistics";
+import ItemSoldStatistics from "./ItemSoldStatistics";
+import ItemsStatistics from "./ItemsStatistics";
 
 export default function Statistics() {
-  const [profit, setProfit] = useState([]);
-  const [income, setIncome] = useState([]);
-  const [itemProfit, setItemProfit] = useState([]);
-  const [itemSold, setItemSold] = useState([]);
-  const [selectedItem, setSelectedItem] = useState();
-  const [isItemSelected, setIsItemSelected] = useState(true);
-  const [itemStat, setItemStat] = useState();
-
-  const store = localStorage.getItem("store");
-  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }));
-
-  const handleSetSearch = async () => {
-    if (selectedItem) {
-      console.log(selectedItem);
-      const itemId = selectedItem.value.id;
-      setItemStat(await GetItemReport({ itemId }));
-    }
-  };
-
-  useEffect(() => {
-    async function fetData() {
-      setProfit(await GetProfitReport());
-      setIncome(await GetIncomeReport());
-      setItemProfit(await GetItemProfitReport());
-      setItemSold(await GetItemSoldReport());
-    }
-    fetData();
-  }, []);
+  const {
+    data: profit,
+    isLoading: profitLoading,
+    isSuccess: profitSuccess,
+  } = useQuery(["profitReport"], async () => await GetProfitReport());
+  const {
+    data: income,
+    isLoading: incomeLoading,
+    isSuccess: incomeSuccess,
+  } = useQuery(["profitReport"], async () => await GetProfitReport());
 
   if (profit.length > 0) {
     return (
       <div className="flex bg-blue-600 h-full w-full flex-col p-5 space-y-2">
-        <div className="flex flex-1 items-start w-full space-x-1">
-          <Link
-            className="w-fit h-fit bg-white px-3 py-1 rounded-lg"
-            to="/menu">
-            Menu
-          </Link>
-          <div className="text-xl text-white">/</div>
-          <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
-            Statistics
-          </Link>
-        </div>
+        <StatisticsCrumbs />
         <div className="w-full h-1/2 flex justify-center space-x-1">
           <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
             <div className="font-bold text-lg">Profit</div>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart width={300} height={100} data={profit}>
-                <CartesianGrid
-                  stroke="grey"
-                  strokeWidth={2}
-                  className="bg-red-500"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="sale"
-                  stroke="blue"
-                  strokeWidth={3}
-                  onClick={(data, index) => console.log(data)}
-                />
-
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-              </LineChart>
-            </ResponsiveContainer>
+            <ProfitStatistics data={profit} />
           </div>
-
           <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
             <div className="font-bold text-lg">Income</div>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart width={300} height={100} data={income}>
-                <CartesianGrid
-                  stroke="grey"
-                  strokeWidth={2}
-                  className="bg-red-500"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="sale"
-                  stroke="green"
-                  strokeWidth={3}
-                />
-
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-              </LineChart>
-            </ResponsiveContainer>
+            <IncomeStatistics data={income} />
           </div>
         </div>
         <div className="w-full h-1/2 flex justify-center space-x-1">
           <div className=" w-1/2 h-full flex flex-row">
             <div className="bg-white w-4/5 h-full p-1 border-2 border-black rounded-lg flex flex-col mr-1">
               <div className="font-bold text-lg">Item's Profit</div>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={300} height={100}>
-                  <Pie
-                    dataKey="total"
-                    data={itemProfit}
-                    outerRadius={80}
-                    fill="green"
-                  />
-                  <Tooltip formatter={(value, name) => [value, name]} />
-                </PieChart>
-              </ResponsiveContainer>
+              <ItemProfitStatistics />
             </div>
             <div className="bg-white w-4/5 h-full p-1 border-2 border-black rounded-lg flex flex-col">
               <div className="font-bold text-lg">Item's Sold</div>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={300} height={100}>
-                  <Pie
-                    dataKey="total"
-                    data={itemSold}
-                    outerRadius={80}
-                    fill="orange"
-                  />
-                  <Tooltip formatter={(value, name) => [value, name]} />
-                </PieChart>
-              </ResponsiveContainer>
+              <ItemSoldStatistics />
             </div>
           </div>
 
           <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
-            <div className="w-4/5 flex flex-row space-x-1">
-              <DropBox
-                setSelectedItem={setSelectedItem}
-                setIsItemSelected={setIsItemSelected}
-                selectedItem={selectedItem}
-                items={data}
-                isLoading={isLoading}
-              />
-              <div className="flex flex-row justify-center items-center ">
-                <div
-                  className="bg-blue-400 p-1 rounded-lg border-2 border-black cursor-pointer"
-                  onClick={handleSetSearch}>
-                  Data
-                </div>
-              </div>
-            </div>
-            {!selectedItem && (
-              <span className="text-red-600">Please select an item</span>
-            )}
-
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart width={300} height={100} data={itemStat}>
-                <CartesianGrid
-                  stroke="grey"
-                  strokeWidth={2}
-                  className="bg-red-500"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="sale"
-                  stroke="green"
-                  strokeWidth={3}
-                />
-
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-              </LineChart>
-            </ResponsiveContainer>
+            <ItemsStatistics />
           </div>
         </div>
       </div>
