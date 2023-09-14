@@ -15,7 +15,7 @@ import {
 } from "../../Utility/configuration";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faArchive } from "@fortawesome/free-solid-svg-icons";
 import InventoryCrumbs from "../BreadCrumbs/InventoryCrumbs";
 import ItemStatistics from "../Statistics/ItemStatistics";
 import ItemReport from "../Statistics/ItemReports";
@@ -71,7 +71,7 @@ export default function Item() {
       <div className="flex flex-1 w-full h-full justify-center items-center flex-col">
         <div className="flex justify-end w-2/5 mb-1">
           <FontAwesomeIcon
-            icon={faTrash}
+            icon={faArchive}
             className="bg-red-600 p-3 rounded-lg cursor-pointer border-blue-500 border-2 hover:border-black"
             onClick={() => handleDelete(data.id)}
           />

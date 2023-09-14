@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { GetDeletedItems, RetriveItem } from "../../Utility/APICalls";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import ArchiveCrumbs from "../BreadCrumbs/ArchiveCrumbs";
 
 export default function Archive() {
   const store = localStorage.getItem("store");
@@ -13,7 +14,7 @@ export default function Archive() {
 
   const handleViewItem = (item) => {
     Swal.fire({
-      title: "Do you want to retrieve this item?",
+      title: "Do you want to restore this item?",
       html: `<span style="font-size: 50px;">${item.itemName}</span>`,
       showCancelButton: true,
       confirmButtonText: "Confirm",
@@ -21,7 +22,7 @@ export default function Archive() {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         RetriveItem(item);
-        Swal.fire("Item Retrieved!", "", "success");
+        Swal.fire("Item Restored!", "", "success");
 
         setTimeout(() => {
           window.location.href = "/archive";
@@ -39,15 +40,7 @@ export default function Archive() {
 
   return (
     <div className="p-5 space-y-5 flex flex-1 flex-col h-full">
-      <div className="flex flex-1 items-start w-full space-x-1">
-        <Link className="w-fit h-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-          Menu
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
-          Archive
-        </Link>
-      </div>
+      <ArchiveCrumbs />
       <div className="flex flex-row items-center space-x-5  p-3">
         <div className="text-5xl font-bold text-yellow-300">Deleted Items</div>
       </div>

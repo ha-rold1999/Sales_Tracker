@@ -9,6 +9,8 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faCancel } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import EditBTN from "../Input/EditBTN";
+import ProfileCrumbs from "../BreadCrumbs/ProfileCrumbs";
 
 export default function Account() {
   const [isEdit, setIsEdit] = useState(false);
@@ -54,15 +56,7 @@ export default function Account() {
   }, []);
   return (
     <div className="flex w-full h-full flex-col p-5">
-      <div className="flex flex-1 items-start w-full space-x-1">
-        <Link className="w-fit h-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-          Menu
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
-          Profile
-        </Link>
-      </div>
+      <ProfileCrumbs />
       <div className="flex justify-center item-center h-full w-full py-10">
         <form
           className="h-fit w-1/2 bg-white border-black border-2 rounded-lg flex justify-center flex-col p-5"
@@ -77,22 +71,7 @@ export default function Account() {
                 disabled={!isEdit}
                 {...register("storeName")}
               />
-              <div className="ml-2">
-                {!isEdit && (
-                  <FontAwesomeIcon
-                    icon={faEdit}
-                    onClick={() => setIsEdit(true)}
-                    className="bg-yellow-500 p-2 rounded-lg"
-                  />
-                )}
-                {isEdit && (
-                  <FontAwesomeIcon
-                    icon={faCancel}
-                    onClick={() => setIsEdit(false)}
-                    className="bg-gray-400 p-2 rounded-lg"
-                  />
-                )}
-              </div>
+              <EditBTN isEdit={isEdit} setIsEdit={setIsEdit} />
             </div>
 
             <span className="text-red-600 text-xs">

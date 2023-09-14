@@ -219,9 +219,9 @@ export async function HandleSaveAllExpenses({
 
 export function HandleDeleteItem({ id }) {
   Swal.fire({
-    title: "Do you want to DELETE this item?",
+    title: "Do you want to ARCHIVE this item?",
     showDenyButton: true,
-    confirmButtonText: "Delete",
+    confirmButtonText: "Archive",
     denyButtonText: `Cancel`,
     confirmButtonColor: "Red",
     denyButtonColor: "Gray",

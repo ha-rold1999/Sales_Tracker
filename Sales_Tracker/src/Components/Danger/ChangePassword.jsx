@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { UpdatePassword } from "../../Utility/APICalls";
 import { UpdatePasswordValidation } from "../../Utility/YupSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import ChangePasswordCrumb from "../BreadCrumbs/ChangePasswordCrumb";
 
 export default function ChangePassword() {
   const schema = UpdatePasswordValidation();
@@ -32,23 +34,16 @@ export default function ChangePassword() {
       UpdatePassword({ account });
     }
   };
+
+  useEffect(() => {
+    if (!Cookies.get("auth_token")) {
+      window.location.href = "/";
+      return;
+    }
+  }, []);
   return (
     <div className="flex w-full h-full flex-col p-5">
-      <div className="flex h-fit items-start w-full space-x-1">
-        <Link className="w-fit h-fit bg-white px-3 py-1 rounded-lg" to="/menu">
-          Menu
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link
-          className="w-fit h-fit bg-white px-3 py-1 rounded-lg"
-          to="/danger">
-          Account
-        </Link>
-        <div className="text-xl text-white">/</div>
-        <Link className="w-fit h-fit bg-yellow-500 px-3 py-1 rounded-lg">
-          Change Password
-        </Link>
-      </div>
+      <ChangePasswordCrumb />
       <div className="flex flex-1 justify-center items-center h-full ">
         <form
           className="bg-white w-2/5 h-3/5 rounded-lg border-black border-2 flex flex-col px-5 "
