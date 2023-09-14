@@ -1,27 +1,54 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import ItemsStatistics from "./ItemsStatistics";
+import { useQuery } from "react-query";
+import PieStatistics from "./PieStatistics";
+import { GetItemProfitReport, GetItemSoldReport } from "../../Utility/APICalls";
+import Swal from "sweetalert2";
 
-export default function ItemStatistics({ data }) {
+export default function ItemStatistics() {
+  const {
+    data: profit,
+    isLoading: profitLoading,
+    isSuccess: profitSuccess,
+    isError: profitError,
+  } = useQuery(["itemsProfit"], async () => await GetItemProfitReport());
+  const {
+    data: sold,
+    isLoading: soldLoading,
+    isSuccess: soldSuccess,
+    isError: soldError,
+  } = useQuery(["itemsSold"], async () => await GetItemSoldReport());
+
+  if (profitLoading && soldLoading) {
+    Swal.showLoading();
+  }
+  if (profitSuccess && soldSuccess) {
+    Swal.close();
+  }
+  if (profitError && soldError) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong",
+    });
+  }
+
   return (
-    <div className="flex justify-center mt-5">
-      <Link
-        to="/inventory/item-report"
-        state={data}
-        className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
-        Item Report
-      </Link>
-      <Link
-        to="/inventory/item-sales"
-        state={data}
-        className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
-        Sale Report
-      </Link>
-      <Link
-        to="/inventory/item-expenses"
-        state={data}
-        className="hover:bg-blue-500 px-2 py-1 rounded-lg cursor-pointer hover:text-white">
-        Expense Report
-      </Link>
+    <div className="w-full h-1/2 flex justify-center space-x-1">
+      <div className=" w-1/2 h-full flex flex-row">
+        <div className="bg-white w-4/5 h-full p-1 border-2 border-black rounded-lg flex flex-col mr-1">
+          <div className="font-bold text-lg">Item's Profit</div>
+          <PieStatistics data={profit} />
+        </div>
+        <div className="bg-white w-4/5 h-full p-1 border-2 border-black rounded-lg flex flex-col">
+          <div className="font-bold text-lg">Item's Sold</div>
+          <PieStatistics data={sold} />
+        </div>
+      </div>
+
+      <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
+        <ItemsStatistics />
+      </div>
     </div>
   );
 }

@@ -25,47 +25,36 @@ export default function ItemsStatistics() {
       setItemStat(await GetItemReport({ itemId }));
     }
   };
-  if (data) {
-    return (
-      <>
-        <div className="w-4/5 flex flex-row space-x-1">
-          <DropBox
-            setSelectedItem={setSelectedItem}
-            selectedItem={selectedItem}
-            items={data}
-          />
-          <div className="flex flex-row justify-center items-center ">
-            <div
-              className="bg-blue-400 p-1 rounded-lg border-2 border-black cursor-pointer"
-              onClick={handleSetSearch}>
-              Data
-            </div>
+  return (
+    <>
+      <div className="w-4/5 flex flex-row space-x-1">
+        <DropBox
+          setSelectedItem={setSelectedItem}
+          selectedItem={selectedItem}
+          items={data}
+        />
+        <div className="flex flex-row justify-center items-center ">
+          <div
+            className="bg-blue-400 p-1 rounded-lg border-2 border-black cursor-pointer"
+            onClick={handleSetSearch}>
+            Data
           </div>
         </div>
-        {!selectedItem && (
-          <span className="text-red-600">Please select an item</span>
-        )}
+      </div>
+      {!selectedItem && (
+        <span className="text-red-600">Please select an item</span>
+      )}
 
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart width={300} height={100} data={itemStat}>
-            <CartesianGrid
-              stroke="grey"
-              strokeWidth={2}
-              className="bg-red-500"
-            />
-            <Line
-              type="monotone"
-              dataKey="sale"
-              stroke="green"
-              strokeWidth={3}
-            />
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart width={300} height={100} data={itemStat}>
+          <CartesianGrid stroke="grey" strokeWidth={2} className="bg-red-500" />
+          <Line type="monotone" dataKey="sale" stroke="green" strokeWidth={3} />
 
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      </>
-    );
-  }
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+        </LineChart>
+      </ResponsiveContainer>
+    </>
+  );
 }

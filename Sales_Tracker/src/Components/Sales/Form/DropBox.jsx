@@ -15,7 +15,7 @@ export default function DropBox({
     Swal.showLoading();
   } else {
     Swal.close();
-    const opt = items.map((item) => ({
+    const opt = items?.map((item) => ({
       value: item,
       label: item.itemName,
     }));

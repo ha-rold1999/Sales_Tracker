@@ -58,19 +58,34 @@ export default function DailyReport() {
       <div className="flex justify-center text-2xl font-semibold">Profit</div>
       <div className="flex justify-center">
         <div className="bg-blue-500 px-5  rounded-lg text-2xl">
-          ₱ {parseFloat(profit?.totalProfit).toFixed(2)}
+          ₱{" "}
+          {profit
+            ? isNaN(profit.totalProfit)
+              ? "0.00"
+              : parseFloat(profit.totalProfit).toFixed(2)
+            : "0.00"}
         </div>
       </div>
       <div className="flex justify-center text-2xl font-semibold">Income</div>
       <div className="flex justify-center">
         <div className="bg-blue-500 px-5 rounded-lg text-2xl">
-          ₱ {parseFloat(profit?.totalIncome).toFixed(2)}
+          ₱{" "}
+          {profit
+            ? isNaN(profit.totalIncome)
+              ? "0.00"
+              : parseFloat(profit.totalIncome).toFixed(2)
+            : "0.00"}
         </div>
       </div>
       <div className="flex justify-center text-2xl font-semibold">Expense</div>
       <div className="flex justify-center">
         <div className="bg-blue-500 px-5 rounded-lg text-2xl">
-          ₱ {parseFloat(expense?.totalExpense).toFixed(2)}
+          ₱{" "}
+          {expense
+            ? isNaN(expense.totalExpense)
+              ? "0.00"
+              : parseFloat(expense.totalExpense).toFixed(2)
+            : "0.00"}
         </div>
       </div>
     </div>

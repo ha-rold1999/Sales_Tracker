@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import InventoryCrumbs from "../BreadCrumbs/InventoryCrumbs";
 import ItemStatistics from "../Statistics/ItemStatistics";
+import ItemReport from "../Statistics/ItemReports";
 
 export default function Item() {
   const queryClient = useQueryClient();
@@ -100,7 +101,7 @@ export default function Item() {
               Save Changes
             </button>
           </div>
-          <ItemStatistics data={data} />
+          <ItemReport data={data} />
         </form>
       </div>
     </div>
