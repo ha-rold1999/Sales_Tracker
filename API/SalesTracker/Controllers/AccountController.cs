@@ -13,14 +13,14 @@ namespace SalesTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    public class AccountController : Controller, IAccountController
     {
-        private AccountHelper _accountHelper;
-        private TokenHelper _tokenHelper;
+        private IAccountHelper _accountHelper;
+        private ITokenHelper _tokenHelper;
         private ILogger<AccountController> _logger;
         private IConfiguration _configuration;
 
-        public AccountController(AccountHelper accountHelper, TokenHelper tokenHelper,ILogger<AccountController> logger, IConfiguration configuration)
+        public AccountController(IAccountHelper accountHelper, ITokenHelper tokenHelper, ILogger<AccountController> logger, IConfiguration configuration)
         {
             _accountHelper = accountHelper;
             _tokenHelper = tokenHelper;
@@ -36,16 +36,16 @@ namespace SalesTracker.Controllers
             {
                 return Ok(_accountHelper.CreateAccount(createAccount).Id);
             }
-            catch(SqlAlreadyFilledException)
+            catch (SqlAlreadyFilledException)
             {
                 return Conflict();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"{ex.Message}");
                 return BadRequest();
             }
-            
+
         }
 
         [HttpPost]
@@ -53,9 +53,9 @@ namespace SalesTracker.Controllers
         public IActionResult Login([FromBody] Login login)
         {
             var storeCredential = _accountHelper.GetStoreCredentials(login);
-            if(storeCredential != null)
+            if (storeCredential != null)
             {
-                if(_accountHelper.GetAccountStatus(storeCredential.Id))
+                if (_accountHelper.GetAccountStatus(storeCredential.Id))
                 {
                     var store = _accountHelper.GetStoreInfo(storeCredential.Id);
                     var authClaims = new List<Claim>
@@ -80,7 +80,7 @@ namespace SalesTracker.Controllers
                         });
                 }
                 return NotFound();
-                
+
             }
             return Unauthorized();
         }
@@ -105,11 +105,11 @@ namespace SalesTracker.Controllers
                 var newStoreInformation = _accountHelper.UpdateStoreInformation(storeInformationDTO);
                 return Ok(newStoreInformation);
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return NotFound();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 return BadRequest();

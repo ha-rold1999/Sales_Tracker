@@ -2,11 +2,8 @@
 using BusinessLogic.Sales;
 using CustomException;
 using Microsoft.EntityFrameworkCore;
-using Models.Model.Account.Information;
-using Models.Model.Sale;
 using Models.Model.Sale.Sales;
 using Models.Model.Sale.Statistics;
-using SalesTracker.DatabaseHelpers.DateReport;
 using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 
@@ -49,6 +46,11 @@ namespace SalesTracker.DatabaseHelpers
             return sales;
         }
 
+        /// <summary>
+        /// Get the daily profits of the store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<DailyStoreSalesSatistics></returns>
         public List<DailyStoreSaleStatistics> GetStoreProfitStatistics(int id)
         {
             var Statistics = from sale in _context.Sale where sale.StoreInformation.Id == id
@@ -60,6 +62,12 @@ namespace SalesTracker.DatabaseHelpers
                              };
             return Statistics.ToList();
         }
+
+        /// <summary>
+        /// Get the daily income of the store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<DailyStoreSaleStatistics></returns>
         public List<DailyStoreSaleStatistics> GetStoreIncomeStatistics(int id)
         {
             var Statistics = from sale in _context.Sale
@@ -73,6 +81,11 @@ namespace SalesTracker.DatabaseHelpers
             return Statistics.ToList();
         }
 
+        /// <summary>
+        /// Get the item's total profit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<ItemStatistics></returns>
         public List<ItemStatistics> GetItemTotalProfit(int id)
         {
             var Statistics = from sale in _context.Sale
@@ -89,6 +102,11 @@ namespace SalesTracker.DatabaseHelpers
             return Statistics.ToList();
         }
 
+        /// <summary>
+        /// Get the item's total sold
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<ItemStatistics></returns>
         public List<ItemStatistics> GetItemTotalSold(int id)
         {
             var Statistics = from sale in _context.Sale
@@ -105,6 +123,12 @@ namespace SalesTracker.DatabaseHelpers
             return Statistics.ToList();
         }
 
+        /// <summary>
+        /// Get the item's daily profit
+        /// </summary>
+        /// <param name="storeId"></param>
+        /// <param name="itemID"></param>
+        /// <returns>List<DailyStoreSaleStatistics></returns>
         public List<DailyStoreSaleStatistics> GetItemReport(int storeId, int itemID)
         {
             var Statistics = from sale in _context.Sale

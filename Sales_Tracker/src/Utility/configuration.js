@@ -1,5 +1,9 @@
 import Swal from "sweetalert2";
-import { AddItemExpenses, DeleteItemCall } from "./APICalls";
+import {
+  AddItemExpenses,
+  DeleteItemCall,
+  CheckAuthorization,
+} from "./APICalls";
 
 export function HandleSales({
   selectedItem,
@@ -235,6 +239,39 @@ export function HandleDeleteItem({ id }) {
       setTimeout(() => {
         window.location.href = "/inventory";
       }, 1000);
+    }
+  });
+}
+
+export function HandeDeleteAccount() {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title:
+          "To confirm delete account please enter your username and password",
+        html:
+          '<input type="text" id="text" class="swal2-input" placeholder="Enter Usernamne">' +
+          '<input type="password" id="password" class="swal2-input" autocapitalize="off" placeholder="Enter your password">',
+        showCancelButton: true,
+        confirmButtonText: "Look up",
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const login = {
+            username: document.getElementById("text").value,
+            password: document.getElementById("password").value,
+          };
+          CheckAuthorization({ login });
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
     }
   });
 }

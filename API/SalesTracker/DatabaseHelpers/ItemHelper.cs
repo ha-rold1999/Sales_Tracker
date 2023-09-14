@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Models.Model.Expense;
-using Models.Model.Expense.Expenses;
 using Models.Model.Items;
-using SalesTracker.DatabaseHelpers.Account;
 using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 using System.ComponentModel.DataAnnotations;
@@ -15,14 +11,12 @@ namespace SalesTracker.DatabaseHelpers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMapper _mapper;
-        private readonly IMemoryCache _cache;
-        private bool _disposed = false;
+        private bool _disposed;
 
-        public ItemHelper(DatabaseContext databaseContext, IMapper mapper, IMemoryCache cache)
+        public ItemHelper(DatabaseContext databaseContext, IMapper mapper)
         {
             _databaseContext = databaseContext;
             _mapper = mapper;
-            _cache = cache;
         }
 
         /// <summary>
@@ -35,11 +29,21 @@ namespace SalesTracker.DatabaseHelpers
             return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && !x.isDeleted).OrderBy(x=>x.ItemName).ToList();
         }
 
+        /// <summary>
+        /// Get the archived items
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List<Item></returns>
         public List<Item> GetArchiveItems(int id)
         {
             return _databaseContext.Item.Where(x => x.StoreInformation.Id == id && x.isDeleted).OrderBy(x => x.ItemName).ToList();
         }
 
+        /// <summary>
+        /// Recover the archived item
+        /// </summary>
+        /// <param name="itemDTO"></param>
+        /// <returns>Item</returns>
         public Item RetrieveItem(ItemDTO itemDTO)
         {
             var item = isExist(itemDTO.Id);

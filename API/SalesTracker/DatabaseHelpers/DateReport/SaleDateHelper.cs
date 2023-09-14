@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Models.Model.Account.Information;
 using Models.Model.Sale;
-using Models.Model.Sale.Sales;
 using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;
 

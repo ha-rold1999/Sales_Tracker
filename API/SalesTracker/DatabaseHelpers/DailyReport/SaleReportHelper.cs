@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BusinessLogic.Sales;
-using Microsoft.EntityFrameworkCore;
 using Models.Model.Sale;
 using Models.Model.Sale.Reports;
 using Models.Model.Sale.Sales;

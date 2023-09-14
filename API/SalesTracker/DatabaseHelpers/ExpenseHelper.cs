@@ -1,8 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Models.Model.Expense;
+﻿using Microsoft.EntityFrameworkCore;
 using Models.Model.Expense.Expenses;
-using Models.Model.Expense.Reports;
 using Models.Model.Items;
 using SalesTracker.DatabaseHelpers.Interfaces;
 using SalesTracker.EntityFramework;

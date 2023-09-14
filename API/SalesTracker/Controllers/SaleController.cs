@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Models.Model.Account.Information;
-using Models.Model.Sale;
-using Models.Model.Sale.Reports;
 using Models.Model.Sale.Sales;
 using SalesTracker.Configuration.Sales;
 using SalesTracker.Controllers.Interfaces;
