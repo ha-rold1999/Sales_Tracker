@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
-const SOURCE = "https://localhost:7114";
+const SOURCE = "http://localhost:9001";
 
 export function GetItems({ store }) {
   return fetch(`${SOURCE}/api/v1/Item/GetStoreItem/${JSON.parse(store).id}`, {

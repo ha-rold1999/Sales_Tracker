@@ -22,7 +22,7 @@ export default function StoreStatistics() {
     Swal.showLoading();
   }
   if (profitSuccess && incomeSuccess) {
-    Swal.close;
+    Swal.close();
   }
   if (profitError && incomeError) {
     Swal.fire({
