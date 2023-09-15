@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
-const SOURCE = "http://localhost:9001";
+const SOURCE = "https://localhost:7114";
 
 export function GetItems({ store }) {
   return fetch(`${SOURCE}/api/v1/Item/GetStoreItem/${JSON.parse(store).id}`, {
@@ -218,7 +218,7 @@ export async function AddItemExpenses({ expenses }) {
 
     console.log(response);
     const data = await response.json();
-    console.log(data); // Handle the response data as needed
+    localStorage.setItem("expenseReport", JSON.stringify(data));
   } catch (error) {
     console.log(error);
   }

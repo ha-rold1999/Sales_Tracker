@@ -232,7 +232,7 @@ export function HandleDeleteItem({ id }) {
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
-      Swal.fire("Saved!", "", "success");
+      Swal.fire("", "", "success");
 
       DeleteItemCall({ id });
 

@@ -86,8 +86,8 @@ namespace SalesTracker.Controllers
                 if (exp.Quantity <= 0) throw new SalesQuantityException();
 
                 _expenseHelper.AddItemExpense(exp);
-                _expenseReportHelper.UpdateExpenseReport(exp, expenseBody.expenseReport);
-                return Ok();
+                var newExpenseReport = _expenseReportHelper.UpdateExpenseReport(exp, expenseBody.expenseReport);
+                return Ok(newExpenseReport);
 
             }
             catch (DbUpdateConcurrencyException)

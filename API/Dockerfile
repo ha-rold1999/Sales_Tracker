@@ -11,6 +11,7 @@ COPY ["SalesTracker/SalesTracker.csproj", "./SalesTracker/"]
 COPY ["BusinessLogic/BusinessLogic.csproj", "./BusinessLogic/"]
 COPY ["CustomException/CustomException.csproj", "./CustomException/"]
 COPY ["Models/Models.csproj", "./Models/"]
+COPY ["Utility/Utility.csproj", "./Utility/"]
 RUN dotnet restore "SalesTracker/SalesTracker.csproj"
 COPY . .
 WORKDIR "/src/SalesTracker"
