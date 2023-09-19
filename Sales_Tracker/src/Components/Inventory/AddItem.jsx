@@ -87,7 +87,12 @@ export default function AddItem() {
           />
           <span className="text-red-600">{errors.itemName?.message}</span>
           <div className="text-lg font-semibold">Stock</div>
-          <StockInput setValue={setValue} watch={watch} schema={schema} />
+          <StockInput
+            setValue={setValue}
+            watch={watch}
+            schema={schema}
+            isAdd={false}
+          />
           <span className="text-red-600">{errors.stock?.message}</span>
           <div className="text-lg font-semibold">Buying Price</div>
           <BuyingPriceInput register={register} />

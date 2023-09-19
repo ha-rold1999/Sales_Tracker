@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export default function StockInput({ setValue, watch, schema }) {
+export default function StockInput({ setValue, watch, schemam, isAdd }) {
   const [newStock, setNewStock] = useState(0);
 
   const currentStock = watch("stock");
@@ -29,14 +29,16 @@ export default function StockInput({ setValue, watch, schema }) {
             setNewStock(parseInt(e.target.value));
           }}
         />
-        <div
-          className="bg-red-500 py-2 px-1 rounded-lg font-medium border-2 border-black cursor-pointer"
-          onClick={() => {
-            setValue("stock", parseInt(parseInt(currentStock) - newStock));
-            setNewStock(0);
-          }}>
-          Subtract
-        </div>
+        {isAdd && (
+          <div
+            className="bg-red-500 py-2 px-1 rounded-lg font-medium border-2 border-black cursor-pointer"
+            onClick={() => {
+              setValue("stock", parseInt(parseInt(currentStock) - newStock));
+              setNewStock(0);
+            }}>
+            Subtract
+          </div>
+        )}
       </div>
     </div>
   );
