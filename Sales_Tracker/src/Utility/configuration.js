@@ -28,6 +28,7 @@ export function HandleSales({
     setIsSoldLessThanStock(false);
     setIsSoldGreaterThanZero(true);
   } else {
+    selectedItem.value.stock -= quantity;
     SetSales({
       selectedItem,
       setTootalProfit,

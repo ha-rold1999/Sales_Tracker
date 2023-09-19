@@ -17,6 +17,7 @@ export default function BoughtItems({
       <div className="text-2xl font-bold">Bought Items</div>
       <div className="flex flex-col-5 w-full mb-10">
         <div className="w-1/4  flex  text-lg font-bold">Item</div>
+        <div className="w-1/4  flex  text-lg font-bold">Unit Price</div>
         <div className="w-1/4 flex text-lg font-bold">Quantity</div>
         <div className="w-1/4  flex text-lg font-bold">Expense</div>
         <div className="w-1/4 flex  text-lg font-bold"></div>
@@ -29,6 +30,7 @@ export default function BoughtItems({
             className="flex flex-col-5 w-full items-center hover:bg-slate-500 hover:text-white"
             key={index}>
             <div className="w-1/4  flex text-lg">{item.item.itemName}</div>
+            <div className="w-1/4  flex text-lg">{item.item.buyingPrice}</div>
             <div className="w-1/4 flex text-lg">{item.quantity}</div>
             <div className="w-1/4  flex text-lg">{expense.toFixed(2)}</div>
             <div className="w-1/4 flex justify-center ">

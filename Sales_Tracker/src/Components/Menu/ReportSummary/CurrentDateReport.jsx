@@ -38,9 +38,9 @@ export default function CurrentDateReport({ profit, expense }) {
         <div className="bg-blue-500 px-5 rounded-lg text-2xl">
           ₱{" "}
           {expense
-            ? isNaN(expense.totalExpense)
+            ? isNaN(expense.expenseReport.totalExpense)
               ? "0.00"
-              : parseFloat(expense.totalExpense).toFixed(2)
+              : parseFloat(expense.expenseReport.totalExpense).toFixed(2)
             : "0.00"}
         </div>
       </div>

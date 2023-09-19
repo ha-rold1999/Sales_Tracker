@@ -32,7 +32,7 @@ namespace SalesTracker.DatabaseHelpers
             {
                 DTO.Profit = SalesLogic.CalculateProfit(DTO.Item.SellingPrice, DTO.Quantity);
                 DTO.Income = SalesLogic.CalculateIncome(DTO.Item.BuyingPrice, DTO.Quantity, DTO.Profit);
-                DTO.Item.Stock = InventoryLogic.SubtractInventory(DTO.Item.Stock, DTO.Quantity);
+                DTO.Item.Stock = DTO.Item.Stock;
             }
 
             var sales = _mapper.Map<Sales>(DTO);
@@ -151,7 +151,7 @@ namespace SalesTracker.DatabaseHelpers
 
             if (!isValid) { throw new SalesQuantityException(); }
 
-            isValid = dto.Item.Stock >= dto.Quantity;
+            //isValid = dto.Item.Stock >= dto.Quantity;
 
             if (!isValid) { throw new SalesQuantityException(); }
 

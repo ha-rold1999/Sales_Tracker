@@ -120,6 +120,7 @@ export default function Sales() {
         setTootalProfit={setTootalProfit}
         totalIncome={totalIncome}
         setTotalIncome={setTotalIncome}
+        data={data}
       />
     </div>
   );
