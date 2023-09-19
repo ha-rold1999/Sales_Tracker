@@ -41,6 +41,49 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
                 ?? AddExpense(new ExpenseReport() { Expense = expense, TotalExpense = 0 });
         }
 
+        public SummaryExpense GetWeeklyReport(int id)
+        {
+            var currentDate = DateOnly.FromDateTime(DateTime.Now);
+            var startDate = currentDate.AddDays(-(int)currentDate.DayOfWeek);
+            var endDate = startDate.AddDays(6);
+
+            return (from expense in _databaseContext.Expense
+                    where expense.StoreInformation.Id == id && expense.Date >= startDate && expense.Date <= endDate
+                    join report in _databaseContext.ExpensesReport on expense.Id equals report.Expense.Id
+                    group new { report.TotalExpense } by 1 into reportGroup
+                    select new SummaryExpense
+                    {
+                        totalExpense = reportGroup.Sum(x => x.TotalExpense)
+                    }).Single();
+        }
+        public SummaryExpense GetMonthlyReport(int id)
+        {
+            var currentDate = DateOnly.FromDateTime(DateTime.Now);
+            var startDate = new DateOnly(currentDate.Year, currentDate.Month, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1);
+
+            return (from expense in _databaseContext.Expense
+                    where expense.StoreInformation.Id == id && expense.Date >= startDate && expense.Date <= endDate
+                    join report in _databaseContext.ExpensesReport on expense.Id equals report.Expense.Id
+                    group new { report.TotalExpense } by 1 into reportGroup
+                    select new SummaryExpense
+                    {
+                        totalExpense = reportGroup.Sum(x => x.TotalExpense)
+                    }).Single();
+        }
+
+        public SummaryExpense GetTotalExpenseReport(int id)
+        {
+            return (from expense in _databaseContext.Expense
+                    where expense.StoreInformation.Id == id
+                    join report in _databaseContext.ExpensesReport on expense.Id equals report.Expense.Id
+                    group new { report.TotalExpense } by 1 into reportGroup
+                    select new SummaryExpense
+                    {
+                        totalExpense = reportGroup.Sum(x => x.TotalExpense)
+                    }).Single();
+        }
+
         /// <summary>
         /// Update the expense report
         /// </summary>

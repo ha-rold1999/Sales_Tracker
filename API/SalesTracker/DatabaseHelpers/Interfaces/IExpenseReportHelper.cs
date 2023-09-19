@@ -9,5 +9,8 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
         ExpenseReport AddExpense(ExpenseReport expenseReport);
         ExpenseReport GetLastReport(Expense expense);
         ExpenseReport UpdateExpenseReport(Expenses expenses, ExpenseReport expenseReport);
+        SummaryExpense GetWeeklyReport(int id);
+        SummaryExpense GetMonthlyReport(int id);
+        SummaryExpense GetTotalExpenseReport(int id);
     }
 }

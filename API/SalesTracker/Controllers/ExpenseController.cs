@@ -123,10 +123,11 @@ namespace SalesTracker.Controllers
             {
                 var expenseDate = _expenseDateHelper.GetLastReport(storeInformation);
                 var expenseReport = _expenseReportHelper.GetLastReport(expenseDate);
-                _cache.Set("CurrentDateExpense", expenseDate, TimeSpan.FromMinutes(120));
-                _cache.Set("ExpenseReport", expenseReport, TimeSpan.FromSeconds(120));
+                var weeklyReport = _expenseReportHelper.GetWeeklyReport(storeInformation.Id);
+                var monthlyReport = _expenseReportHelper.GetMonthlyReport(storeInformation.Id);
+                var totalExpenseReport = _expenseReportHelper.GetTotalExpenseReport(storeInformation.Id);
 
-                return Ok(expenseReport);
+                return Ok(new { expenseReport, weeklyReport, monthlyReport, totalExpenseReport });
             }
             catch (Exception ex)
             {
