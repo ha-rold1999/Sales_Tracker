@@ -41,6 +41,11 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
                 ?? AddExpense(new ExpenseReport() { Expense = expense, TotalExpense = 0 });
         }
 
+        /// <summary>
+        /// Get this weeks expense report
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>SummaryExpense</returns>
         public SummaryExpense GetWeeklyReport(int id)
         {
             var currentDate = DateOnly.FromDateTime(DateTime.Now);
@@ -56,6 +61,12 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
                         totalExpense = reportGroup.Sum(x => x.TotalExpense)
                     }).Single();
         }
+
+        /// <summary>
+        /// Get this months expense report
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>SummaryExpense</returns>
         public SummaryExpense GetMonthlyReport(int id)
         {
             var currentDate = DateOnly.FromDateTime(DateTime.Now);
@@ -72,6 +83,11 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
                     }).Single();
         }
 
+        /// <summary>
+        /// Get the total expense of the store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>SummaryExpense/returns>
         public SummaryExpense GetTotalExpenseReport(int id)
         {
             return (from expense in _databaseContext.Expense

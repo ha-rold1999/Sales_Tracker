@@ -46,6 +46,11 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
                 ?? AddReport(new SaleReportDTO() { Sale = sale, TotalIncome = 0, TotalProfit = 0 });
         }
 
+        /// <summary>
+        /// Get this weeks sales report
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>DateRangeReport</returns>
         public DateRangeReport GetWeeklyReport(int id)
         {
             var currentDate = DateOnly.FromDateTime(DateTime.Now);
@@ -66,6 +71,11 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
 
         }
 
+        /// <summary>
+        /// Get this months sales report
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DateRangeReport GetMonthlyReport(int id)
         {
             var cuurenDate = DateOnly.FromDateTime(DateTime.Now);
@@ -86,6 +96,11 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
 
         }
 
+        /// <summary>
+        /// Get the total sales of the store
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public TotalSaleReport GetTotalSaleReport(int id)
         {
             return (from sale in _context.Sale
