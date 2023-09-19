@@ -10,5 +10,8 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
         void Dispose();
         SaleReport GetLastReport(Sale sale);
         SaleReport UpdateSaleReport(SaleReport saleReport, SalesDTO salesDTO);
+        DateRangeReport? GetWeeklyReport(int id);
+        DateRangeReport? GetMonthlyReport(int id);
+        TotalSaleReport GetTotalSaleReport(int id);
     }
 }

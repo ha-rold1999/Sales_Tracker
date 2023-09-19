@@ -393,17 +393,6 @@ export async function UpdateAccountAPI({ account }) {
       body: JSON.stringify(account),
     });
 
-    if (response.status === 409) {
-      Swal.close();
-      Swal.fire({
-        icon: "error",
-        title: "Signup Failed",
-        text: "Username already exist",
-      });
-      console.error("Login failed:", response.statusText);
-      return;
-    }
-
     if (!response.ok) {
       Swal.close();
       Swal.fire({
@@ -417,7 +406,7 @@ export async function UpdateAccountAPI({ account }) {
 
     await Swal.fire({
       icon: "success",
-      title: "Signup Success",
+      title: "Update Success",
       showConfirmButton: false,
       timer: 1500,
     });

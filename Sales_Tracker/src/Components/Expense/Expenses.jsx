@@ -63,7 +63,7 @@ export default function Expenses() {
   };
 
   return (
-    <div className="flex flex-col-2 h-full">
+    <div className="flex flex-col-2 h-full bg-yellow-200">
       <div className="h-full w-2/5 px-10 py-5 flex justify-center items-center flex-col">
         <ExpenseCrumbs />
         <div className="w-full">
@@ -102,7 +102,7 @@ export default function Expenses() {
             </button>
           </div>
           {!isExpenseExist && (
-            <span className="text-red-600">There is no sales to save</span>
+            <span className="text-red-600">There is no expenses to save</span>
           )}
           <Total totalExpense={totalExpense} />
         </div>

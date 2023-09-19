@@ -193,7 +193,7 @@ export async function HandleSaveAllExpenses({
   if (expenses.length > 0) {
     try {
       Swal.showLoading();
-      await queryClient.fetchQuery("save sales", () =>
+      await queryClient.fetchQuery("save expenses", () =>
         AddExpenses({ expenses })
       );
       Swal.close();

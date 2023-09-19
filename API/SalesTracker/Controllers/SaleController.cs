@@ -92,9 +92,10 @@ namespace SalesTracker.Controllers
             {
                 var saleDate = _saleDateHelper.GetLastReport(storeInformation);
                 var saleReport = _saleReportHelper.GetLastReport(saleDate);
-                _cache.Set("CurrenDateSales", saleDate, TimeSpan.FromMinutes(120));
-                _cache.Set("SaleReport", saleReport, TimeSpan.FromMinutes(120));
-                return Ok(saleReport);
+                var weeklyReport = _saleReportHelper.GetWeeklyReport(storeInformation.Id);
+                var monthlyReport = _saleReportHelper.GetMonthlyReport(storeInformation.Id);
+                var totalReport = _saleReportHelper.GetTotalSaleReport(storeInformation.Id);
+                return Ok(new { saleReport ,  weeklyReport,  monthlyReport, totalReport});
             }
             catch (Exception ex)
             {

@@ -46,6 +46,59 @@ namespace SalesTracker.DatabaseHelpers.DailyReport
                 ?? AddReport(new SaleReportDTO() { Sale = sale, TotalIncome = 0, TotalProfit = 0 });
         }
 
+        public DateRangeReport GetWeeklyReport(int id)
+        {
+            var currentDate = DateOnly.FromDateTime(DateTime.Now);
+            var startDate = currentDate.AddDays(-(int)currentDate.DayOfWeek);
+            var endDate = startDate.AddDays(6);
+
+            return (from sale in _context.Sale
+                    where sale.StoreInformation.Id == id && sale.Date >= startDate && sale.Date <= endDate
+                    join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                    group new { report.TotalProfit, report.TotalIncome } by 1 into reportGroup
+                    select new DateRangeReport
+                    {
+                        startDate = startDate,
+                        endDate = endDate,
+                        TotalProfit = reportGroup.Sum(x => x.TotalProfit),
+                        TotalIncome = reportGroup.Sum(x => x.TotalIncome)
+                    }).Single();
+
+        }
+
+        public DateRangeReport GetMonthlyReport(int id)
+        {
+            var cuurenDate = DateOnly.FromDateTime(DateTime.Now);
+            var startDate = new DateOnly(cuurenDate.Year, cuurenDate.Month, 1);
+            var endDate = startDate.AddMonths(1).AddDays(-1);
+
+            return (from sale in _context.Sale
+                    where sale.StoreInformation.Id == id && sale.Date >= startDate && sale.Date <= endDate
+                    join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                    group new { report.TotalProfit, report.TotalIncome } by 1 into reportGroup
+                    select new DateRangeReport
+                    {
+                        startDate = startDate,
+                        endDate = endDate,
+                        TotalProfit = reportGroup.Sum(x => x.TotalProfit),
+                        TotalIncome = reportGroup.Sum(x => x.TotalIncome)
+                    }).Single();
+
+        }
+
+        public TotalSaleReport GetTotalSaleReport(int id)
+        {
+            return (from sale in _context.Sale
+                    where sale.StoreInformation.Id == id
+                    join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                    group new { report.TotalProfit, report.TotalIncome } by 1 into reportGroup
+                    select new TotalSaleReport
+                    {
+                        TotalProfit = reportGroup.Sum(x => x.TotalProfit),
+                        TotalIncome = reportGroup.Sum(x => x.TotalIncome)
+                    }).Single();
+        }
+
         /// <summary>
         /// Update the report
         /// </summary>
