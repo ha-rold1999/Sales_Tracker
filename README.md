@@ -36,3 +36,16 @@ Sales Tracker is a web application designed for small stores to easily track the
    ```
 
 ## Sample output
+### Dashboard
+![Screenshot 2023-09-19 223414](https://github.com/ha-rold1999/Sales_Tracker/assets/64396407/ee130e50-0c40-4371-a27b-9baeae065079)
+### Statis
+![Screenshot 2023-09-19 223652](https://github.com/ha-rold1999/Sales_Tracker/assets/64396407/7f0e6fbc-5e0d-45b9-b9f5-4fb4c34715be)
+### Sales
+![Screenshot 2023-09-19 223831](https://github.com/ha-rold1999/Sales_Tracker/assets/64396407/da137f5f-5197-4830-a334-be233de62675)
+### Expense
+![Screenshot 2023-09-19 223939](https://github.com/ha-rold1999/Sales_Tracker/assets/64396407/93363a55-f0f6-4d7c-8f41-93664b4f44af)
+### Inventory
+![Screenshot 2023-09-19 224010](https://github.com/ha-rold1999/Sales_Tracker/assets/64396407/55c09797-b76e-4573-9ce7-40a878033d14)
+
+
+
