@@ -55,6 +55,7 @@ namespace SalesTracker.DatabaseHelpers
         {
             var Statistics = from sale in _context.Sale where sale.StoreInformation.Id == id
                              join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                             orderby sale.Date
                              select new DailyStoreSaleStatistics
                              {
                                  Date = sale.Date,
@@ -73,6 +74,7 @@ namespace SalesTracker.DatabaseHelpers
             var Statistics = from sale in _context.Sale
                              where sale.StoreInformation.Id == id
                              join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                             orderby sale.Date
                              select new DailyStoreSaleStatistics
                              {
                                  Date = sale.Date,
@@ -141,7 +143,8 @@ namespace SalesTracker.DatabaseHelpers
                                  Date = groupedReport.First().Sale.Date,
                                  Sale = groupedReport.Sum(r => r.Profit)
                              };
-            return Statistics.ToList();
+            var sortedStatistics = Statistics.ToList().OrderBy(sale => sale.Date);
+            return sortedStatistics.ToList();
         }
 
         //Check if sales model is valid
