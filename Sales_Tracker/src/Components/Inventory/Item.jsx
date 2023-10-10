@@ -58,13 +58,16 @@ export default function Item() {
     <div className="p-5">
       <InventoryCrumbs itemName={data.itemName} />
       <div className="flex flex-1 w-full h-full justify-center items-center flex-col">
-        <div className="flex justify-end w-2/5 mb-1">
-          <FontAwesomeIcon
-            icon={faArchive}
-            className="bg-red-600 p-3 rounded-lg cursor-pointer border-blue-500 border-2 hover:border-black"
-            onClick={() => handleDelete(data.id)}
-          />
-        </div>
+        {data.stock == 0 && (
+          <div className="flex justify-end w-2/5 mb-1">
+            <FontAwesomeIcon
+              icon={faArchive}
+              className="bg-red-600 p-3 rounded-lg cursor-pointer border-blue-500 border-2 hover:border-black"
+              onClick={() => handleDelete(data.id)}
+            />
+          </div>
+        )}
+
         <form
           onSubmit={handleSubmit(handleUpdate)}
           className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg ">
