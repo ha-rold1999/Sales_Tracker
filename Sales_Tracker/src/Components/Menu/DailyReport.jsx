@@ -26,16 +26,22 @@ export default function DailyReport() {
     isLoading: isProfitLoading,
     isError: isProfitError,
     isSuccess: isProfitSuccess,
-  } = useQuery(["sales", year, month, day], () =>
-    GetCurrentDateSalesReport({ store })
+  } = useQuery(
+    ["sales", year, month, day],
+    () => GetCurrentDateSalesReport({ store }),
+    { staleTime: Infinity }
   );
   const {
     data: expense,
     isLoading: isExpenseLoading,
     isError: isExpenseError,
     isSuccess: isExpenseSuccess,
-  } = useQuery(["expenses", year, month, day], () =>
-    GetCurrentDateExpenseReport({ store })
+  } = useQuery(
+    ["expenses", year, month, day],
+    () => GetCurrentDateExpenseReport({ store }),
+    {
+      staleTime: Infinity,
+    }
   );
 
   if (isProfitLoading || isExpenseLoading) {

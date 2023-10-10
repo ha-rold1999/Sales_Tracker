@@ -46,42 +46,6 @@ export function HandleSales({
   }
 }
 
-export async function HandleSaveAllSales({
-  sales,
-  queryClient,
-  AddSales,
-  navigate,
-  setIsSalesExist,
-}) {
-  if (sales.length > 0) {
-    try {
-      Swal.showLoading();
-      await queryClient.fetchQuery("save sales", () => AddSales({ sales }));
-      Swal.close();
-
-      await Swal.fire({
-        icon: "success",
-        title: "Sales saved",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-
-      navigate("/menu");
-    } catch (error) {
-      Swal.close();
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "This is on us we are working on it",
-      });
-    }
-
-    setIsSalesExist(true);
-  } else {
-    setIsSalesExist(false);
-  }
-}
-
 export function HandleExpenses({
   selectedItem,
   setIsItemSelected,

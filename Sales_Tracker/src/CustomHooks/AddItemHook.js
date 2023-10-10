@@ -36,6 +36,7 @@ function useAddItemAndExpense() {
       onSuccess: () => {
         // Mutate the 'items' query here if needed
         queryClient.invalidateQueries(["items"]);
+        queryClient.invalidateQueries(["expenses"]);
         Swal.close();
         Swal.fire({
           icon: "success",

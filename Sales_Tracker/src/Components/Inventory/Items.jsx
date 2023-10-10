@@ -10,7 +10,9 @@ export default function Items() {
   const store = localStorage.getItem("store");
   const [search, setSearch] = useState("");
 
-  const { data } = useQuery(["items"], () => GetItems({ store }));
+  const { data } = useQuery(["items"], () => GetItems({ store }), {
+    staleTime: Infinity,
+  });
 
   useEffect(() => {
     if (!Cookies.get("auth_token")) {

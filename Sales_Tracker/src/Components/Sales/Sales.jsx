@@ -6,21 +6,23 @@ import Sold from "./Form/Sold";
 import Total from "./Total";
 import SoldItems from "./Sold";
 import Stock from "./Stock";
-import { AddSales, GetItems } from "../../Utility/APICalls";
+import { GetItems } from "../../Utility/APICalls";
 import { SetSales } from "../../Utility/SetData";
 import { useQuery } from "react-query";
-import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { HandleSales, HandleSaveAllSales } from "../../Utility/configuration";
+import { HandleSales } from "../../Utility/configuration";
 import Cookies from "js-cookie";
 import SalesCrumbs from "../BreadCrumbs/SalesCrumbs";
+import useSaveAllSales from "../../CustomHooks/AddSalesHook";
 
 export default function Sales() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const store = localStorage.getItem("store");
+  const { handleSaveAllSales } = useSaveAllSales();
 
-  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }));
+  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }), {
+    staleTime: Infinity,
+  });
 
   const [selectedItem, setSelectedItem] = useState();
   const [sales, setSales] = useState([]);
@@ -50,14 +52,8 @@ export default function Sales() {
     });
   };
 
-  const handleSaveAllSales = async () => {
-    await HandleSaveAllSales({
-      sales,
-      queryClient,
-      AddSales,
-      navigate,
-      setIsSalesExist,
-    });
+  const handleSaveSales = async () => {
+    handleSaveAllSales(sales, navigate, setIsSalesExist);
   };
 
   useEffect(() => {
@@ -103,7 +99,7 @@ export default function Sales() {
           <div className="flex justify-center mt-10">
             <button
               className="bg-orange-500 w-full py-5 text-xl font-bold border-2 border-black rounded-lg"
-              onClick={handleSaveAllSales}>
+              onClick={handleSaveSales}>
               Save All Sales
             </button>
           </div>

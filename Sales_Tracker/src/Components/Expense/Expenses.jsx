@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useQueries, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import DropBox from "../Sales/Form/DropBox";
 import { useState } from "react";
@@ -8,21 +6,21 @@ import Stock from "../Sales/Stock";
 import Sold from "../Sales/Form/Sold";
 import BoughtItems from "./BoughtItems";
 import Total from "./Total";
-import {
-  HandleExpenses,
-  HandleSaveAllExpenses,
-} from "../../Utility/configuration";
+import { HandleExpenses } from "../../Utility/configuration";
 import { SetExpense } from "../../Utility/SetData";
-import { AddExpenses, GetItems } from "../../Utility/APICalls";
+import { GetItems } from "../../Utility/APICalls";
 import { useQuery } from "react-query";
 import ExpenseCrumbs from "../BreadCrumbs/ExpenseCrumbs";
+import useSaveAllExpenses from "../../CustomHooks/AddExpenseHook";
 
 export default function Expenses() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { handleSaveAllExpenses } = useSaveAllExpenses();
 
   const store = localStorage.getItem("store");
-  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }));
+  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }), {
+    staleTime: Infinity,
+  });
 
   const [selectedItem, setSelectedItem] = useState();
   const [isItemSelected, setIsItemSelected] = useState(true);
@@ -52,14 +50,8 @@ export default function Expenses() {
     });
   };
 
-  const handleSaveAllExpenses = async () => {
-    await HandleSaveAllExpenses({
-      expenses,
-      queryClient,
-      AddExpenses,
-      navigate,
-      setIsExpensesExist,
-    });
+  const handleSaveAll = async () => {
+    handleSaveAllExpenses(expenses, navigate, setIsExpensesExist);
   };
 
   return (
@@ -97,7 +89,7 @@ export default function Expenses() {
           <div className="flex justify-center mt-10">
             <button
               className="bg-orange-500 w-full py-5 text-xl font-bold border-2 border-black rounded-lg"
-              onClick={handleSaveAllExpenses}>
+              onClick={handleSaveAll}>
               Save All Expense
             </button>
           </div>
