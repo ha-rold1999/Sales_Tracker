@@ -1,18 +1,23 @@
-import Sales from "./Components/Sales/Sales";
-import Inventory from "./Components/Inventory/Inventory";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import MainPage from "./Components/Menu/MainPage";
-import Expenses from "./Components/Expense/Expenses";
 import { Provider } from "react-redux";
 import Store from "./Redux/Store";
 import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";
-import Account from "./Components/Account/Account";
-import Archive from "./Components/Archive/Archive";
-import Danger from "./Components/Danger/Danger";
-import ChangePassword from "./Components/Danger/ChangePassword";
-import Statistics from "./Components/Statistics/Statistics";
 import PageNotFound from "./Components/Fallbacks/PageNotFound";
+import SuspenseFallBack from "./Components/Fallbacks/SuspenseFallBack";
+import ErrorFallback from "./Components/Fallbacks/ErrorFallback";
+import { ErrorBoundary } from "react-error-boundary";
+import { lazy, Suspense } from "react";
+
+const MainPage = lazy(() => import("./Components/Menu/MainPage"));
+const Sales = lazy(() => import("./Components/Sales/Sales"));
+const Inventory = lazy(() => import("./Components/Inventory/Inventory"));
+const Expenses = lazy(() => import("./Components/Expense/Expenses"));
+const Register = lazy(() => import("./Components/Register/Register"));
+const Account = lazy(() => import("./Components/Account/Account"));
+const Archive = lazy(() => import("./Components/Archive/Archive"));
+const Danger = lazy(() => import("./Components/Danger/Danger"));
+const ChangePassword = lazy(() => import("./Components/Danger/ChangePassword"));
+const Statistics = lazy(() => import("./Components/Statistics/Statistics"));
 
 function App() {
   return (
@@ -20,16 +25,126 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/menu" element={<MainPage />} />
-          <Route path="/sales" element={<Sales />} />
-          <Route path="/inventory/*" element={<Inventory />} />
-          <Route path="/expenses/*" element={<Expenses />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/archive" element={<Archive />} />
-          <Route path="/danger" element={<Danger />} />
-          <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/statistics" element={<Statistics />} />
+          <Route
+            path="/menu"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <MainPage />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/sales"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Sales />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/inventory/*"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Inventory />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/expenses/*"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Expenses />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Register />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/account"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Account />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/archive"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Archive />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/danger"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Danger />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/change-password"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <ChangePassword />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path="/statistics"
+            element={
+              <ErrorBoundary
+                FallbackComponent={ErrorFallback}
+                onReset={() => (window.location.href = "/")}>
+                <Suspense fallback={<SuspenseFallBack />}>
+                  <Statistics />
+                </Suspense>
+              </ErrorBoundary>
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>

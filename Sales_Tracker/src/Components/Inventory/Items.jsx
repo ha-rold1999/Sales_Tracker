@@ -42,7 +42,7 @@ export default function Items() {
         </div>
       </div>
 
-      <div className="h-full overflow-y-auto hide-scrollbar">
+      <div className="h-full overflow-y-auto ">
         <div className="grid gap-2 grid-cols-3 ">
           {filterData?.map((item, index) => {
             return (

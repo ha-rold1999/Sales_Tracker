@@ -45,7 +45,7 @@ export default function Archive() {
         <div className="text-5xl font-bold text-yellow-300">Deleted Items</div>
       </div>
 
-      <div className="h-full overflow-y-auto hide-scrollbar">
+      <div className="h-full overflow-y-auto">
         <div className="grid gap-2 grid-cols-3 ">
           {data?.map((item, index) => {
             return (

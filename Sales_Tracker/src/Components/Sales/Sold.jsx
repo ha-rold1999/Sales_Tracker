@@ -20,7 +20,7 @@ export default function SoldItems({
     setSales(items);
   };
   return (
-    <div className="h-full w-3/5 bg-white px-10 py-5 space-y-1 rounded-bl-3xl rounded-tl-3xl border-4 border-black overflow-y-auto hide-scrollbar">
+    <div className="h-full w-3/5 bg-white px-10 py-5 space-y-1 rounded-bl-3xl rounded-tl-3xl border-4 border-black overflow-y-auto ">
       <div className="text-2xl font-bold">Sales</div>
       <div className="flex flex-col-5 w-full mb-10">
         <div className="w-1/4  flex  text-lg font-bold">Item</div>
