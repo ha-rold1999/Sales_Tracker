@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export default function StockInput({ setValue, watch, schemam, isAdd }) {
+export default function StockInput({ setValue, watch, schema, isAdd }) {
   const [newStock, setNewStock] = useState(0);
 
   const currentStock = watch("stock");

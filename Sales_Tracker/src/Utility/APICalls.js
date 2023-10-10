@@ -215,8 +215,6 @@ export async function AddItemExpenses({ expenses }) {
       },
       body: JSON.stringify(requestBody), // Send the entire array as the body
     });
-
-    console.log(response);
     const data = await response.json();
     localStorage.setItem("expenseReport", JSON.stringify(data));
   } catch (error) {

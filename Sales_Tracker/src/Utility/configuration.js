@@ -4,6 +4,7 @@ import {
   DeleteItemCall,
   CheckAuthorization,
 } from "./APICalls";
+import { useMutation } from "react-query";
 
 export function HandleSales({
   selectedItem,
@@ -103,45 +104,6 @@ export async function HandleUpdateItem({
     await Swal.fire({
       icon: "success",
       title: "Item updated",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-
-    navigate("/inventory");
-  } catch (error) {
-    Swal.close();
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "This is on us we are working on it",
-    });
-  }
-}
-
-export async function HandleAddItem({
-  queryClient,
-  AddItemCall,
-  itemName,
-  stock,
-  buyingPrice,
-  sellingPrice,
-  navigate,
-}) {
-  try {
-    Swal.showLoading();
-    const item = await queryClient.fetchQuery("add item", () =>
-      AddItemCall({ itemName, stock, buyingPrice, sellingPrice })
-    );
-
-    const expenses = { item: item, quantity: stock };
-    await queryClient.fetchQuery("add expese", () =>
-      AddItemExpenses({ expenses })
-    );
-    Swal.close();
-
-    await Swal.fire({
-      icon: "success",
-      title: "Item added",
       showConfirmButton: false,
       timer: 1500,
     });

@@ -2,20 +2,18 @@ import React, { useEffect } from "react";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
-import { AddItemCall } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Swal from "sweetalert2";
-import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { AddItemValidation } from "../../Utility/YupSchema";
-import { HandleAddItem } from "../../Utility/configuration";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import useAddItemAndExpense from "../../CustomHooks/AddItemHook";
 
 export default function AddItem() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const { handleAddItemAndExpense } = useAddItemAndExpense();
 
   const schema = AddItemValidation();
 
@@ -38,16 +36,14 @@ export default function AddItem() {
   const buyingPrice = watch("buyingPrice");
   const sellingPrice = watch("sellingPrice");
 
-  const handleClick = () => {
-    HandleAddItem({
-      queryClient,
-      AddItemCall,
+  const handleClick = async () => {
+    handleAddItemAndExpense(
       itemName,
       stock,
       buyingPrice,
       sellingPrice,
-      navigate,
-    });
+      navigate
+    );
   };
 
   useEffect(() => {
