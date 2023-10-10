@@ -12,6 +12,7 @@ import Archive from "./Components/Archive/Archive";
 import Danger from "./Components/Danger/Danger";
 import ChangePassword from "./Components/Danger/ChangePassword";
 import Statistics from "./Components/Statistics/Statistics";
+import PageNotFound from "./Components/Fallbacks/PageNotFound";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/danger" element={<Danger />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </Provider>
