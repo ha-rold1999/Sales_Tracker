@@ -82,43 +82,6 @@ export async function HandleSaveAllSales({
   }
 }
 
-export async function HandleUpdateItem({
-  watch,
-  queryClient,
-  UpdateItemAPI,
-  data,
-  navigate,
-}) {
-  const itemName = watch("itemName");
-  const stock = watch("stock");
-  const buyingPrice = watch("buyingPrice");
-  const sellingPrice = watch("sellingPrice");
-
-  try {
-    Swal.showLoading();
-    await queryClient.fetchQuery("update item", () =>
-      UpdateItemAPI({ data, itemName, stock, buyingPrice, sellingPrice })
-    );
-    Swal.close();
-
-    await Swal.fire({
-      icon: "success",
-      title: "Item updated",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-
-    navigate("/inventory");
-  } catch (error) {
-    Swal.close();
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "This is on us we are working on it",
-    });
-  }
-}
-
 export function HandleExpenses({
   selectedItem,
   setIsItemSelected,

@@ -3,25 +3,20 @@ import { useLocation } from "react-router-dom";
 import StockInput from "./Form/StockInput";
 import BuyingPriceInput from "./Form/BuyingPriceInput";
 import SellingPriceInput from "./Form/SellingPriceInput";
-import { UpdateItemAPI } from "../../Utility/APICalls";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { ItemValidation } from "../../Utility/YupSchema";
-import {
-  HandleDeleteItem,
-  HandleUpdateItem,
-} from "../../Utility/configuration";
+import { HandleDeleteItem } from "../../Utility/configuration";
 import Cookies from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArchive } from "@fortawesome/free-solid-svg-icons";
 import InventoryCrumbs from "../BreadCrumbs/InventoryCrumbs";
-import ItemStatistics from "../Statistics/ItemStatistics";
 import ItemReport from "../Statistics/ItemReports";
+import useUpdateItem from "../../CustomHooks/UpdateItemHook";
 
 export default function Item() {
-  const queryClient = useQueryClient();
+  const { handleUpdateItem } = useUpdateItem();
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
@@ -44,14 +39,8 @@ export default function Item() {
     },
   });
 
-  const handleUpdateItem = () => {
-    HandleUpdateItem({
-      watch,
-      queryClient,
-      UpdateItemAPI,
-      data,
-      navigate,
-    });
+  const handleUpdate = () => {
+    handleUpdateItem(watch, data, navigate);
   };
 
   function handleDelete(id) {
@@ -77,7 +66,7 @@ export default function Item() {
           />
         </div>
         <form
-          onSubmit={handleSubmit(handleUpdateItem)}
+          onSubmit={handleSubmit(handleUpdate)}
           className="w-2/5 h-fit bg-white px-10 py-5 rounded-lg ">
           <input
             className="flex justify-center text-3xl font-bold bg-yellow-500 py-2 px-1 rounded-lg"
