@@ -27,6 +27,10 @@ function useSaveAllSales() {
           showConfirmButton: false,
           timer: 1500,
         });
+        queryClient.invalidateQueries("itemsProfit");
+        queryClient.invalidateQueries("itemsSold");
+        queryClient.invalidateQueries("profitReport");
+        queryClient.invalidateQueries("incomeReport");
         queryClient.invalidateQueries("sales");
         queryClient.invalidateQueries("items");
       },

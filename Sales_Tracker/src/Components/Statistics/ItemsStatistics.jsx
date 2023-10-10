@@ -17,7 +17,9 @@ export default function ItemsStatistics() {
   const [selectedItem, setSelectedItem] = useState();
   const [itemStat, setItemStat] = useState();
   const store = localStorage.getItem("store");
-  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }));
+  const { data, isLoading } = useQuery(["items"], () => GetItems({ store }), {
+    staleTime: Infinity,
+  });
   const handleSetSearch = async () => {
     if (selectedItem) {
       console.log("asdasd" + selectedItem);

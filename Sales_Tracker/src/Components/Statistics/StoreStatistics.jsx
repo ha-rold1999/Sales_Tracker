@@ -10,13 +10,17 @@ export default function StoreStatistics() {
     isLoading: profitLoading,
     isSuccess: profitSuccess,
     isError: profitError,
-  } = useQuery(["profitReport"], async () => await GetProfitReport());
+  } = useQuery(["profitReport"], async () => await GetProfitReport(), {
+    staleTime: Infinity,
+  });
   const {
     data: income,
     isLoading: incomeLoading,
     isSuccess: incomeSuccess,
     isError: incomeError,
-  } = useQuery(["incomeReport"], async () => await GetIncomeReport());
+  } = useQuery(["incomeReport"], async () => await GetIncomeReport(), {
+    staleTime: Infinity,
+  });
 
   if (profitLoading && incomeLoading) {
     Swal.showLoading();

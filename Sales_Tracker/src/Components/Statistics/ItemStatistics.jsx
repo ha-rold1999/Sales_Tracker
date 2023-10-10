@@ -11,13 +11,17 @@ export default function ItemStatistics() {
     isLoading: profitLoading,
     isSuccess: profitSuccess,
     isError: profitError,
-  } = useQuery(["itemsProfit"], async () => await GetItemProfitReport());
+  } = useQuery(["itemsProfit"], async () => await GetItemProfitReport(), {
+    staleTime: Infinity,
+  });
   const {
     data: sold,
     isLoading: soldLoading,
     isSuccess: soldSuccess,
     isError: soldError,
-  } = useQuery(["itemsSold"], async () => await GetItemSoldReport());
+  } = useQuery(["itemsSold"], async () => await GetItemSoldReport(), {
+    staleTime: Infinity,
+  });
 
   if (profitLoading && soldLoading) {
     Swal.showLoading();
