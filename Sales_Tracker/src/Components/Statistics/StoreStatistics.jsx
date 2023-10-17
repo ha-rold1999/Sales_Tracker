@@ -61,7 +61,7 @@ export default function StoreStatistics() {
           <button
             className="bg-green-500 p-1 rounded-lg border-2 border-black"
             onClick={() => setOpenIncome(!openIncome)}>
-            {openProfit ? "Report" : "Summary"}
+            {openIncome ? "Report" : "Summary"}
           </button>
         </div>
         {!openIncome && <LineStatistics data={income} />}
