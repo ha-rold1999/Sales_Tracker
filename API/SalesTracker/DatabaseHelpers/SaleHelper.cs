@@ -63,6 +63,29 @@ namespace SalesTracker.DatabaseHelpers
                              };
             return Statistics.ToList();
         }
+        /// <summary>
+        /// Get Store Total Profit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
+        public decimal GetStoreTotalProfit(int id)
+        {
+            var total = from sale in _context.Sale
+                        where sale.StoreInformation.Id == id
+                        join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                        select report.TotalProfit;
+            return total.Sum();
+        }
+
+        public decimal GetStoreAverageProfit(int id)
+        {
+            var average = from sale in _context.Sale
+                          where sale.StoreInformation.Id == id
+                          join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                          select report.TotalProfit;
+            return average.Average();
+        }
+        
 
         /// <summary>
         /// Get the daily income of the store

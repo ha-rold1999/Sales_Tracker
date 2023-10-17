@@ -582,3 +582,32 @@ export async function GetItemReport({ itemId }) {
 
   return response.json();
 }
+
+export async function GetStoreTotalProfit() {
+  const id = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(`${SOURCE}/api/Sale/GetStoreTotalProfit/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("auth_token")}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function GetStoreAverageProfit() {
+  const id = JSON.parse(localStorage.getItem("store")).id;
+  const response = await fetch(
+    `${SOURCE}/api/Sale/GetStoreAverageProfit/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  );
+
+  return response.json();
+}

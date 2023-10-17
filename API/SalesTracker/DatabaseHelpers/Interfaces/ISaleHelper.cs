@@ -9,6 +9,8 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
         Sales AddSales(SalesDTO DTO);
         List<DailyStoreSaleStatistics> GetStoreProfitStatistics(int id);
         List<DailyStoreSaleStatistics> GetStoreIncomeStatistics(int id);
+        decimal GetStoreTotalProfit(int id);
+        decimal GetStoreAverageProfit(int id);
         List<ItemStatistics> GetItemTotalProfit(int id);
         List<ItemStatistics> GetItemTotalSold(int id);
         List<DailyStoreSaleStatistics> GetItemReport(int storeId, int itemID);

@@ -33,6 +33,8 @@ function useSaveAllSales() {
         queryClient.invalidateQueries("incomeReport");
         queryClient.invalidateQueries("sales");
         queryClient.invalidateQueries("items");
+        queryClient.invalidateQueries("profitSummary");
+        queryClient.invalidateQueries("averageSummary");
       },
     }
   );
