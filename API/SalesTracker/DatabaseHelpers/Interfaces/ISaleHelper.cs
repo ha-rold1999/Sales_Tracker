@@ -18,5 +18,7 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
         List<DailyStoreSaleStatistics> GetItemReport(int storeId, int itemID);
         double GetStoreItemTotalSold(int id);
         double GetStoreItemAverageSold(int id);
+        decimal GetStoreItemTotalProfit(int id);
+        decimal GetStoreItemTotalIncome(int id);
     }
 }

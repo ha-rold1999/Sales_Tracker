@@ -230,8 +230,22 @@ namespace SalesTracker.DatabaseHelpers
             {
                 return 0; // No items found, so return 0.
             }
+        }
 
+        public decimal GetStoreItemTotalProfit(int id)
+        {
+            var total = from sales in _context.Sales
+                        where sales.Item.Id == id
+                        select sales.Profit;
+            return total.Sum();
+        }
 
+        public decimal GetStoreItemTotalIncome(int id)
+        {
+            var total = from sales in _context.Sales
+                        where sales.Item.Id == id
+                        select sales.Income;
+            return total.Sum();
         }
 
         //Check if sales model is valid

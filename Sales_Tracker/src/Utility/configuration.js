@@ -171,3 +171,10 @@ export function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString(undefined, options);
 }
+
+export function formatToPHP(number) {
+  return number.toLocaleString("en-PH", {
+    style: "currency",
+    currency: "PHP",
+  });
+}

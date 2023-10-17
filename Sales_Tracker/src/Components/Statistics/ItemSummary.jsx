@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { GetStoreTotalItemsSold } from "../../Utility/APICalls";
 import ItemSold from "./ItemSold";
+import ItemTotalSummary from "./ItemTotalSummary";
 
 export default function ItemSummary({ id }) {
   const {
@@ -29,20 +30,7 @@ export default function ItemSummary({ id }) {
           </div>
         </div>
       </div>
-      <div className="w-1/3  border-black border-2 rounded-lg p-1 space-y-1">
-        <div className="w-full h-1/2 ">
-          <div className="w-full flex justify-center">Total Profit </div>
-          <div className="flex justify-center items-center w-full h-1/2  text-xl">
-            1,000,000.00
-          </div>
-        </div>
-        <div className="w-full h-1/2 ">
-          <div className="w-full flex justify-center">Total Income</div>
-          <div className="flex justify-center items-center w-full h-1/2  text-xl">
-            1,000,000.00
-          </div>
-        </div>
-      </div>
+      <ItemTotalSummary id={id} />
 
       <ItemSold id={id} />
     </div>
