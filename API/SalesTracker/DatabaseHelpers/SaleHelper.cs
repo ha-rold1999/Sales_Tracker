@@ -63,6 +63,7 @@ namespace SalesTracker.DatabaseHelpers
                              };
             return Statistics.ToList();
         }
+
         /// <summary>
         /// Get Store Total Profit
         /// </summary>
@@ -77,6 +78,11 @@ namespace SalesTracker.DatabaseHelpers
             return total.Sum();
         }
 
+        /// <summary>
+        /// Get store average profit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreAverageProfit(int id)
         {
             var average = from sale in _context.Sale
@@ -104,6 +110,24 @@ namespace SalesTracker.DatabaseHelpers
                                  Sale = report.TotalIncome
                              };
             return Statistics.ToList();
+        }
+
+        public decimal GetStoreTotalIncome(int id)
+        {
+            var total = from sale in _context.Sale
+                        where sale.StoreInformation.Id == id
+                        join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                        select report.TotalIncome;
+            return total.Sum();
+        }
+
+        public decimal GetStoreAverageIncome(int id)
+        {
+            var total = from sale in _context.Sale
+                        where sale.StoreInformation.Id == id
+                        join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                        select report.TotalIncome;
+            return total.Average();
         }
 
         /// <summary>

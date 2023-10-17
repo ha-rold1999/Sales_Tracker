@@ -4,9 +4,11 @@ import { useQuery } from "react-query";
 import LineStatistics from "./LineStatistics";
 import Swal from "sweetalert2";
 import ProfiSummary from "./ProfiSummary";
+import IncomeSummary from "./IncomeSummary";
 
 export default function StoreStatistics() {
   const [openProfit, setOpenProfit] = useState(false);
+  const [openIncome, setOpenIncome] = useState(false);
 
   const {
     data: profit,
@@ -54,8 +56,16 @@ export default function StoreStatistics() {
         {openProfit && <ProfiSummary />}
       </div>
       <div className="bg-white w-1/2 h-full flex flex-col p-1 border-2 border-black rounded-lg">
-        <div className="font-bold text-lg">Income</div>
-        <LineStatistics data={income} />
+        <div className="flex flex-row  justify-between">
+          <div className="font-bold text-lg">Income</div>
+          <button
+            className="bg-green-500 p-1 rounded-lg border-2 border-black"
+            onClick={() => setOpenIncome(!openIncome)}>
+            {openProfit ? "Report" : "Summary"}
+          </button>
+        </div>
+        {!openIncome && <LineStatistics data={income} />}
+        {openIncome && <IncomeSummary />}
       </div>
     </div>
   );

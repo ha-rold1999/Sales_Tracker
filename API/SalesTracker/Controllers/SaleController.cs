@@ -151,6 +151,24 @@ namespace SalesTracker.Controllers
 
         [Authorize]
         [HttpGet]
+        [Route("api/[controller]/GetStoreTotalIncome/{id}")]
+        public IActionResult GetStoreTotalIncome(int id)
+        {
+            var sum = _saleHelper.GetStoreTotalIncome(id);
+            return Ok(sum);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetStoreAverageIncome/{id}")]
+        public IActionResult GetStoreAverageIncome(int id)
+        {
+            var average = _saleHelper.GetStoreAverageIncome(id);
+            return Ok(average);
+        }
+
+        [Authorize]
+        [HttpGet]
         [Route("api/[controller]/GetItemSold/{id}")]
         public IActionResult GetItemSold(int id)
         {
