@@ -112,6 +112,11 @@ namespace SalesTracker.DatabaseHelpers
             return Statistics.ToList();
         }
 
+        /// <summary>
+        /// Get Store Total Income
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreTotalIncome(int id)
         {
             var total = from sale in _context.Sale
@@ -121,6 +126,11 @@ namespace SalesTracker.DatabaseHelpers
             return total.Sum();
         }
 
+        /// <summary>
+        /// Get Store Average Income
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreAverageIncome(int id)
         {
             var total = from sale in _context.Sale
@@ -192,6 +202,36 @@ namespace SalesTracker.DatabaseHelpers
                              };
             var sortedStatistics = Statistics.ToList().OrderBy(sale => sale.Date);
             return sortedStatistics.ToList();
+        }
+
+        public double GetStoreItemTotalSold(int id)
+        {
+            var total = from sales in _context.Sales
+                        where sales.Item.Id == id
+                        select sales.Quantity;
+            return total.Sum();
+        }
+
+        public double GetStoreItemAverageSold(int id)
+        {
+            var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
+
+            if (hasItems)
+            {
+                var total = _context.Sales
+                    .Where(sales => sales.Item.Id == id)
+                    .GroupBy(sales => sales.Sale.Id)
+                    .Select(groupedSales => groupedSales.Sum(s => s.Quantity))
+                    .Average();
+
+                return total;
+            }
+            else
+            {
+                return 0; // No items found, so return 0.
+            }
+
+
         }
 
         //Check if sales model is valid

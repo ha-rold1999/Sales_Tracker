@@ -640,3 +640,33 @@ export async function GetStoreAverageIncome() {
 
   return response.json();
 }
+
+export async function GetStoreTotalItemsSold(id) {
+  const response = await fetch(
+    `${SOURCE}/api/Sale/GetStoreItemTotalSold/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  );
+
+  return response.json();
+}
+
+export async function GetStoreAverageItemsSold(id) {
+  const response = await fetch(
+    `${SOURCE}/api/Sale/GetStoreItemAverageSold/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  );
+
+  return response.json();
+}
