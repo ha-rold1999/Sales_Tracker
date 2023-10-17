@@ -221,5 +221,23 @@ namespace SalesTracker.Controllers
             return Ok(sum);
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetStoreItemAverageProfit/{id}")]
+        public IActionResult GetStoreItemAverageProfit(int id)
+        {
+            var average = _saleHelper.GetStoreItemAverageProfit(id);
+            return Ok(average);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/[controller]/GetStoreItemAverageIncome/{id}")]
+        public IActionResult GetStoreItemAverageIncome(int id)
+        {
+            var average = _saleHelper.GetStoreItemAverageIncome(id);
+            return Ok(average);
+        }
+
     }
 }

@@ -20,5 +20,7 @@ namespace SalesTracker.DatabaseHelpers.Interfaces
         double GetStoreItemAverageSold(int id);
         decimal GetStoreItemTotalProfit(int id);
         decimal GetStoreItemTotalIncome(int id);
+        decimal GetStoreItemAverageProfit(int id);
+        decimal GetStoreItemAverageIncome(int id);
     }
 }

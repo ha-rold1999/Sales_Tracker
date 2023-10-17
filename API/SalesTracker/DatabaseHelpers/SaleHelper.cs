@@ -248,6 +248,46 @@ namespace SalesTracker.DatabaseHelpers
             return total.Sum();
         }
 
+        public decimal GetStoreItemAverageProfit(int id)
+        {
+            var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
+
+            if (hasItems)
+            {
+                var total = _context.Sales
+                    .Where(sales => sales.Item.Id == id)
+                    .GroupBy(sales => sales.Sale.Id)
+                    .Select(groupedSales => groupedSales.Sum(s => s.Profit))
+                    .Average();
+
+                return total;
+            }
+            else
+            {
+                return 0; // No items found, so return 0.
+            }
+        }   
+
+        public decimal GetStoreItemAverageIncome(int id)
+        {
+            var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
+
+            if (hasItems)
+            {
+                var total = _context.Sales
+                    .Where(sales => sales.Item.Id == id)
+                    .GroupBy(sales => sales.Sale.Id)
+                    .Select(groupedSales => groupedSales.Sum(s => s.Income))
+                    .Average();
+
+                return total;
+            }
+            else
+            {
+                return 0; // No items found, so return 0.
+            }
+        }
+
         //Check if sales model is valid
         private bool isValid(SalesDTO dto)
         {

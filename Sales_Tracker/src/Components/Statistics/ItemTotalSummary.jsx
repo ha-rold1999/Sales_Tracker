@@ -6,7 +6,7 @@ import {
 import { useQuery } from "react-query";
 import { formatToPHP } from "../../Utility/configuration";
 
-export default function ItemTotalSummary({ id }) {
+function ItemTotalSummary({ id }) {
   const {
     data: totalProfit,
     isLoading: totalProfitLoading,
@@ -41,3 +41,7 @@ export default function ItemTotalSummary({ id }) {
     </div>
   );
 }
+
+export default React.memo(ItemTotalSummary, (prev, next) => {
+  return prev.id === next.id;
+});

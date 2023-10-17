@@ -700,3 +700,33 @@ export async function GetStoreTotalItemIncom(id) {
 
   return response.json();
 }
+
+export async function GetStoreItemAverageProfit(id) {
+  const response = await fetch(
+    `${SOURCE}/api/Sale/GetStoreItemAverageProfit/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  );
+
+  return response.json();
+}
+
+export async function GetStoreItemAverageIncome(id) {
+  const response = await fetch(
+    `${SOURCE}/api/Sale/GetStoreItemAverageIncome/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("auth_token")}`,
+      },
+    }
+  );
+
+  return response.json();
+}

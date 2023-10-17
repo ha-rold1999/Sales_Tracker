@@ -35,6 +35,8 @@ function useSaveAllSales() {
         queryClient.invalidateQueries("items");
         queryClient.invalidateQueries("profitSummary");
         queryClient.invalidateQueries("averageSummary");
+        queryClient.invalidateQueries("incomeTotal");
+        queryClient.invalidateQueries("averageIncome");
       },
     }
   );

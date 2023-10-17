@@ -5,7 +5,7 @@ import {
   GetStoreAverageItemsSold,
 } from "../../Utility/APICalls";
 
-export default function ItemSold({ id }) {
+function ItemSold({ id }) {
   const {
     data: totalSold,
     isLoading: totalSoldLoading,
@@ -30,9 +30,9 @@ export default function ItemSold({ id }) {
         </div>
       </div>
       <div className="w-full h-1/2 ">
-        <div className="w-full flex justify-center">Average Sold</div>
+        <div className="w-full flex justify-center">Daily Sales Average</div>
         <div className="flex justify-center items-center w-full h-1/2  text-xl">
-          {averangeSold}
+          {averangeSoldSuccess && averangeSold}
           {averangeSoldLoading && "Loading..."}
           {averangeSoldError && "Something went wrong"}
         </div>
@@ -40,3 +40,7 @@ export default function ItemSold({ id }) {
     </div>
   );
 }
+
+export default React.memo(ItemSold, (prev, next) => {
+  return prev.id === next.id;
+});
