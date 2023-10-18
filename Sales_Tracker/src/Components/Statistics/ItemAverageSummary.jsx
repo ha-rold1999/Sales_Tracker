@@ -44,7 +44,5 @@ function ItemAverageSummary({ id }) {
 }
 
 export default React.memo(ItemAverageSummary, (prev, next) => {
-  console.log(prev.id);
-  console.log(next.id);
   return prev.id === next.id;
 });

@@ -46,7 +46,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <Sales />
                   </Suspense>
@@ -58,7 +58,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <Inventory />
                   </Suspense>
@@ -70,7 +70,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <Expenses />
                   </Suspense>
@@ -106,7 +106,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <Archive />
                   </Suspense>
@@ -118,7 +118,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <Danger />
                   </Suspense>
@@ -130,7 +130,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <ChangePassword />
                   </Suspense>
@@ -142,7 +142,7 @@ function App() {
               element={
                 <ErrorBoundary
                   FallbackComponent={ErrorFallback}
-                  onReset={() => (window.location.href = "/")}>
+                  onReset={() => (window.location.href = "/menu")}>
                   <Suspense fallback={<SuspenseFallBack />}>
                     <Statistics />
                   </Suspense>

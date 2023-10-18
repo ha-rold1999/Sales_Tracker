@@ -25,7 +25,6 @@ export default function ItemsStatistics() {
   });
   const handleSetSearch = async () => {
     if (selectedItem) {
-      console.log("asdasd" + JSON.stringify(selectedItem.value));
       const itemId = selectedItem.value.id;
       setItemStat(await GetItemReport({ itemId }));
     }
