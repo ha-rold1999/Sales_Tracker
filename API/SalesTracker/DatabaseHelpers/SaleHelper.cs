@@ -85,11 +85,21 @@ namespace SalesTracker.DatabaseHelpers
         /// <returns>decimal</returns>
         public decimal GetStoreAverageProfit(int id)
         {
-            var average = from sale in _context.Sale
-                          where sale.StoreInformation.Id == id
-                          join report in _context.SaleReport on sale.Id equals report.Sale.Id
-                          select report.TotalProfit;
-            return average.Average();
+            var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
+
+            if (hasItems)
+            {
+                var average = from sale in _context.Sale
+                              where sale.StoreInformation.Id == id
+                              join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                              select report.TotalProfit;
+                return average.Average();
+            }
+            else
+            {
+                return 0;
+            }
+            
         }
         
 
@@ -133,11 +143,22 @@ namespace SalesTracker.DatabaseHelpers
         /// <returns>decimal</returns>
         public decimal GetStoreAverageIncome(int id)
         {
-            var total = from sale in _context.Sale
-                        where sale.StoreInformation.Id == id
-                        join report in _context.SaleReport on sale.Id equals report.Sale.Id
-                        select report.TotalIncome;
-            return total.Average();
+            var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
+
+            if (hasItems)
+            {
+                var total = from sale in _context.Sale
+                            where sale.StoreInformation.Id == id
+                            join report in _context.SaleReport on sale.Id equals report.Sale.Id
+                            select report.TotalIncome;
+                return total.Average();
+            }
+            else
+            {
+                return 0;
+            }
+
+            
         }
 
         /// <summary>
@@ -204,6 +225,11 @@ namespace SalesTracker.DatabaseHelpers
             return sortedStatistics.ToList();
         }
 
+        /// <summary>
+        /// Get the item's total sold
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>double</returns>
         public double GetStoreItemTotalSold(int id)
         {
             var total = from sales in _context.Sales
@@ -212,6 +238,11 @@ namespace SalesTracker.DatabaseHelpers
             return total.Sum();
         }
 
+        /// <summary>
+        /// Get the item's average sold
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>double</returns>
         public double GetStoreItemAverageSold(int id)
         {
             var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
@@ -228,10 +259,15 @@ namespace SalesTracker.DatabaseHelpers
             }
             else
             {
-                return 0; // No items found, so return 0.
+                return 0;
             }
         }
 
+        /// <summary>
+        /// Get the item's total profit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreItemTotalProfit(int id)
         {
             var total = from sales in _context.Sales
@@ -240,6 +276,11 @@ namespace SalesTracker.DatabaseHelpers
             return total.Sum();
         }
 
+        /// <summary>
+        /// Get the item's total income
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreItemTotalIncome(int id)
         {
             var total = from sales in _context.Sales
@@ -248,6 +289,11 @@ namespace SalesTracker.DatabaseHelpers
             return total.Sum();
         }
 
+        /// <summary>
+        /// Get the item's average profit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreItemAverageProfit(int id)
         {
             var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
@@ -264,10 +310,15 @@ namespace SalesTracker.DatabaseHelpers
             }
             else
             {
-                return 0; // No items found, so return 0.
+                return 0;
             }
         }   
 
+        /// <summary>
+        /// Get item's average income
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>decimal</returns>
         public decimal GetStoreItemAverageIncome(int id)
         {
             var hasItems = _context.Sales.Any(sales => sales.Item.Id == id);
@@ -284,7 +335,7 @@ namespace SalesTracker.DatabaseHelpers
             }
             else
             {
-                return 0; // No items found, so return 0.
+                return 0;
             }
         }
 
