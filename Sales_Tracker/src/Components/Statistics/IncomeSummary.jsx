@@ -34,7 +34,7 @@ export default function IncomeSummary() {
   return (
     <div className="flex flex-row h-full w-full space-x-1  mt-1">
       <div className="w-1/2  h-full  flex items-center flex-col border-2 border-black rounded-lg ">
-        <h1 className="text-lg font-bold">Total Profit</h1>
+        <h1 className="text-lg font-bold">Total Income</h1>
         <div className="flex w-full h-full justify-center items-center  font-bold text-5xl">
           {totalLoading && "Loading..."}
           {totalError && "Something went wrong"}
@@ -42,7 +42,7 @@ export default function IncomeSummary() {
         </div>
       </div>
       <div className="w-1/2  h-full  flex items-center flex-col border-2 border-black rounded-lg">
-        <h1 className="text-lg font-bold">Average Profit Each Day</h1>
+        <h1 className="text-lg font-bold">Average Income Each Day</h1>
         <div className="flex w-full h-full justify-center items-center  font-bold text-5xl">
           {averageLoading && "Loading..."}
           {averageError && "Something went wrong"}

@@ -19,7 +19,7 @@ function ItemAverageSummary({ id }) {
     isLoading: incomeAverageLoading,
     isSuccess: incomeAverageSuccess,
     isError: incomeAverageError,
-  } = useQuery(["itemAvearageSold"], () => GetStoreItemAverageIncome(id));
+  } = useQuery(["itemAvearageIncome"], () => GetStoreItemAverageIncome(id));
 
   return (
     <div className="w-1/3  border-black border-2 rounded-lg p-1 space-y-1">
