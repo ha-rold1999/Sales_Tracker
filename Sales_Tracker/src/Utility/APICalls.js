@@ -1,7 +1,8 @@
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 
-const SOURCE = "https://localhost:7114";
+const SOURCE =
+  "https://ffb8-2001-4454-542-e600-e40a-8a03-f65d-16ce.ngrok-free.app";
 
 export function GetItems({ store }) {
   return fetch(`${SOURCE}/api/v1/Item/GetStoreItem/${JSON.parse(store).id}`, {
